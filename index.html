@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neuraflow - A Revolução da Análise Visual com Inteligência Artificial</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+  <style>
+    /* RESET BÁSICO */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* ESTILOS GERAIS */
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(150deg, #28313B, #485461);
+      color: #f5f5f5;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+      transition: color 0.3s ease;
+    }
+    a:hover {
+      color: #f9aa33;
+    }
+
+    h1, h2, h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      letter-spacing: 1.5px;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto; /* Garante que as imagens sejam responsivas */
+      display: block;
+    }
+
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    /* ESPAÇAMENTOS (UTILITÁRIOS) */
+    .py-1 { padding-top: 1rem; padding-bottom: 1rem; }
+    .py-2 { padding-top: 2rem; padding-bottom: 2rem; }
+    .py-3 { padding-top: 3rem; padding-bottom: 3rem; }
+    .px-1 { padding-left: 1rem; padding-right: 1rem; }
+    .px-2 { padding-left: 2rem; padding-right: 2rem; }
+    .px-3 { padding-left: 3rem; padding-right: 3rem; }
+    .my-1 { margin-top: 1rem; margin-bottom: 1rem; }
+    .my-2 { margin-top: 2rem; margin-bottom: 2rem; }
+    .my-3 { margin-top: 3rem; margin-bottom: 3rem; }
+    .mx-1 { margin-left: 1rem; margin-right: 1rem; }
+    .mx-2 { margin-left: 2rem; margin-right: 2rem; }
+    .mx-3 { margin-left: 3rem; margin-right: 3rem; }
+
+    /* BOTÃO PADRÃO */
+    .button {
+      display: inline-block;
+      background: #f9aa33;
+      color: #222;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 5px;
+      font-weight: 600;
+      text-transform: uppercase;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    .button:hover {
+      background: #e99625;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+    }
+    .button:active {
+      opacity: 0.8;
+    }
+
+    /* CABEÇALHO (HEADER) */
+    header {
+      background: rgba(0, 0, 0, 0.3);
+      padding: 20px;
+      position: fixed;
+      width: 100%;
+      z-index: 100;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      top: 0;
+      transform: translateY(0);
+      transition: transform 0.3s ease-in-out;
+    }
+    header.hide {
+      transform: translateY(-150%);
+    }
+    header .logo {
+      height: 140px;
+    }
+
+    /* ÍCONE MENU (HAMBÚRGUER) - EXIBIDO SÓ EM TELAS MENORES */
+    #menu-toggle {
+      display: none; /* some em telas maiores */
+      background: none;
+      border: none;
+      font-size: 1.8rem;
+      color: #f5f5f5;
+      cursor: pointer;
+    }
+
+    /* NAVEGAÇÃO */
+    nav ul {
+      display: flex;
+      list-style: none;
+    }
+    nav ul li {
+      margin-left: 20px;
+    }
+    nav ul li a {
+      color: #f5f5f5;
+      font-weight: 600;
+      padding: 10px;
+      border-radius: 5px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    nav ul li a:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: #f9aa33;
+    }
+
+    /* HERO SECTION */
+    .hero {
+  background: url('https://i.ibb.co/9wNSZYJ/Snapshot-2025-01-03-14-38-30.png') no-repeat center center/cover;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  color: #fff;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+.hero-content {
+  z-index: 2;
+}
+
+.hero h1 {
+  font-size: 5rem;
+  margin-bottom: 20px;
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
+  color: #f9aa33;
+}
+
+.hero p {
+  font-size: 1.8rem;
+  max-width: 800px;
+  margin: 0 auto 30px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+
+    /* ABOUT SECTION */
+    .about {
+      background-color: #343a40;
+      color: #f5f5f5;
+    }
+    .about-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+    .about-text {
+      text-align: left;
+    }
+    .about h2 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      color: #f9aa33;
+    }
+    .about p {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+    .about-image img {
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+      width: 100%;
+      height: auto;
+    }
+
+    /* FEATURES SECTION */
+    .features {
+      background-color: #2c3e50;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      text-align: center;
+    }
+    .feature {
+      background: rgba(0, 0, 0, 0.2);
+      border: 2px solid #f9aa33;
+      border-radius: 10px;
+      padding: 30px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .feature:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
+    }
+    .feature i {
+      color: #f9aa33;
+      font-size: 3rem;
+      margin-bottom: 15px;
+    }
+    .feature h3 {
+      font-size: 1.8rem;
+      margin-bottom: 15px;
+    }
+    .feature p {
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+
+    /* TESTIMONIALS SECTION */
+.testimonials {
+  background: #343a40;
+  padding: 40px 0;
+}
+
+.testimonials-slider {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 20px;
+  align-items: stretch;
+  gap: 20px;
+}
+
+.testimonial {
+  background-color: #2c3e50;
+  border: 2px solid #f9aa33;
+  border-radius: 10px;
+  padding: 30px;
+  margin: 0;
+  min-width: 320px;
+  max-width: 350px;
+  scroll-snap-align: start;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.testimonial img {
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  margin: 0 auto 15px;
+  border: 3px solid #f9aa33;
+}
+
+.testimonial p {
+  font-size: 1rem;
+  line-height: 1.7;
+  margin-bottom: 15px;
+}
+
+.testimonial h4 {
+  font-size: 1.2rem;
+  color: #f9aa33;
+  margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+  .testimonials-slider {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .testimonial {
+    width: 100%;
+    max-width: 90%;
+  }
+}
+
+
+
+    /* CTA SECTION */
+    .cta {
+      background: linear-gradient(150deg, #f9aa33, #e99625);
+      color: #222;
+      text-align: center;
+    }
+    .cta h2 {
+      font-size: 3.5rem;
+      margin-bottom: 20px;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    }
+    .cta p {
+      font-size: 1.4rem;
+      margin-bottom: 30px;
+    }
+
+    /* FOOTER */
+    footer {
+      background: #222;
+      color: #ccc;
+      text-align: center;
+      padding: 40px 0;
+    }
+    footer .footer-content {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+    footer .footer-section {
+      flex: 1;
+      min-width: 250px;
+      margin: 0 20px 20px;
+    }
+    footer h4 {
+      font-size: 1.4rem;
+      color: #f9aa33;
+      margin-bottom: 20px;
+    }
+    footer ul {
+      list-style: none;
+      padding: 0;
+    }
+    footer ul li {
+      margin-bottom: 10px;
+    }
+    footer ul li a {
+      color: #ccc;
+      transition: color 0.3s ease;
+    }
+    footer ul li a:hover {
+      color: #f9aa33;
+    }
+    footer .social-links a {
+      display: inline-block;
+      margin: 0 10px;
+      font-size: 1.5rem;
+    }
+    footer .social-links i {
+      color: #f9aa33;
+    }
+    footer .copyright {
+      margin-top: 30px;
+      font-size: 0.9rem;
+    }
+
+    /* MEDIA QUERIES PARA TELAS MÉDIAS */
+    @media (max-width: 992px) {
+      header .logo {
+        height: 80px;
+      }
+      .hero h1 {
+        font-size: 3rem;
+      }
+      .hero p {
+        font-size: 1.2rem;
+      }
+      .features-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    /* MEDIA QUERIES PARA TELAS MENORES (TABLETS) */
+    @media (max-width: 768px) {
+      header .logo {
+        height: 60px;
+      }
+
+      /* Mostra o botão de menu e esconde a nav por padrão */
+      #menu-toggle {
+        display: block;
+      }
+      nav {
+        display: none;
+        width: 100%;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: rgba(0, 0, 0, 0.7);
+      }
+      nav.show {
+        display: block;
+      }
+      nav ul {
+        flex-direction: column;
+        align-items: center;
+      }
+      nav ul li {
+        margin: 10px 0;
+      }
+
+      .about-content {
+        grid-template-columns: 1fr;
+      }
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+      .feature {
+        margin: 0 auto;
+        max-width: 350px;
+      }
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      .hero p {
+        font-size: 1.1rem;
+      }
+      .testimonials-slider {
+        padding: 1rem;
+      }
+      .cta h2 {
+        font-size: 2rem;
+      }
+      .cta p {
+        font-size: 1.1rem;
+      }
+    }
+
+    /* MEDIA QUERIES AINDA MENORES (CELULARES PEQUENOS) */
+    @media (max-width: 576px) {
+      .hero h1 {
+        font-size: 2rem;
+      }
+      .hero p {
+        font-size: 1rem;
+      }
+      .about h2 {
+        font-size: 2rem;
+      }
+      .about p {
+        font-size: 1rem;
+      }
+      .features-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      .feature {
+        max-width: 100%;
+      }
+      .testimonial {
+        min-width: 90%;
+      }
+      footer .footer-content {
+        flex-direction: column;
+      }
+      footer .footer-section {
+        margin: 20px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header>
+    <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
+      <img src="https://neuraflow.com.br/neura_logo.png" alt="Logo Neuraflow" class="logo">
+      <!-- BOTÃO HAMBÚRGUER (SÓ APARECE EM TELAS MENORES) -->
+      <button id="menu-toggle" aria-label="Abrir menu">
+        <i class="fas fa-bars"></i>
+      </button>
+      <nav id="main-nav">
+        <ul>
+          <li><a href="#about">Sobre</a></li>
+          <li><a href="#features">Recursos</a></li>
+          <li><a href="#testimonials">Testemunhos</a></li>
+          <li>
+            <a
+              href="https://api.whatsapp.com/send?phone=5511971122168"
+              class="button"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Contato
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Neuraflow</h1>
+      <p>Desvende o Poder da Percepção Visual com Inteligência Artificial. Otimize o Impacto do seu Design e Converta Mais.</p>
+      <a href="#about" class="button">Descubra a Neuraflow</a>
+    </div>
+  </section>
+
+  <!-- ABOUT SECTION -->
+  <section id="about" class="about py-3">
+    <div class="container">
+      <div class="about-content">
+        <div class="about-text">
+          <h2>Sobre a Neuraflow</h2>
+          <p>
+            Combinamos a mais avançada tecnologia de Inteligência Artificial com
+            Análise Preditiva para interpretar e prever o comportamento do
+            consumidor em relação à comunicação visual. Nossa missão é
+            transformar a maneira como você entende o impacto visual de seus
+            designs.
+          </p>
+          <p>
+            Com a Neuraflow, você pode carregar qualquer imagem ou vídeo e, em
+            instantes, nossa IA analisa onde os olhos do consumidor irão se
+            concentrar, gerando mapas de calor detalhados e relatórios com
+            insights práticos.
+          </p>
+          <a href="#features" class="button">Explore os Recursos</a>
+        </div>
+        <div class="about-image">
+          <img
+            src="https://neuraflow.com.br/home_image.jpg"
+            alt="Imagem Exemplo"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES SECTION -->
+  <section id="features" class="features py-3">
+    <div class="container">
+      <h2 class="text-center py-2">Recursos Exclusivos</h2>
+      <div class="text-center my-2">
+        <a
+          href="https://pdfupload.io/docs/7dd785ea"
+          class="button"
+          target="_blank"
+          download="report_exemplo.pdf"
+        >
+          <i class="fas fa-file-download"></i> Baixar Report de Exemplo
+        </a>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature">
+          <i class="fas fa-brain"></i>
+          <h3>Inteligência Artificial Avançada</h3>
+          <p>
+            Utilizamos redes neurais de ponta, incluindo Vision Transformers e
+            CNNs, para análises visuais detalhadas e confiáveis.
+          </p>
+        </div>
+        <div class="feature">
+          <i class="fas fa-chart-line"></i>
+          <h3>Análise Preditiva</h3>
+          <p>
+            Prevemos o comportamento do consumidor, fornecendo insights valiosos
+            para otimizar o impacto do seu design.
+          </p>
+        </div>
+        <div class="feature">
+          <i class="fas fa-dollar-sign"></i>
+          <h3>Acessível e Eficiente</h3>
+          <p>
+            Oferecemos uma solução poderosa a um preço acessível, permitindo que
+            você tome decisões baseadas em dados sem estourar o orçamento.
+          </p>
+        </div>
+        <div class="feature">
+          <i class="fas fa-fire"></i>
+          <h3>Mapas de Calor Detalhados</h3>
+          <p>
+            Visualize onde a atenção do público será capturada em suas criações,
+            com mapas de calor fáceis de entender.
+          </p>
+        </div>
+        <div class="feature">
+          <i class="fas fa-file-alt"></i>
+          <h3>Relatórios Completos</h3>
+          <p>
+            Receba relatórios detalhados que ajudam a entender não só onde, mas
+            por que certas áreas atraem mais atenção.
+          </p>
+        </div>
+        <div class="feature">
+          <i class="fas fa-users"></i>
+          <h3>Suporte Especializado</h3>
+          <p>
+            Nossa equipe está pronta para ajudar a sua empresa a aproveitar ao
+            máximo os recursos da Neuraflow.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS SECTION -->
+  <section id="testimonials" class="testimonials py-3">
+    <div class="container">
+      <h2 class="text-center py-2">Depoimentos</h2>
+      <div class="testimonials-slider">
+        <div class="testimonial">
+          <img
+            src="https://media.licdn.com/dms/image/v2/D4D03AQHEexePHcEPpA/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1692797111800?e=1741824000&v=beta&t=InJV6-4t0iOU5K-7aJXr39c9m7O1GxdMcgP4th4w0PE"
+            alt="Depoimento 1"
+          />
+          <p>
+            "A Neuraflow transformou nossa abordagem de design. Agora, cada
+            criação é otimizada para o máximo impacto visual!"
+          </p>
+          <h4>Paula Weber, Designer Gráfico</h4>
+        </div>
+        <div class="testimonial">
+          <img
+            src="https://media.licdn.com/dms/image/v2/D4D03AQFs_HAbE_TmdQ/profile-displayphoto-shrink_400_400/B4DZQlFwZVHMAg-/0/1735789054588?e=1741824000&v=beta&t=mZxeULZuRMQxwPcM1KTmcmqSyx02jfo8wx8xrJKUqDw"
+            alt="Depoimento 2"
+          />
+          <p>
+            "Neuraflow faz parte da nossa equipe e é nosso parceiro estratégico.
+            Suas análises instantâneas de designs e a correção automatizada de
+            textos nos permitem finalizar projetos em menos tempo, otimizando
+            cada entrega com máxima eficiência e qualidade."
+          </p>
+          <h4>Alejandra Acosta Salati, Técnica en Flexografía</h4>
+        </div>
+        <div class="testimonial">
+          <img
+            src="https://media.licdn.com/dms/image/v2/D4E03AQHcfeVVbdDJdQ/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1708967445743?e=1741824000&v=beta&t=aFlpy_Ksi0wfQjQgwe7ece4ee9wnLv8pTRjXbYbCJE0"
+            alt="Depoimento 3"
+          />
+          <p>
+            "Finalmente uma ferramenta que combina precisão, facilidade de uso e
+            um preço acessível. A Neuraflow é essencial para qualquer
+            profissional criativo."
+          </p>
+          <h4>Gabriela Monteiro, Diretora de Arte</h4>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA SECTION (CONTATO) -->
+  <section id="contact" class="cta py-3">
+    <div class="container text-center">
+      <h2>Transforme sua Comunicação Visual com a Neuraflow</h2>
+      <p>
+        Entre em contato conosco hoje mesmo e descubra como podemos ajudar a
+        impulsionar sua estratégia visual.
+      </p>
+      <a href="mailto:andre@neuraflow.com.br" class="button">Fale Conosco</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container footer-content">
+      <div class="footer-section about">
+        <h4>Sobre a Neuraflow</h4>
+        <p>
+          Combinamos a mais avançada tecnologia de Inteligência Artificial com
+          Análise Preditiva para interpretar e prever o comportamento do
+          consumidor.
+        </p>
+      </div>
+      <div class="footer-section links">
+        <h4>Links Rápidos</h4>
+        <ul>
+          <li><a href="#about">Sobre</a></li>
+          <li><a href="#features">Recursos</a></li>
+          <li><a href="#testimonials">Testemunhos</a></li>
+          <li><a href="#contact">Contato</a></li>
+        </ul>
+      </div>
+      <div class="footer-section contact-form">
+        <h4>Contato</h4>
+        <p><i class="fas fa-envelope"></i> aislan@neuraflow.com.br</p>
+        <div class="social-links">
+          <a href="https://www.instagram.com/neuraflow" target="_blank"
+            ><i class="fab fa-instagram"></i
+          ></a>
+          <a href="https://www.youtube.com/@neuraflowai" target="_blank"
+            ><i class="fab fa-youtube"></i
+          ></a>
+        </div>
+      </div>
+    </div>
+    <div class="container copyright">
+      <p>© 2025 Neuraflow. Todos os direitos reservados. | Política de Privacidade</p>
+    </div>
+  </footer>
+
+  <!-- GSAP E EFEITOS DE MOUSE/ORIENTAÇÃO -->
+  <script type="module">
+    import { gsap } from 'https://cdn.skypack.dev/gsap@3.12.0';
+    const UPDATE = ({ x, y }) => {
+      gsap.set(document.documentElement, {
+        '--x': gsap.utils.mapRange(0, window.innerWidth, -1, 1, x),
+        '--y': gsap.utils.mapRange(0, window.innerHeight, -1, 1, y),
+      });
+    };
+    window.addEventListener('mousemove', UPDATE);
+
+    const handleOrientation = ({ beta, gamma }) => {
+      const isLandscape = window.matchMedia('(orientation: landscape)').matches;
+      gsap.set(document.documentElement, {
+        '--x': gsap.utils.clamp(
+          -1,
+          1,
+          isLandscape
+            ? gsap.utils.mapRange(-45, 45, -1, 1, beta)
+            : gsap.utils.mapRange(-45, 45, -1, 1, gamma)
+        ),
+        '--y': gsap.utils.clamp(
+          -1,
+          1,
+          isLandscape
+            ? gsap.utils.mapRange(20, 70, 1, -1, Math.abs(gamma))
+            : gsap.utils.mapRange(20, 70, 1, -1, beta)
+        ),
+      });
+    };
+
+    const START = () => {
+      if (DeviceOrientationEvent?.requestPermission) {
+        Promise.all([DeviceOrientationEvent.requestPermission()]).then(
+          (results) => {
+            if (results.every((r) => r === 'granted')) {
+              window.addEventListener('deviceorientation', handleOrientation);
+            }
+          }
+        );
+      } else {
+        window.addEventListener('deviceorientation', handleOrientation);
+      }
+    };
+
+    document.body.addEventListener('click', START, { once: true });
+  </script>
+
+  <!-- ANIMAÇÃO DA IMAGEM EM "ABOUT" -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const aboutSection = document.getElementById('about');
+      const aboutImage = document.querySelector('.about-image');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            aboutImage.style.opacity = '1';
+            aboutImage.style.transform = 'translateX(0)';
+          } else {
+            aboutImage.style.opacity = '0';
+            aboutImage.style.transform = 'translateX(200px)';
+          }
+        });
+      }, { threshold: 0.1 });
+      observer.observe(aboutSection);
+    });
+  </script>
+
+  <!-- EFEITO PARA ESCONDER O HEADER AO ROLAR A PÁGINA -->
+  <script>
+    let lastScroll = 0;
+    window.addEventListener('scroll', function() {
+      const header = document.querySelector('header');
+      const currentScroll = window.pageYOffset;
+      if (currentScroll > lastScroll) {
+        header.classList.add('hide');
+      } else {
+        header.classList.remove('hide');
+      }
+      lastScroll = currentScroll;
+    });
+  </script>
+
+  <!-- SCRIPT PARA O MENU HAMBÚRGUER -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const menuToggle = document.getElementById('menu-toggle');
+      const mainNav = document.getElementById('main-nav');
+
+      menuToggle.addEventListener('click', function() {
+        mainNav.classList.toggle('show');
+      });
+
+      /* Repetição do efeito de animação da imagem (caso queira unificar, pode remover) */
+      const aboutImage = document.querySelector('.about-image');
+      aboutImage.style.opacity = '0';
+      aboutImage.style.transition = 'opacity 1s ease-in-out, transform 1s ease-in-out';
+      aboutImage.style.transform = 'translateX(200px)';
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            aboutImage.style.opacity = '1';
+            aboutImage.style.transform = 'translateX(0)';
+          } else {
+            aboutImage.style.opacity = '0';
+            aboutImage.style.transform = 'translateX(200px)';
+          }
+        });
+      }, { threshold: 0.1 });
+      observer.observe(document.getElementById('about'));
+    });
+  </script>
+</body>
+</html>
