@@ -8,11 +8,18 @@
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
+* {
+  text-transform: unset;
+}
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
+h3 {
+      text-transform: none; /* Garantindo que h3 não use caixa alta */
+    }
+
     html {
       height: 100%;
       overflow-x: hidden;
@@ -73,7 +80,7 @@
       border: none;
       border-radius: 5px;
       font-weight: 600;
-      text-transform: uppercase;
+      text-transform: none!important;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
       transition: all 0.3s ease;
       cursor: pointer;
@@ -203,13 +210,18 @@
         line-height: 1.2;
       }
     .hero-content h1 span {
-        display: inline-block;
-        font-family: 'Bebas Neue', sans-serif;
-        font-size: 3.3rem !important;
-        opacity: 0;
-        margin: 0 8px;
-        animation: kinetic-animation 1.2s forwards;
-      }
+  display: inline-block;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3.3rem !important;
+  opacity: 0;
+  margin: 0 8px;
+  animation: kinetic-animation 1.2s forwards;
+  color: #f9aa33; /* Cor principal do texto */
+  text-shadow: 
+    0 0 5px #ff6b00,  /* Brilho principal */
+    0 0 10px #ff4500, /* Contorno externo mais intenso */
+    0 0 15px #ff2400; /* Contorno ainda mais suave */
+}
       @keyframes kinetic-animation {
   0% {
     opacity: 0;
@@ -565,8 +577,8 @@
       <div class="about-content">
         <div class="about-text">
           <h2>Sobre a Neuraflow</h2>
-          <p>"Utilizamos Arquitetura Híbrida, combinando Vision Transformers e CNNs, para analisar de forma preditiva a interação do público com designs visuais. Nossa tecnologia identifica áreas de maior saliência de atenção, gerando mapas de calor detalhados e relatórios ricos em insights.Transformamos dados visuais em decisões estratégicas, permitindo que você maximize o impacto e a eficácia dos seus designs.</p>
-          <p>Com a Neuraflow, você pode carregar qualquer imagem ou vídeo e, em instantes, nossa IA analisa onde os olhos do consumidor irão se concentrar, gerando mapas de calor detalhados e relatórios com insights práticos.</p>
+          <p>Utilizamos uma arquitetura híbrida, combinando Vision Transformers e CNNs, para analisar a interação do público com designs visuais. Nossa tecnologia identifica áreas de maior atenção, gera mapas de calor detalhados e relatórios estratégicos para vendas, marketing e alta direção. Isso permite maximizar o impacto dos designs, melhorar a performance de vendas e tomar decisões assertivas antes de lançar ou atualizar produtos.</p>
+          <p>Com a Neuraflow, você pode carregar qualquer imagem ou vídeo e, em instantes, nossa IA analisa onde os olhos do consumidor irão se concentrar, permitindo que se faça mudanças no design para adequar os resultados obtidos com a estratégia da empresa.</p>
           <a href="#features" class="button">Explore os Recursos</a>
         </div>
         <div class="about-image">
@@ -635,10 +647,15 @@
           <img src="https://uploaddeimagens.com.br/images/004/879/995/full/luiza.jpg?1736341349" alt="Depoimento 3">
           <p>"Finalmente uma ferramenta que combina precisão, facilidade de uso e um preço acessível. A Neuraflow é essencial para qualquer profissional criativo."</p>
           <h4>Luiza Gelatti, Designer</h4>
-        </div>
+      </div>
+      <div class="testimonial">
+        <img src="https://media.licdn.com/dms/image/v2/D4D03AQHAy4ygXAjmpQ/profile-displayphoto-shrink_400_400/B4DZO9STtFHQAo-/0/1734047517470?e=1742428800&v=beta&t=qFbN_YPCbpJjD5rnKgFbWjzuKKDsqJbb8ZnSi4wkvIk" alt="Depoimento 4">
+        <p>"Com nossas capacidades de impressão digital e personalização de embalagens flexíveis, a inteligência artificial da Neuraflow nos permite prever o desempenho das embalagens no ponto de venda. Isso amplia nossa oferta de serviços e garante mais sucesso financeiro para nossos clientes."</p>
+        <h4>Felipe Toledo, CEO na Camargo Embalagens | Membro do Conselho da ABRE</h4>
       </div>
     </div>
-  </section>
+  </div>
+</section>
   <section id="contact" class="cta py-3">
     <div class="container text-center">
       <h2>Transforme sua Comunicação Visual com a Neuraflow</h2>
