@@ -8,767 +8,655 @@
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      text-transform: unset;
-    }
-    h3 {
-      text-transform: none;
-    }
-    html {
-      height: 100%;
-      overflow-x: hidden;
-      scroll-behavior: smooth;
-    }
-    body {
-      font-family: 'Roboto', sans-serif;
-      min-height: 100%;
-      background: linear-gradient(150deg, #28313B, #485461) fixed;
-      color: #f5f5f5;
-      line-height: 1.6;
-      overflow-x: hidden;
-      position: relative;
-      width: 100%;
-    }
-    a {
-      text-decoration: none;
-      color: inherit;
-      transition: color 0.3s ease;
-    }
-    a:hover {
-      color: #f9aa33;
-    }
-    h1, h2, h3 {
-      font-family: 'Bebas Neue', sans-serif;
-      letter-spacing: 1.5px;
-    }
-    img {
-      display: block;
-      max-width: 100%;
-      height: auto;
-    }
-    .container {
-      width: 100%;
-      max-width: 1300px;
-      margin: 0 auto;
-      padding: 0 20px;
-      position: relative;
-    }
-    .text-center {
-      text-align: center;
-    }
-    .py-1 {
-      padding-top: 1rem;
-      padding-bottom: 1rem;
-    }
-    .py-2 {
-      padding-top: 2rem;
-      padding-bottom: 2rem;
-    }
-    .py-3 {
-      padding-top: 3rem;
-      padding-bottom: 3rem;
-    }
-    .px-1 {
-      padding-left: 1rem;
-      padding-right: 1rem;
-    }
-    .px-2 {
-      padding-left: 2rem;
-      padding-right: 2rem;
-    }
-    .px-3 {
-      padding-left: 3rem;
-      padding-right: 3rem;
-    }
-    .my-1 {
-      margin-top: 1rem;
-      margin-bottom: 1rem;
-    }
-    .my-2 {
-      margin-top: 2rem;
-      margin-bottom: 2rem;
-    }
-    .my-3 {
-      margin-top: 3rem;
-      margin-bottom: 3rem;
-    }
-    .mx-1 {
-      margin-left: 1rem;
-      margin-right: 1rem;
-    }
-    .mx-2 {
-      margin-left: 2rem;
-      margin-right: 2rem;
-    }
-    .mx-3 {
-      margin-left: 3rem;
-      margin-right: 3rem;
-    }
-    .button {
-      display: inline-block;
-      background: #f9aa33;
-      color: #222;
-      padding: 12px 30px;
-      border: none;
-      border-radius: 5px;
-      font-weight: 600;
-      text-transform: none !important;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-      transition: all 0.3s ease;
-      cursor: pointer;
-    }
-    .button:hover {
-      background: #e99625;
-      transform: translateY(-2px);
-      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
-    }
-    .button:active {
-      opacity: 0.8;
-    }
-    header {
-      background: rgba(0, 0, 0, 0.85);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      padding: 10px 0;
-      position: fixed;
-      width: 100%;
-      z-index: 1000;
-      top: 0;
-      left: 0;
-      transform: translateY(0);
-      transition: transform 0.3s ease-in-out, background 0.3s ease-in-out;
-    }
-    header.hide {
-      transform: translateY(-100%);
-      background: rgba(0, 0, 0, 0.95);
-    }
-    header .logo {
-      height: 60px;
-    }
-    header .container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    nav ul {
-      list-style: none;
-      display: flex;
-      gap: 20px;
-    }
-    .hamburger {
-      display: none;
-      cursor: pointer;
-      flex-direction: column;
-      justify-content: space-around;
-      width: 30px;
-      height: 25px;
-    }
-    .hamburger .line {
-      width: 100%;
-      height: 3px;
-      background-color: #f5f5f5;
-      transition: all 0.3s ease;
-    }
-    .hamburger.active .line:nth-child(1) {
-      transform: translateY(11px) rotate(45deg);
-    }
-    .hamburger.active .line:nth-child(2) {
-      opacity: 0;
-    }
-    .hamburger.active .line:nth-child(3) {
-      transform: translateY(-11px) rotate(-45deg);
-    }
-    .menu {
-      position: absolute;
-      top: 80px;
-      left: 0;
-      width: 100%;
-      background: rgba(0, 0, 0, 0.95);
-      display: none;
-      z-index: 999;
-    }
-    .menu.active {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-    .menu ul {
-      list-style: none;
-      padding: 0;
-      text-align: center;
-    }
-    .menu ul li {
-      margin: 20px 0;
-    }
-    .menu ul li a {
-      color: #f5f5f5;
-      font-size: 1.5rem;
-      font-weight: 600;
-      padding: 10px 20px;
-      border-radius: 5px;
-      transition: background-color 0.3s ease, color 0.3s ease;
-    }
-    .menu ul li a:hover {
-      background-color: rgba(255, 255, 255, 0.1);
-      color: #f9aa33;
-    }
-    .hero {
-      min-height: 70vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      position: relative;
-      color: #fff;
-      padding-top: 100px;
-      overflow: hidden;
-    }
-    .hero-content {
-      position: absolute;
-      top: 55%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 2;
-      width: 80%;
-      max-width: 800px;
-    }
-    .hero-content h1 {
-      font-size: 0;
-      margin-bottom: 60px;
-      position: relative;
-      color: #f9aa33;
-      text-align: center;
-      line-height: 1.2;
-    }
-    .hero-content h1 span {
-      display: inline-block;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 3.3rem !important;
-      opacity: 0;
-      margin: 0 8px;
-      animation: kinetic-animation 1.2s forwards;
-      color: #f9aa33;
-      text-shadow: 0 0 5px #ff6b00, 0 0 10px #ff4500, 0 0 15px #ff2400;
-    }
-    @keyframes kinetic-animation {
-      0% {
-        opacity: 0;
-        transform: translateX(-50%) scale(0.8);
-      }
-      50% {
-        opacity: 1;
-        transform: translateX(0) scale(1.1);
-      }
-      100% {
-        opacity: 1;
-        transform: translateX(0) scale(1);
-      }
-    }
-    .hero-content h1 span:nth-child(1) {
-      animation-delay: 0.2s;
-    }
-    .hero-content h1 span:nth-child(2) {
-      animation-delay: 0.6s;
-    }
-    .hero-content h1 span:nth-child(3) {
-      animation-delay: 1.0s;
-    }
-    .hero-content h1 span:nth-child(4) {
-      animation-delay: 1.4s;
-    }
-    .hero-content h1 span:nth-child(5) {
-      animation-delay: 1.8s;
-    }
-    .hero-content h1 span:nth-child(6) {
-      animation-delay: 2.2s;
-    }
-    .hero p {
-      font-size: 1.2rem;
-      margin-bottom: 30px;
-      display: none;
-    }
-    .video-container {
-      position: relative;
-      width: 80%;
-      max-width: 1280px;
-      height: 60vh;
-      margin: 0 auto;
-      overflow: hidden;
-    }
-    .video-container video {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: 1;
-    }
-    @media (min-width: 768px) {
-      .hero-content {
-        width: 60%;
-      }
-      .hero-content h1 span {
-        font-size: 3.5rem;
-      }
-      .hero p {
-        font-size: 1.5rem;
-      }
-    }
-    .about {
-      background-color: #343a40;
-      color: #f5f5f5;
-    }
-    .about-content {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 40px;
-      align-items: center;
-    }
-    .about-text {
-      text-align: left;
-    }
-    .about h2 {
-      font-size: 3rem;
-      margin-bottom: 20px;
-      color: #f9aa33;
-    }
-    .about p {
-      font-size: 1.1rem;
-      line-height: 1.8;
-      margin-bottom: 20px;
-    }
-    .about-image img {
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-      width: 100%;
-      height: auto;
-      aspect-ratio: 16/9;
-      object-fit: cover;
-    }
-    .features {
-      background-color: #2c3e50;
-    }
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 30px;
-      text-align: center;
-    }
-    .feature {
-      background: rgba(0, 0, 0, 0.2);
-      border: 2px solid #f9aa33;
-      border-radius: 10px;
-      padding: 30px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .feature:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
-    }
-    .feature i {
-      color: #f9aa33;
-      font-size: 3rem;
-      margin-bottom: 15px;
-    }
-    .feature h3 {
-      font-size: 1.8rem;
-      margin-bottom: 15px;
-    }
-    .feature p {
-      font-size: 1rem;
-      line-height: 1.7;
-    }
-    .testimonials {
-      background: #343a40;
-      padding: 40px 0;
-    }
-    .testimonials-slider {
-      display: flex;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      scroll-behavior: smooth;
-      padding-bottom: 20px;
-      align-items: stretch;
-      gap: 20px;
-    }
-    .testimonial {
-      background-color: #2c3e50;
-      border: 2px solid #f9aa33;
-      border-radius: 10px;
-      padding: 30px;
-      margin: 0;
-      min-width: 320px;
-      max-width: 350px;
-      scroll-snap-align: start;
-      scroll-snap-stop: always;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-      text-align: center;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-    .testimonial img {
-      border-radius: 50%;
-      width: 100px;
-      height: 100px;
-      object-fit: cover;
-      margin: 0 auto 15px;
-      border: 3px solid #f9aa33;
-      aspect-ratio: 1;
-    }
-    .testimonial p {
-      font-size: 1rem;
-      line-height: 1.7;
-      margin-bottom: 15px;
-    }
-    .testimonial h4 {
-      font-size: 1.2rem;
-      color: #f9aa33;
-      margin-top: 10px;
-    }
-    .cta {
-      background: linear-gradient(150deg, #f9aa33, #e99625);
-      color: #222;
-      text-align: center;
-    }
-    .cta h2 {
-      font-size: 3.5rem;
-      margin-bottom: 20px;
-      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-    }
-    .cta p {
-      font-size: 1.4rem;
-      margin-bottom: 30px;
-    }
-    footer {
-      background: #222;
-      color: #ccc;
-      text-align: center;
-      padding: 40px 0;
-    }
-    footer .footer-content {
-      display: flex;
-      justify-content: space-around;
-      flex-wrap: wrap;
-      margin-bottom: 40px;
-    }
-    footer .footer-section {
-      flex: 1;
-      min-width: 250px;
-      margin: 0 20px 20px;
-    }
-    footer h4 {
-      font-size: 1.4rem;
-      color: #f9aa33;
-      margin-bottom: 20px;
-    }
-    footer ul {
-      list-style: none;
-      padding: 0;
-    }
-    footer ul li {
-      margin-bottom: 10px;
-    }
-    footer ul li a {
-      color: #ccc;
-      transition: color 0.3s ease;
-    }
-    footer ul li a:hover {
-      color: #f9aa33;
-    }
-    footer .social-links a {
-      display: inline-block;
-      margin: 0 10px;
-      font-size: 1.5rem;
-    }
-    footer .social-links i {
-      color: #f9aa33;
-    }
-    footer .copyright {
-      margin-top: 30px;
-      font-size: 0.9rem;
-    }
-    @media (max-width: 992px) {
-      header .logo {
-        height: 70px;
-      }
-      .hero-content h1 span {
-        font-size: 2.5rem;
-      }
-      .hero p {
-        font-size: 1rem;
-      }
-      .features-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-    @media (max-width: 768px) {
-      .about-content {
-        grid-template-columns: 1fr;
-      }
-      .features-grid {
-        grid-template-columns: 1fr;
-      }
-      .feature {
-        margin: 0 auto;
-        max-width: 350px;
-      }
-      .hero-content h1 span {
-        font-size: 2rem;
-      }
-      .hero p {
-        font-size: 1rem;
-      }
-      .testimonials-slider {
-        padding: 1rem;
-      }
-      .cta h2 {
-        font-size: 2rem;
-      }
-      .cta p {
-        font-size: 1.1rem;
-      }
-    }
-    @media (max-width: 576px) {
-      .hero-content h1 span {
-        font-size: 1.8rem;
-      }
-      .hero p {
-        font-size: 0.9rem;
-      }
-      .about h2 {
-        font-size: 2rem;
-      }
-      .about p {
-        font-size: 1rem;
-      }
-      .features-grid {
-        gap: 20px;
-      }
-      .feature {
-        max-width: 100%;
-      }
-      .testimonial {
-        min-width: 90%;
-      }
-      footer .footer-content {
-        flex-direction: column;
-      }
-      footer .footer-section {
-        margin: 20px 0;
-      }
-    }
-    @media (max-width: 585px) {
-      .hamburger {
-        display: flex;
-      }
-      .hero-content h1 span {
-        font-size: 1.5rem;
-      }
-      .hero p {
-        font-size: 0.9rem;
-      }
-      nav ul {
-        display: none;
-      }
-    }
-  </style>
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300;400;700&display=swap");
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+:root {
+  --glass-bg: rgba(255, 255, 255, 0.2);
+  --glass-border: rgba(255, 255, 255, 0.4);
+  --blur-value: 10px;
+  --theme-bg-color: rgba(16, 18, 27, 0.4);
+  --border-color: rgba(113, 119, 144, 0.25);
+  --theme-color: #f9fafb;
+  --inactive-color: rgb(113, 119, 144, 0.78);
+  --body-font: "Roboto", sans-serif;
+  --title-font: "Bebas Neue", cursive;
+  --primary-color: #f58426;
+  --secondary-color: #1e1e1e;
+  --white-color: #fff;
+  --black-color: #000;
+  --gray-color: #ccc;
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+  font-family: var(--body-font);
+  background-color: var(--white-color);
+  color: var(--secondary-color);
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.video-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
+}
+.video-bg video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.content {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: var(--glass-bg);
+  border-bottom: 1px solid var(--glass-border);
+  backdrop-filter: blur(var(--blur-value));
+  -webkit-backdrop-filter: blur(var(--blur-value));
+  padding: 1rem 0;
+  z-index: 100;
+  transition: transform 0.3s ease;
+}
+header.hide {
+  transform: translateY(-100%);
+}
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.logo {
+  width: 150px;
+}
+nav ul {
+  list-style: none;
+  display: flex;
+}
+nav ul li {
+  margin-left: 2rem;
+}
+nav ul li a {
+  font-family: var(--title-font);
+  font-size: 24px;
+  color: var(--secondary-color);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+nav ul li a:hover {
+  color: var(--primary-color);
+}
+.button {
+  background-color: var(--primary-color);
+  color: var(--white-color);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+.button:hover {
+  background-color: #e99625;
+}
+.button:active {
+  transform: scale(0.98);
+}
+.hamburger {
+  display: none;
+  cursor: pointer;
+}
+.line {
+  width: 25px;
+  height: 3px;
+  background-color: var(--secondary-color);
+  margin: 5px 0;
+  transition: all 0.3s ease;
+}
+.menu {
+  display: none;
+  position: absolute;
+  top: 60px;
+  left: 0;
+  width: 100%;
+  background-color: var(--white-color);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 99;
+}
+.menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.menu ul li {
+  margin: 0;
+  padding: 1rem;
+  border-bottom: 1px solid var(--gray-color);
+}
+.menu ul li a {
+  font-family: var(--title-font);
+  font-size: 24px;
+  color: var(--secondary-color);
+  text-decoration: none;
+  display: block;
+}
+.menu.active {
+  display: block;
+}
+.hamburger.active .line:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+.hamburger.active .line:nth-child(2) {
+  opacity: 0;
+}
+.hamburger.active .line:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+.hero {
+  margin-top: 70px;
+  padding: 120px 20px 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero-content {
+  background-color: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 14px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(var(--blur-value));
+  -webkit-backdrop-filter: blur(var(--blur-value));
+  width: 100%;
+  max-width: 700px;
+  padding: 60px 30px;
+  z-index: 10;
+}
+.hero-content h1 {
+  font-family: var(--title-font);
+  font-size: 2.5rem;
+  line-height: 1;
+  margin-bottom: 40px;
+  text-transform: uppercase;
+  color: var(--white-color);
+}
+.hero-content h1 span {
+  display: inline-block;
+}
+.hero video {
+  width: 100%;
+  max-width: 700px;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+.py-3 {
+  padding: 3rem 0;
+}
+.text-center {
+  text-align: center;
+}
+.my-2 {
+  margin: 2rem 0;
+}
+.py-2 {
+  padding: 2rem 0;
+}
+.about {
+  background-color: var(--white-color);
+}
+.about-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.about-text {
+  width: 100%;
+  max-width: 500px;
+  margin-bottom: 30px;
+}
+.about-text h2 {
+  font-family: var(--title-font);
+  font-size: 48px;
+  margin-bottom: 20px;
+  color: var(--primary-color);
+}
+.about-text p {
+  font-size: 18px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+.about-image {
+  width: 100%;
+  max-width: 400px;
+  opacity: 0;
+  transform: translateX(200px);
+  transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+}
+.about-image img {
+  width: 100%;
+  border-radius: 10px;
+}
+.features {
+  background-color: var(--white-color);
+}
+.features h2 {
+  font-family: var(--title-font);
+  font-size: 48px;
+  margin-bottom: 20px;
+  color: var(--primary-color);
+}
+.features-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 30px;
+}
+@media (min-width: 768px) {
+  .features-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+.feature {
+  background-color: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(var(--blur-value));
+  -webkit-backdrop-filter: blur(var(--blur-value));
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+.feature:hover {
+  transform: translateY(-5px);
+}
+.feature i {
+  font-size: 48px;
+  color: var(--primary-color);
+  margin-bottom: 20px;
+}
+.feature h3 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: var(--secondary-color);
+}
+.feature p {
+  font-size: 16px;
+  line-height: 1.6;
+}
+.testimonials {
+  background-color: var(--white-color);
+}
+.testimonials h2 {
+  font-family: var(--title-font);
+  font-size: 48px;
+  margin-bottom: 20px;
+  color: var(--primary-color);
+}
+.testimonials-slider {
+  display: flex;
+  overflow-x: auto;
+  padding-bottom: 20px;
+  scroll-snap-type: x mandatory;
+}
+.testimonial {
+  background-color: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(var(--blur-value));
+  -webkit-backdrop-filter: blur(var(--blur-value));
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-right: 20px;
+  min-width: 300px;
+  scroll-snap-align: start;
+}
+.testimonial img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-bottom: 20px;
+}
+.testimonial p {
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+.testimonial h4 {
+  font-size: 18px;
+  color: var(--secondary-color);
+}
+.cta {
+  background-color: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(var(--blur-value));
+  -webkit-backdrop-filter: blur(var(--blur-value));
+  color: var(--white-color);
+  border-radius: 10px;
+}
+.cta h2 {
+  font-family: var(--title-font);
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+.cta p {
+  font-size: 18px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+footer {
+  background-color: var(--secondary-color);
+  color: var(--white-color);
+  padding: 4rem 0;
+  margin-top: auto;
+}
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.footer-section {
+  width: 100%;
+  max-width: 300px;
+  margin-bottom: 2rem;
+}
+.footer-section h4 {
+  font-family: var(--title-font);
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+.footer-section p {
+  font-size: 16px;
+  line-height: 1.6;
+}
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+}
+.footer-section ul li {
+  margin-bottom: 10px;
+}
+.footer-section ul li a {
+  color: var(--white-color);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+.footer-section ul li a:hover {
+  color: var(--primary-color);
+}
+.social-links a {
+  color: var(--white-color);
+  margin-right: 15px;
+  font-size: 24px;
+  transition: color 0.3s ease;
+}
+.social-links a:hover {
+  color: var(--primary-color);
+}
+.copyright {
+  text-align: center;
+  margin-top: 2rem;
+  border-top: 1px solid var(--gray-color);
+  padding-top: 2rem;
+}
+@media (max-width: 768px) {
+  .hamburger {
+    display: block;
+  }
+  nav {
+    display: none;
+  }
+  .menu {
+    display: none;
+  }
+  .hero {
+    margin-top: 60px;
+    padding: 100px 20px 50px;
+  }
+  .hero-content {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 20px;
+    padding: 40px 20px;
+  }
+  .hero-content h1 {
+    font-size: 2rem;
+    margin-bottom: 30px;
+  }
+  .hero video {
+    width: 100%;
+    max-width: 100%;
+  }
+  .about-content {
+    flex-direction: column;
+  }
+  .about-text {
+    width: 100%;
+    max-width: 100%;
+  }
+  .about-image {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 20px;
+  }
+  .footer-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .footer-section {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+</style>
+
+
 </head>
 <body>
-  <header>
-    <div class="container">
-      <img src="https://andregazineu.github.io/newfrontNeuraflow/Logo_Neuraflow_Laranja_Branco_Vetor.svg" alt="Logo Neuraflow" class="logo">
-      <nav>
-        <ul>
-          <li><a href="#about">Sobre</a></li>
-          <li><a href="#features">Recursos</a></li>
-          <li><a href="#testimonials">Testemunhos</a></li>
-          <li>
-            <a href="https://api.whatsapp.com/send?phone=5511971122168" class="button" target="_blank" rel="noopener noreferrer">
-              Contato
-            </a>
-          </li>
-        </ul>
-      </nav>
-      <div class="hamburger">
-        <div class="line"></div>
-        <div class="line"></div>
-        <div class="line"></div>
-      </div>
+    <div class="video-bg">
+        <video autoplay loop muted>
+            <source src="https://andregazineu.github.io/newfrontNeuraflow/video_output_converted.webm" type="video/webm">
+            Seu navegador não suporta a tag de vídeo.
+        </video>
     </div>
-    <div class="menu">
-        <ul>
-            <li><a href="#about">Sobre</a></li>
-            <li><a href="#features">Recursos</a></li>
-            <li><a href="#testimonials">Testemunhos</a></li>
-            <li><a href="https://api.whatsapp.com/send?phone=5511971122168" class="button" target="_blank" rel="noopener noreferrer">Contato</a></li>
-        </ul>
-      </div>
-  </header>
-  <section class="hero">
-    <div class="hero-content">
-        <h1>
-            <span>Encontre</span>
-<span>os</span>
-<span>Pontos</span>
-<span>que</span>
-<span>Chamam</span>
-<span>Atenção</span>
-          </h1>
-    </div>
-    <video src="https://dms.licdn.com/playlist/vid/v2/C4D05AQFkSoXEWQiuig/mp4-640p-30fp-crf28/mp4-640p-30fp-crf28/0/1679422881782?e=2147483647&v=beta&t=_zFnceQ2Xc27YVdS5DUTkUpb1E0Flv8gn8ELqMWEa_A" autoplay muted loop playsinline></video>
-  </section>
-  <section id="about" class="about py-3">
-    <div class="container">
-      <div class="about-content">
-        <div class="about-text">
-          <h2>Sobre a Neuraflow</h2>
-          <p>Utilizamos uma arquitetura híbrida, combinando Vision Transformers e CNNs, para analisar a interação do público com designs visuais. Nossa tecnologia identifica áreas de maior atenção, gera mapas de calor detalhados e relatórios estratégicos para vendas, marketing e alta direção. Isso permite maximizar o impacto dos designs, melhorar a performance de vendas e tomar decisões assertivas antes de lançar ou atualizar produtos.</p>
-          <p>Com a Neuraflow, você pode carregar qualquer imagem ou vídeo e, em instantes, nossa IA analisa onde os olhos do consumidor irão se concentrar, permitindo que se faça mudanças no design para adequar os resultados obtidos com a estratégia da empresa.</p>
-          <a href="#features" class="button">Explore os Recursos</a>
-        </div>
-        <div class="about-image">
-          <img src="https://neuraflow.com.br/home_image.jpg" alt="Imagem Exemplo">
-        </div>
-      </div>
-    </div>
-  </section>
-  <section id="features" class="features py-3">
-    <div class="container">
-      <h2 class="text-center py-2">Recursos Exclusivos</h2>
-      <div class="text-center my-2">
-        <a href="https://pdfupload.io/docs/7dd785ea" class="button" target="_blank" download="report_exemplo.pdf">
-          <i class="fas fa-file-download"></i> Baixar Report de Exemplo
-        </a>
-      </div>
-      <div class="features-grid">
-        <div class="feature">
-          <i class="fas fa-brain"></i>
-          <h3>Inteligência Artificial Avançada</h3>
-          <p>Utilizamos redes neurais de ponta, incluindo Vision Transformers e CNNs, para análises visuais detalhadas e confiáveis.</p>
-        </div>
-        <div class="feature">
-          <i class="fas fa-chart-line"></i>
-          <h3>Análise Preditiva</h3>
-          <p>Prevemos o comportamento do consumidor, fornecendo insights valiosos para otimizar o impacto do seu design.</p>
-        </div>
-        <div class="feature">
-          <i class="fas fa-dollar-sign"></i>
-          <h3>Acessível e Eficiente</h3>
-          <p>Oferecemos uma solução poderosa a um preço acessível, permitindo que você tome decisões baseadas em dados sem estourar o orçamento.</p>
-        </div>
-        <div class="feature">
-          <i class="fas fa-fire"></i>
-          <h3>Heatmaps Detalhados</h3>
-          <p>Visualize onde a atenção do público será capturada em suas criações, com heatmaps fáceis de entender.</p>
-        </div>
-        <div class="feature">
-          <i class="fas fa-file-alt"></i>
-          <h3>Relatórios Completos</h3>
-          <p>Receba relatórios detalhados que ajudam a entender não só onde, mas por que certas áreas atraem mais atenção.</p>
-        </div>
-        <div class="feature">
-          <i class="fas fa-users"></i>
-          <h3>Suporte Especializado</h3>
-          <p>Nossa equipe está pronta para ajudar a sua empresa a aproveitar ao máximo os recursos da Neuraflow.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-  <section id="testimonials" class="testimonials py-3">
-    <div class="container">
-      <h2 class="text-center py-2">Depoimentos</h2>
-      <div class="testimonials-slider">
-        <div class="testimonial">
-          <img src="https://media.licdn.com/dms/image/v2/D4D03AQHEexePHcEPpA/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1692797111800?e=1741824000&v=beta&t=InJV6-4t0iOU5K-7aJXr39c9m7O1GxdMcgP4th4w0PE" alt="Depoimento 1">
-          <p>"A Neuraflow transformou nossa abordagem de design. Agora, cada criação é otimizada para o máximo impacto visual!"</p>
-          <h4>Paula Weber, Designer Gráfico</h4>
-        </div>
-        <div class="testimonial">
-          <img src="https://media.licdn.com/dms/image/v2/D4D03AQFs_HAbE_TmdQ/profile-displayphoto-shrink_400_400/B4DZQlFwZVHMAg-/0/1735789054588?e=1741824000&v=beta&t=mZxeULZuRMQxwPcM1KTmcmqSyx02jfo8wx8xrJKUqDw" alt="Depoimento 2">
-          <p>"Neuraflow faz parte da nossa equipe e é nosso parceiro estratégico. Suas análises instantâneas de designs e a correção automatizada de textos nos permitem finalizar projetos em menos tempo, otimizando cada entrega com máxima eficiência e qualidade."</p>
-          <h4>Alejandra Acosta Salati, Técnica en Flexografía</h4>
-        </div>
-        <div class="testimonial">
-          <img src="https://uploaddeimagens.com.br/images/004/879/995/full/luiza.jpg?1736341349" alt="Depoimento 3">
-          <p>"Finalmente uma ferramenta que combina precisão, facilidade de uso e um preço acessível. A Neuraflow é essencial para qualquer profissional criativo."</p>
-          <h4>Luiza Gelatti, Designer</h4>
-      </div>
-      <div class="testimonial">
-        <img src="https://media.licdn.com/dms/image/v2/D4D03AQHAy4ygXAjmpQ/profile-displayphoto-shrink_400_400/B4DZO9STtFHQAo-/0/1734047517470?e=1742428800&v=beta&t=qFbN_YPCbpJjD5rnKgFbWjzuKKDsqJbb8ZnSi4wkvIk" alt="Depoimento 4">
-        <p>"Com nossas capacidades de impressão digital e personalização de embalagens flexíveis, a inteligência artificial da Neuraflow nos permite prever o desempenho das embalagens no ponto de venda. Isso amplia nossa oferta de serviços e garante mais sucesso financeiro para nossos clientes."</p>
-        <h4>Felipe Toledo, CEO na Camargo Embalagens | Membro do Conselho da ABRE</h4>
-      </div>
-    </div>
-  </div>
-</section>
-  <section id="contact" class="cta py-3">
-    <div class="container text-center">
-      <h2>Transforme sua Comunicação Visual com a Neuraflow</h2>
-      <p>Entre em contato conosco hoje mesmo e descubra como podemos ajudar a impulsionar sua estratégia visual.</p>
-      <a href="mailto:andre@neuraflow.com.br" class="button">Fale Conosco</a>
-    </div>
-  </section>
-  <footer>
-    <div class="container footer-content">
-      <div class="footer-section about">
-        <h4>Como usar a API da Neuraflow</h4>
-        <div style="background: linear-gradient(145deg, #1e1e1e, #252526); border-radius: 8px; overflow: hidden; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); margin-top: 20px;">
-          <div style="background: #333; padding: 8px; display: flex; align-items: center;">
-            <div style="display: flex; gap: 8px; margin-right: auto;">
-              <span style="width: 12px; height: 12px; background: #f55252; border-radius: 50%;"></span>
-              <span style="width: 12px; height: 12px; background: #f9aa33; border-radius: 50%;"></span>
-              <span style="width: 12px; height: 12px; background: #3bcf62; border-radius: 50%;"></span>
+
+    <div class="content">
+        <header>
+            <div class="container">
+                <img src="https://andregazineu.github.io/newfrontNeuraflow/Logo_Neuraflow_Laranja_Branco_Vetor.svg" alt="Logo Neuraflow" class="logo">
+                <nav>
+                    <ul>
+                        <li><a href="#about">Sobre</a></li>
+                        <li><a href="#features">Recursos</a></li>
+                        <li><a href="#testimonials">Testemunhos</a></li>
+                        <li>
+                            <a href="https://api.whatsapp.com/send?phone=5511971122168" class="button" target="_blank" rel="noopener noreferrer">
+                                Contato
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <div class="hamburger">
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
+                </div>
             </div>
-            <span style="color: #ccc; font-size: 0.9rem; font-family: 'Roboto', sans-serif;"> API</span>
+            <div class="menu">
+                <ul>
+                    <li><a href="#about">Sobre</a></li>
+                    <li><a href="#features">Recursos</a></li>
+                    <li><a href="#testimonials">Testemunhos</a></li>
+                    <li><a href="https://api.whatsapp.com/send?phone=5511971122168" class="button" target="_blank" rel="noopener noreferrer">Contato</a></li>
+                </ul>
+            </div>
+        </header>
+
+        <section class="hero">
+            <div class="hero-content">
+                <h1>
+                    <span>Encontre</span>
+                    <span>os</span>
+                    <span>Pontos</span>
+                    <span>que</span>
+                    <span>Chamam</span>
+                    <span>Atenção</span>
+                </h1>
+            </div>
+            <video src="https://dms.licdn.com/playlist/vid/v2/C4D05AQFkSoXEWQiuig/mp4-640p-30fp-crf28/mp4-640p-30fp-crf28/0/1679422881782?e=2147483647&v=beta&t=_zFnceQ2Xc27YVdS5DUTkUpb1E0Flv8gn8ELqMWEa_A" autoplay muted loop playsinline></video>
+        </section>
+
+        <section id="about" class="about py-3">
+            <div class="container">
+                <div class="about-content">
+                    <div class="about-text">
+                        <h2>Sobre a Neuraflow</h2>
+                        <p>Utilizamos uma arquitetura híbrida, combinando Vision Transformers e CNNs, para analisar a interação do público com designs visuais. Nossa tecnologia identifica áreas de maior atenção, gera mapas de calor detalhados e relatórios estratégicos para vendas, marketing e alta direção. Isso permite maximizar o impacto dos designs, melhorar a performance de vendas e tomar decisões assertivas antes de lançar ou atualizar produtos.</p>
+                        <p>Com a Neuraflow, você pode carregar qualquer imagem ou vídeo e, em instantes, nossa IA analisa onde os olhos do consumidor irão se concentrar, permitindo que se faça mudanças no design para adequar os resultados obtidos com a estratégia da empresa.</p>
+                        <a href="#features" class="button">Explore os Recursos</a>
+                    </div>
+                    <div class="about-image">
+                        <img src="https://neuraflow.com.br/home_image.jpg" alt="Imagem Exemplo">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="features py-3">
+            <div class="container">
+                <h2 class="text-center py-2">Recursos Exclusivos</h2>
+                <div class="text-center my-2">
+                    <a href="https://pdfupload.io/docs/7dd785ea" class="button" target="_blank" download="report_exemplo.pdf">
+                        <i class="fas fa-file-download"></i> Baixar Report de Exemplo
+                    </a>
+                </div>
+                <div class="features-grid">
+                    <div class="feature">
+                        <i class="fas fa-brain"></i>
+                        <h3>Inteligência Artificial Avançada</h3>
+                        <p>Utilizamos redes neurais de ponta, incluindo Vision Transformers e CNNs, para análises visuais detalhadas e confiáveis.</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>Análise Preditiva</h3>
+                        <p>Prevemos o comportamento do consumidor, fornecendo insights valiosos para otimizar o impacto do seu design.</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-dollar-sign"></i>
+                        <h3>Acessível e Eficiente</h3>
+                        <p>Oferecemos uma solução poderosa a um preço acessível, permitindo que você tome decisões baseadas em dados sem estourar o orçamento.</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-fire"></i>
+                        <h3>Heatmaps Detalhados</h3>
+                        <p>Visualize onde a atenção do público será capturada em suas criações, com heatmaps fáceis de entender.</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-file-alt"></i>
+                        <h3>Relatórios Completos</h3>
+                        <p>Receba relatórios detalhados que ajudam a entender não só onde, mas por que certas áreas atraem mais atenção.</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-users"></i>
+                        <h3>Suporte Especializado</h3>
+                        <p>Nossa equipe está pronta para ajudar a sua empresa a aproveitar ao máximo os recursos da Neuraflow.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+      <section id="testimonials" class="testimonials py-3">
+          <div class="container">
+              <h2 class="text-center py-2">Depoimentos</h2>
+              <div class="testimonials-slider">
+                  <div class="testimonial">
+                      <img src="https://media.licdn.com/dms/image/v2/D4D03AQHEexePHcEPpA/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1692797111800?e=1741824000&v=beta&t=InJV6-4t0iOU5K-7aJXr39c9m7O1GxdMcgP4th4w0PE" alt="Depoimento 1">
+                      <p>"A Neuraflow transformou nossa abordagem de design. Agora, cada criação é otimizada para o máximo impacto visual!"</p>
+                      <h4>Paula Weber, Designer Gráfico</h4>
+                  </div>
+                  <div class="testimonial">
+                      <img src="https://media.licdn.com/dms/image/v2/D4D03AQFs_HAbE_TmdQ/profile-displayphoto-shrink_400_400/B4DZQlFwZVHMAg-/0/1735789054588?e=1741824000&v=beta&t=mZxeULZuRMQxwPcM1KTmcmqSyx02jfo8wx8xrJKUqDw" alt="Depoimento 2">
+                      <p>"Neuraflow faz parte da nossa equipe e é nosso parceiro estratégico. Suas análises instantâneas de designs e a correção automatizada de textos nos permitem finalizar projetos em menos tempo, otimizando cada entrega com máxima eficiência e qualidade."</p>
+                      <h4>Alejandra Acosta Salati, Técnica en Flexografía</h4>
+                  </div>
+                  <div class="testimonial">
+                      <img src="https://andregazineu.github.io/newfrontNeuraflow/luiza.jpg" alt="Depoimento 3">
+                      <p>"Finalmente uma ferramenta que combina precisão, facilidade de uso e um preço acessível. A Neuraflow é essencial para qualquer profissional criativo."</p>
+                      <h4>Luiza Gelatti, Designer</h4>
+                  </div>
+                  <div class="testimonial">
+                      <img src="https://media.licdn.com/dms/image/v2/D4D03AQHAy4ygXAjmpQ/profile-displayphoto-shrink_400_400/B4DZO9STtFHQAo-/0/1734047517470?e=1742428800&v=beta&t=qFbN_YPCbpJjD5rnKgFbWjzuKKDsqJbb8ZnSi4wkvIk" alt="Depoimento 4">
+                      <p>"Com nossas capacidades de impressão digital e personalização de embalagens flexíveis, a inteligência artificial da Neuraflow nos permite prever o desempenho das embalagens no ponto de venda. Isso amplia nossa oferta de serviços e garante mais sucesso financeiro para nossos clientes."</p>
+                      <h4>Felipe Toledo, CEO na Camargo Embalagens | Membro do Conselho da ABRE</h4>
+                  </div>
+              </div>
           </div>
-          <pre id="terminal-content" style="background: #1e1e1e; color: #f5f5f5; padding: 12px; font-family: 'Roboto', sans-serif; font-size: 1rem; overflow-x: auto; white-space: pre-wrap; line-height: 1.5; text-align: left;"></pre>
-        </div>
-      </div>
-      <div class="footer-section links">
-        <h4>Links Rápidos</h4>
-        <ul>
-          <li><a href="#about">Sobre</a></li>
-          <li><a href="#features">Recursos</a></li>
-          <li><a href="#testimonials">Testemunhos</a></li>
-          <li><a href="#contact">Contato</a></li>
-        </ul>
-      </div>
-      <div class="footer-section contact-form">
-        <h4>Contato</h4>
-        <p><i class="fas fa-envelope"></i> aislan@neuraflow.com.br</p>
-        <div class="social-links">
-          <a href="https://www.linkedin.com/in/seu-perfil/" target="_blank">
-            <i class="fab fa-linkedin"></i>
-          </a>
-          <a href="https://www.youtube.com/@neuraflowai" target="_blank">
-            <i class="fab fa-youtube"></i>
-          </a>
-        </div>
-      </div>
+      </section>
+
+        <section id="contact" class="cta py-3">
+            <div class="container text-center">
+                <h2>Transforme sua Comunicação Visual com a Neuraflow</h2>
+                <p>Entre em contato conosco hoje mesmo e descubra como podemos ajudar a impulsionar sua estratégia visual.</p>
+                <a href="mailto:andre@neuraflow.com.br" class="button">Fale Conosco</a>
+            </div>
+        </section>
     </div>
-    <div class="container copyright">
-      <p>© 2025 Neuraflow. Todos os direitos reservados. | Política de Privacidade</p>
+
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-section links">
+                <h4>Links Rápidos</h4>
+                <ul>
+                    <li><a href="#about">Sobre</a></li>
+                    <li><a href="#features">Recursos</a></li>
+                    <li><a href="#testimonials">Testemunhos</a></li>
+                    <li><a href="#contact">Contato</a></li>
+                </ul>
+            </div>
+            <div class="footer-section contact-form">
+                <h4>Contato</h4>
+                <p><i class="fas fa-envelope"></i> aislan@neuraflow.com.br</p>
+                <div class="social-links">
+                    <a href="https://www.linkedin.com/in/seu-perfil/" target="_blank">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="https://www.youtube.com/@neuraflowai" target="_blank">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="container copyright">
+            <p>© 2025 Neuraflow. Todos os direitos reservados. | Política de Privacidade</p>
     </div>
   </footer>
-  <script>
-    const terminalText = "Acesse a API da Neuraflow instalando `requests` no Python ou `axios` no Node.js. Com poucas linhas, envie dados e integre a API de forma rápida e prática.";
-    const terminalContent = document.getElementById("terminal-content");
-    let index = 0;
-    function typeEffect() {
-      if (index < terminalText.length) {
-        terminalContent.textContent += terminalText[index];
-        index++;
-        setTimeout(typeEffect, 50);
-      }
-    }
-    window.onload = typeEffect;
-  </script>
   <script type="module">
     import { gsap } from 'https://cdn.skypack.dev/gsap@3.12.0';
     const UPDATE = ({ x, y }) => {
