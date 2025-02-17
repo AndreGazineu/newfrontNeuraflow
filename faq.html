@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - Perguntas Frequentes - Neuraflow</title>
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+        body, h1, h2, h3, h4, p, ul, li {
+            margin: 0;
+            padding: 0;
+        }
+        ul {
+            list-style: none;
+        }
+        a {
+            text-decoration: none;
+        }
+
+        :root {
+            --primary: #FF6B2B;
+            --primary-dark: #E95A1A;
+            --secondary: #1A1A2E;
+            --secondary-light: #2A2A3A;
+            --accent: #4E9AFF;
+            --text: #2A2A3A;
+            --text-light: #6B7280;
+            --bg: #FFFFFF;
+            --bg-alt: #F7F9FC;
+            --border: #E5E7EB;
+            --radius: 16px;
+            --shadow: 0 2px 4px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
+            --header-height: 80px;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            color: var(--text);
+            line-height: 1.6; /* Aumentei um pouco o line-height para mais respiro */
+            background: var(--bg);
+            overflow-x: hidden;
+            text-align: left;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            line-height: 1.3; /* Ajustei o line-height para títulos */
+            text-align: left;
+        }
+
+        .container {
+            width: min(1200px, 90%);
+            margin-inline: auto;
+            padding: 3rem 1.5rem; /* Aumentei o padding do container */
+        }
+
+        .faq-section {
+            margin-top: 3rem; /* Aumentei a margem superior da seção FAQ */
+        }
+
+        .faq-section h2 {
+            font-size: 2.75rem; /* Aumentei o tamanho do título da FAQ */
+            color: var(--secondary);
+            margin-bottom: 2rem; /* Aumentei a margem inferior do título */
+            text-align: left;
+        }
+
+        .faq-list dt {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            background-color: var(--bg); /* Fundo branco, igual ao body */
+            color: var(--secondary); /* Cor do texto da pergunta mais escura */
+            margin-bottom: 0.75rem; /* Aumentei um pouco a margem inferior entre perguntas */
+            padding: 1.25rem 1.5rem; /* Aumentei o padding da pergunta */
+            border-bottom: 1px solid var(--border); /* Adicionei uma borda inferior sutil */
+            border-radius: var(--radius); /* Mantém o border-radius */
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            position: relative;
+            user-select: none;
+        }
+
+        .faq-list dt:hover, .faq-list dt.active {
+            background-color: var(--bg-alt); /* Hover mais suave */
+        }
+
+        .faq-list dt::after {
+            content: '+';
+            position: absolute;
+            right: 1.5rem; /* Ajustei a posição do ícone */
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.4rem; /* Aumentei o tamanho do ícone */
+            color: var(--primary); /* Cor do ícone primária (laranja) */
+            transition: transform 0.3s ease;
+        }
+
+        .faq-list dt.active::after {
+            content: '−';
+            transform: translateY(-50%) rotate(45deg);
+        }
+
+        .faq-list dd {
+            padding: 0 1.5rem 1.75rem 1.5rem; /* Aumentei o padding vertical da resposta */
+            margin-left: 0;
+            margin-bottom: 1.5rem; /* Aumentei a margem inferior entre respostas */
+            background-color: var(--bg); /* Fundo branco, igual ao body */
+            border-radius: 0 0 var(--radius) var(--radius);
+            border-top: none; /* Removi a borda superior */
+            overflow: hidden;
+            max-height: 0;
+            opacity: 0; /* Inicialmente transparente para animação "Inflection" */
+            transform: translateY(-10px); /* Começa um pouco acima para o slide-down */
+            transition: max-height 0.4s ease-out, opacity 0.3s ease-out, transform 0.3s ease-out, padding 0.4s ease-out; /* Animação refinada */
+            font-family: 'Space Grotesk', sans-serif;
+            color: var(--text-light); /* Cor do texto da resposta mais clara */
+        }
+
+        .faq-list dd.active {
+            max-height: 600px; /* Ajustei a altura máxima */
+            opacity: 1; /* Fica totalmente visível */
+            transform: translateY(0); /* Slide-down para a posição original */
+            padding: 1.75rem 1.5rem 1.75rem 1.5rem; /* Mantém o padding quando aberto */
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 2rem 1rem;
+            }
+
+            .faq-section h2 {
+                font-size: 2.25rem;
+                margin-bottom: 1.75rem;
+            }
+
+            .faq-list dt {
+                padding: 1rem 1.25rem;
+                font-size: 1.1rem;
+                margin-bottom: 0.6rem;
+            }
+
+            .faq-list dd {
+                padding: 1.25rem;
+                font-size: 1rem;
+                margin-bottom: 1.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <section class="faq-section">
+            <h2>Perguntas Frequentes (FAQ)</h2>
+            <dl class="faq-list">
+                <dt>1) O que é a Neuraflow?</dt>
+                <dd>Neuraflow é uma solução que combina Inteligência Artificial e Análise Preditiva para entender o comportamento do consumidor, especialmente em relação à comunicação visual.</dd>
+
+                <dt>2) Como surgiu a Neuraflow?</dt>
+                <dd>Empresas de AI eyetracking como Feng-GUI, DragonflyAI e Neurons usam CNNs para prever a saliência visual humana em designs visuais, criando mapas de calor que indicam para onde a atenção é direcionada.
+                    Por outro lado, a Neuraflow combina esta técnica com o uso de Vision Transformers, levando em conta principios perceptivos gerais e capturando dependências globais entre regiões distantes da imagem.
+                    Isso fornece uma compreensão mais refinada sobre a maneira como os humanos processam informações complexas nos ambientes visuais e a sua capacidade de entender a cena como um todo (Gestalt).
+                </dd>
+
+                <dt>3) Como a Neuraflow funciona?</dt>
+                <dd>A Neuraflow utiliza algoritmos de IA treinados com grandes volumes de dados sobre interação visual.
+                    Esses algoritmos conseguem prever para onde as pessoas olham em uma imagem, gerando mapas de calor e relatórios que indicam as áreas de maior atenção. Estes relatórios ricos em detalhes são gerados automaticamente.</dd>
+
+                <dt>4) O que é eye tracking?</dt>
+                <dd>Eye tracking é uma tecnologia que monitora o movimento dos olhos para determinar para onde uma pessoa está olhando.
+                    A Neuraflow utiliza princípios semelhantes, mas com base em Inteligência Artificial, ao invés de rastreamento ocular direto.</dd>
+
+                <dt>5) O que é saliência de atenção?</dt>
+                <dd>Saliência de atenção refere-se às áreas de uma imagem que mais chamam a atenção do observador. A Neuraflow identifica essas áreas através de seus algoritmos.</dd>
+
+                <dt>6) O que a Neuraflow analisa?</dt>
+                <dd>A Neuraflow pode analisar diversos tipos de comunicação visual, incluindo:
+                    <ul>
+                        <li>Design de interfaces</li>
+                        <li>Aplicativos</li>
+                        <li>Vídeos e animações em CG</li>
+                        <li>Anúncios</li>
+                        <li>Embalagens e rótulos</li>
+                        <li>Sites e landing pages</li>
+                        <li>Campanhas de e-mail marketing</li>
+                        <li>Todo tipo de comunicação visual impressa ou eletrônica.</li>
+                    </ul>
+                </dd>
+
+                <dt>7) No que a Neuraflow se diferencia de outras empresas e soluções existentes mundo afora?</dt>
+                <dd>A Neuraflow se diferencia das demais empresas no setor devido à sua combinação única de poderosas técnicas de machine learning, incluindo tanto CNNs quanto Vision Transformers.
+                    Enquanto as outras empresas confiam unicamente em CNNs para prever a saliência visual humana em designs visuais, a Neuraflow vai além, incorporando ainda a teoria da Gestalt e o uso de Vision Transformers.
+                    Isso permite à Neuraflow capturar dependências globais entre regiões distantes da imagem, bem como levar em consideração princípios perceptivos gerais relacionados à organização e segmentação de objetos no espaço visual.
+                    Dessa forma, oferece insights ainda mais precisos e relevantes acerca do modo como os seres humanos processam informações complexas em contextos reais.
+                    Com isso, torna-se possível obter uma compreensão abrangente sobre o comportamento do consumidor em relação à comunicação visual impressa ou digital.</dd>
+
+                <dt>8) Qual o investimento por análise?</dt>
+                <dd>O investimento é de apenas USD 5,00 por análise para a obtenção do relatório automatizado completo para um design.</dd>
+
+                <dt>9) Como posso comprar uma análise?</dt>
+                <dd>Você pode comprar pelo site, pagando com seu cartão de crédito pessoal ou corporativo pela plataforma de pagamentos Paypal, por depósito ou transferência, PIX ou, caso nenhuma destas formas atenda às demandas da sua empresa, solicitar-nos pelo e-mail financeiro@neuraflow.com.br.</dd>
+
+                <dt>10) Quais as formas de pagamento?</dt>
+                <dd>Por padrão, recebemos pagamentos via Paypal no site da Neuraflow. Mas também aceitamos os métodos tradicionais como depósito ou transferência e PIX.</dd>
+
+                <dt>11) Posso comprar mais de uma análise da Neuraflow?</dt>
+                <dd>Sim. Você pode comprar todos os créditos para realizar as análises que quiser, conforme a sua demanda, da sua empresa e clientes.</dd>
+
+                <dt>12) Como eu posso fazer o download do report?</dt>
+                <dd>Uma vez logado no site da Neuraflow, com sua conta gmail ou login personalizado e saldo de crédito suficiente para ao menos um relatório, após o processamento do design enviado e o clique no botão “criar relatório”, ele estará disponível para visualização e download no site.
+                    Caso não o encontre, basta sair do site e conectar-se novamente.</dd>
+
+                <dt>13) Posso personalizar o relatório?</dt>
+                <dd>Sim. É possível desenvolver um relatório personalizado. Você pode demandar isso à nossa equipe de desenvolvimento.</dd>
+
+                <dt>14) Posso visualizar relatórios anteriores?</dt>
+                <dd>Sim. Uma vez logado na Neuraflow, os relatórios poderão ser acessados clicando no botão “Navegar em todos os relatórios”.</dd>
+
+                <dt>15) Posso analisar qualquer tipo de imagem?</dt>
+                <dd>É aconselhável utilizar a Neuraflow na análise de imagens de design de interface, aplicativos, vídeos, anúncios, embalagens, rótulos, artes de campanhas de e-mail marketing e layouts de comunicação visual impressa e digital, em geral.</dd>
+
+                <dt>16) A Neuraflow analisa vídeos?</dt>
+                <dd>Sim, a Neuraflow é capaz de analisar imagens estáticas e dinâmicas, como vídeos.</dd>
+
+                <dt>17) A Neuraflow analisa gifs?</dt>
+                <dd>Não, no momento a Neuraflow não consegue processar arquivos desta natureza.</dd>
+
+                <dt>18) Posso analisar mais de uma imagem ao mesmo tempo?</dt>
+                <dd>Sim. Você pode realizar comparações entre imagens utilizando a Neuraflow.</dd>
+
+                <dt>19) Fiz o processamento de uma imagem, mas não visualizei a imagem com o mapa de calor ou o relatório. O que devo fazer?</dt>
+                <dd>Nem todas as imagens, em função da sua natureza, podem gerar gráficos que sumarizem a saliência de atenção, em virtude da maneira como são interpretadas pela IA.
+                    Todavia, tudo o que for processado na Neuraflow deve produzir um relatório, de maneira automática. Caso não o tenha encontrado, sugerimos que se desconecte da plataforma, limpe o cache do seu computador e reconecte na Neuraflow. Se ainda sim, o erro persistir, contate a nossa equipe técnica pelo e-mail andre@neuraflow.com.br.</dd>
+
+                <dt>20) É seguro enviar imagens à Neuraflow?</dt>
+                <dd>Sim, a Neuraflow aproveita a mesma segurança oferecida pelo Google quando utiliza o Google Cloud Platform (GCP).</dd>
+
+                <dt>21) Que tipo de insight posso obter a partir de um report da Neuraflow?</dt>
+                <dd>Um novo design ou a alteração / modernização de um design existente pode fracassar. E, com o fracasso, comprometer não apenas o desempenho das vendas, mas até mesmo a imagem da marca perante os seus clientes.
+                    A Neuraflow é capaz de prever o quão atrativo pode ser o design e sugerir mudanças que favoreçam a legibilidade, a retenção, o reconhecimento de elementos e até mesmo, evoque determinadas emoções – tendo como resultado final, uma estratégia mais assertiva para as empresas, seus produtos e marcas.</dd>
+            </dl>
+        </section>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const faqQuestions = document.querySelectorAll('.faq-list dt');
+
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', () => {
+                    const answer = question.nextElementSibling;
+                    question.classList.toggle('active');
+                    answer.classList.toggle('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
