@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -1084,7 +1085,7 @@
         }
 
         .hamburger-menu {
-          display: none;
+          display: flex;
           flex-direction: column;
           cursor: pointer;
         }
@@ -1254,13 +1255,13 @@
           }
 
           .hamburger-menu {
-            display: flex;
-          }
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
 
-          nav.nav-desktop {
-            display: none;
-          }
 
+          
           .footer-sections {
             flex-direction: column;
             gap: 2rem;
@@ -1282,11 +1283,7 @@
             <a href="/" class="logo-link">
                 <img src="https://andregazineu.github.io/newfrontNeuraflow/Logo_Neuraflow_Laranja_Branco_Vetor.svg" alt="Neuraflow" class="logo">
             </a>
-            <nav class="nav-desktop">
-                <ul>
-                    <li><a href="https://api.whatsapp.com/send?phone=5511971122168" class="btn btn-whatsapp" target="_blank" rel="noopener noreferrer" aria-label="Contato via WhatsApp"><i class="fab fa-whatsapp"></i> Contato</a></li>
-                </ul>
-            </nav>
+            
             <div class="hamburger-menu" id="hamburger-icon">
                 <div class="bar"></div>
                 <div class="bar"></div>
