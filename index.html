@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -1217,47 +1215,57 @@
         }
 
         @media (max-width: 768px) {
-          .hero {
-            grid-template-columns: 1fr;
-            padding-top: calc(var(--header-height) + 2rem);
-            text-align: center;
-          }
+  .hero {
+    grid-template-columns: 1fr;
+    padding-top: calc(var(--header-height) + 2rem);
+    text-align: center;
+  }
 
-          .hero-cta {
-            justify-content: center;
-          }
+  .hero-cta {
+    justify-content: center;
+  }
 
-          .hero-media::before,
-          .hero-media::after {
-            display: none;
-          }
+  .hero-media::before,
+  .hero-media::after {
+    display: none;
+  }
 
-          .clarity-container,
-          .technology-section .container,
-          .api-section .container {
-            grid-template-columns: 1fr;
-            text-align: center;
-          }
+  .clarity-container,
+  .technology-section .container,
+  .api-section .container {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
 
-          .clarity-text-content,
-          .technology-content,
-          .api-content {
-            margin-inline: auto;
-          }
+  .clarity-text-content,
+  .technology-content,
+  .api-content {
+    margin-inline: auto;
+  }
 
-          .api-images {
-            flex-direction: row;
-            justify-content: center;
-          }
+  .api-images {
+    flex-direction: row;
+    justify-content: center;
+  }
 
-          .api-images img {
-            max-width: 80%;
-          }
+  .api-images img {
+    max-width: 80%;
+  }
 
-          .hamburger-menu {
-  display: flex;
-  flex-direction: column;
-  cursor: pointer;
+  .hamburger-menu {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+  }
+
+  /* Adicione as regras abaixo para inverter a ordem do hero */
+  .hero-content {
+    order: 2;
+  }
+
+  .hero-media {
+    order: 1;
+  }
 }
 
 
