@@ -1,3 +1,6 @@
+
+
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -5,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Neuraflow - Análise Visual com IA</title>
     <meta name="description" content="Neuraflow: Análise preditiva de atenção visual com IA para otimizar designs de embalagens, rótulos, anúncios e mais.">
-    <meta name="keywords" content="IA, análise visual, design, embalagens, otimização">
+    <meta name="keywords" content="IA, análise visual, design, embalagens, otimização, heatmap, mapa de calor, atenção visual, predição, marketing, publicidade, embalagem, rótulo, design gráfico, análise preditiva">
     <meta name="author" content="Neuraflow">
     <link rel="icon" type="image/svg+xml" href="https://andregazineu.github.io/newfrontNeuraflow/Logo_Neuraflow_Laranja_Branco_Vetor.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,1068 +16,1050 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+    <!--  Estilos CSS  -->
     <style>
+
+        /* Paleta de Cores Neuraflow - Inspirada em William Eggleston */
         :root {
-  --primary: #FF6B2B;
-  --primary-light: #FF8A5B;
-  --primary-dark: #E95A1A;
-  --secondary: #1A1A2E;
-  --secondary-light: #2A2A3A;
-  --accent: #4E9AFF;
-  --accent-hover: #2D7FE5;
-  --text-dark: #1A1A2E;
-  --text-medium: #4A4A5A;
-  --text-light: #6B7280;
-  --bg-white: #FFFFFF;
-  --bg-light: #F7F9FC;
-  --bg-gray: #E5E7EB;
-  --border: #E5E7EB;
-  --border-light: rgba(229, 231, 235, 0.5);
-  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.05), 0 2px 4px rgba(0, 0, 0, 0.03);
-  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.07), 0 4px 6px rgba(0, 0, 0, 0.04);
-  --shadow-xl: 0 15px 25px rgba(0, 0, 0, 0.1), 0 5px 10px rgba(0, 0, 0, 0.05);
-  --radius-sm: 6px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --header-height: 80px;
-  --transition-fast: 0.2s ease;
-  --transition-normal: 0.3s ease;
-  --transition-slow: 0.5s ease;
-  --font-heading: 'Outfit', sans-serif;
-  --font-body: 'Space Grotesk', sans-serif;
-  --section-padding: 7rem 0;
-  --section-margin-bottom: 1.5rem;
-  --gradient-overlay: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  --primary-gradient: linear-gradient(135deg, var(--primary), var(--accent));
-}
+            --primary: #e74c3c;        /* Vermelho vibrante */
+            --secondary: #f39c12;      /* Amarelo dourado */
+            --accent: #2980b9;         /* Azul profundo */
+            --background: #f7f4f0;     /* Bege claro (papel fotográfico vintage) */
+            --text: #2c3e50;           /* Cinza escuro (quase preto) */
+            --light-text: #7f8c8d;     /* Cinza claro */
+            --border: #bdc3c7;         /* Cinza suave para bordas */
+            --overlay: rgba(44, 62, 80, 0.7); /* Sobreposição escura com transparência */
+            --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
 
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+            /* Tipografia */
+            --heading-font: 'Space Grotesk', sans-serif;
+            --body-font: 'Outfit', sans-serif;
+            --code-font: 'Fira Code', monospace;
 
-body {
-  font-family: var(--font-body);
-  color: var(--text-dark);
-  line-height: 1.6;
-  background:
-    radial-gradient(circle at 15% 50%, rgba(255, 107, 43, 0.05), transparent 400px),
-    radial-gradient(circle at 85% 30%, rgba(78, 154, 255, 0.05), transparent 400px),
-    #f5f5f7;
-  overflow-x: hidden;
-}
+            /* Espaçamento e Layout */
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 2rem;
+            --spacing-lg: 4rem;
+            --spacing-xl: 8rem;
+            --border-radius: 4px;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-heading);
-  font-weight: 800;
-  line-height: 1.2;
-}
+        /* Resets e estilos base (boas práticas) */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-h1 {
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  margin-bottom: var(--section-margin-bottom);
-  line-height: 1.1;
-}
+        html {
+            scroll-behavior: smooth; /* Rolagem suave */
+            font-size: 16px; /* Tamanho de fonte base */
+        }
 
-h2 {
-  font-size: clamp(2rem, 4vw, 2.5rem);
-  color: var(--secondary);
-  margin-bottom: var(--section-margin-bottom);
-  position: relative;
-  display: inline-block;
-}
+        body {
+            font-family: var(--body-font);
+            color: var(--text);
+            background-color: var(--background);
+            line-height: 1.6;
+            overflow-x: hidden; /* Evita barra de rolagem horizontal indesejada */
+        }
 
-h2::after {
-  content: "";
-  position: absolute;
-  bottom: -10px;
-  left: 0;
-  width: 80px;
-  height: 4px;
-  background: var(--primary);
-  border-radius: 2px;
-}
+        /* Tipografia */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--heading-font);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: var(--spacing-sm);
+            color: var(--text);
+        }
 
-h3 {
-  font-weight: 700;
-  color: var(--primary);
-  margin-bottom: 1rem;
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
+        h1 {
+            font-size: 3.5rem;
+            letter-spacing: -0.03em;
+        }
 
-a {
-  text-decoration: none;
-  color: inherit;
-  transition: color var(--transition-fast);
-}
+        h2 {
+            font-size: 2.5rem;
+            position: relative;
+            margin-bottom: var(--spacing-md);
+        }
 
-ul {
-  list-style: none;
-}
+        /* Linha decorativa abaixo dos títulos h2 (boa prática de design) */
+        h2::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            width: 60px;
+            height: 3px;
+            background-color: var(--primary);
+        }
 
-img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
+        h3 {
+            font-size: 1.75rem;
+        }
 
-.container {
-  width: min(1200px, 90%);
-  margin-inline: auto;
-}
+        p {
+            margin-bottom: var(--spacing-md);
+            font-size: 1.125rem;
+        }
 
-.section-title {
-  font-size: clamp(2rem, 4vw, 2.5rem);
-  margin-bottom: 1.5rem;
-  position: relative;
-  display: inline-block;
-}
+        a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
 
-.section-title::after {
-  content: "";
-  position: absolute;
-  bottom: -10px;
-  left: 0;
-  width: 80px;
-  height: 4px;
-  background: var(--primary);
-  border-radius: 2px;
-}
+        a:hover {
+            color: var(--secondary);
+        }
 
-.section-description {
-  font-size: 1.125rem;
-  color: var(--text-medium);
-  max-width: 700px;
-  margin-bottom: 3rem;
-}
+        img {
+            max-width: 100%; /* Garante que as imagens não ultrapassem o container */
+            height: auto;
+            display: block;
+        }
 
-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: var(--header-height);
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--border-light);
-  z-index: 100;
-  box-shadow: var(--shadow-md);
-  transition: transform var(--transition-normal), background var(--transition-normal);
-}
+        /* Container para layout responsivo (boa prática) */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
 
-header.scrolled {
-  background: rgba(255, 255, 255, 0.98);
-  box-shadow: var(--shadow-lg);
-}
+        /* Cabeçalho */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;  /* Garante que o header fique acima de outros elementos */
+            background-color: rgba(247, 244, 240, 0.95); /* Fundo com transparência */
+            backdrop-filter: blur(5px); /* Efeito de desfoque (compatibilidade) */
+            border-bottom: 1px solid var(--border);
+        }
 
-.header-content {
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--spacing-sm) 0;
+        }
 
-.logo {
-  height: 150px;
-  margin-top: -50px; 
-  transition: transform var(--transition-fast);
-}
+        .logo {
+            height: 100px;
+            width: auto; /* Mantém a proporção */
+        }
 
-.logo:hover {
-  transform: scale(1.05);
-}
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
 
-nav.nav-desktop ul {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-}
+        nav ul li {
+            margin-left: var(--spacing-md);
+        }
 
-nav.nav-desktop a {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: var(--text-dark);
-  font-weight: 600;
-  padding: 0.5rem;
-  position: relative;
-}
+        nav ul li a {
+            color: var(--text);
+            font-weight: 600;
+            position: relative;
+            padding-bottom: 4px;
+        }
 
-nav.nav-desktop a::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: var(--primary);
-  transition: width var(--transition-normal);
-}
+        /* Linha animada abaixo dos links do menu (boa prática) */
+        nav ul li a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary);
+            transform: scaleX(0); /* Começa invisível */
+            transform-origin: right; /* Anima da direita para a esquerda */
+            transition: transform 0.3s ease;
+        }
 
-nav.nav-desktop a:hover {
-  color: var(--primary);
-}
+        nav ul li a:hover::after {
+            transform: scaleX(1);  /* Mostra a linha no hover */
+            transform-origin: left; /* Anima da esquerda para a direita */
+        }
 
-nav.nav-desktop a:hover::after {
-  width: 100%;
-}
+        /* Menu Hambúrguer */
+        .hamburger-menu {
+            display: block; /* Escondido por padrão em telas maiores */
+            cursor: pointer;
+        }
 
-.nav-cta {
-  margin-left: 1rem;
-}
+        .bar {
+            width: 28px;
+            height: 3px;
+            background-color: var(--primary);
+            margin: 5px 0;
+            transition: 0.4s;
+            border-radius: 2px;
+        }
 
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1.5rem;
-  border-radius: var(--radius-md);
-  font-weight: 600;
-  transition: all var(--transition-fast);
-  border: none;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  text-align: center;
-  box-shadow: var(--shadow-sm);
-}
+        .nav-mobile {
+            display: none; /* Escondido por padrão */
+        }
 
-.btn::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: var(--gradient-overlay);
-  transition: left 0.7s ease;
-}
-
-.btn:hover::before {
-  left: 100%;
-}
-
-.btn:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
-}
-
-.btn-primary {
-  background: var(--primary);
-  color: white;
-}
-
-.btn-primary:hover {
-  background: var(--primary-dark);
-}
-
-.btn-secondary {
-  background: var(--bg-white);
-  color: var(--primary);
-  border: 2px solid var(--primary);
-}
-
-.btn-secondary:hover {
-  background: rgba(255, 107, 43, 0.05);
-}
-
-.btn-whatsapp {
-  background: #25d366;
-  color: white;
-}
-
-.btn-whatsapp:hover {
-  background: #128c7e;
-}
-
-.btn i {
-  font-size: 1.2rem;
-}
-
-.hero {
-  min-height: 100vh;
-  padding-top: var(--header-height);
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  align-items: center;
-  gap: 4rem;
-}
-
-.hero-content {
-  max-width: 600px;
-}
-
-.hero p {
-  font-size: 1.25rem;
-  color: var(--text-medium);
-  margin-bottom: 2.5rem;
-}
-
-.animated-phrase {
-  display: inline-block;
-  background: var(--primary-gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  position: relative;
-}
-
-.hero-cta {
-  display: flex;
-  gap: 1rem;
-}
-
+        /* Seção Hero */
 .hero-media {
-  display: flex;
-  justify-content: center;
-  position: relative;
+    position: relative;
 }
 
 .hero-media::before, .hero-media::after {
-  content: '';
-  position: absolute;
-  border-radius: 50%;
-  z-index: -1;
-  background: radial-gradient(circle, rgba(255, 107, 43, 0.1), transparent 70%);
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    z-index: -1;
 }
 
 .hero-media::before {
-  top: -50px;
-  right: -50px;
-  width: 200px;
-  height: 200px;
+    width: 120px;
+    height: 120px;
+    background-color: var(--secondary);
+    opacity: 0.2;
+    top: -30px;
+    right: -20px;
 }
 
 .hero-media::after {
-  bottom: -30px;
-  left: -30px;
-  width: 150px;
-  height: 150px;
-  background: radial-gradient(circle, rgba(78, 154, 255, 0.1), transparent 70%);
+    width: 80px;
+    height: 80px;
+    background-color: var(--primary);
+    opacity: 0.15;
+    bottom: -20px;
+    right: 30px;
+}
+        .hero {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* Duas colunas de tamanhos iguais */
+            gap: var(--spacing-lg);
+            min-height: 85vh; /* Altura mínima para ocupar a maior parte da tela */
+            align-items: center; /* Alinhamento vertical */
+            padding: var(--spacing-lg) 0;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 600px; /* Largura máxima para o conteúdo */
+        }
+
+        .hero h1 {
+            margin-bottom: var(--spacing-md);
+            position: relative; /* Para a animação do texto */
+        }
+	.hero h1::before {
+    content: "";
+    position: absolute;
+    top: -20px;
+    left: -10px;
+    width: 60px;
+    height: 60px;
+    background-color: var(--secondary);
+    opacity: 0.2;
+    z-index: -1;
+    border-radius: 50%;
+}
+        /* Animação do texto (opcional) */
+        .hero h1 .animated-phrase {
+            color: var(--primary);
+            display: inline-block;
+            opacity: 1;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .hero p .animated-phrase {
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: var(--spacing-sm);
+        }
+
+        /* Estilos dos Botões */
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;  /* Para o efeito de hover */
+        }
+
+        /* Efeito de brilho no botão (opcional) */
+        .btn::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%; /* Começa fora do botão */
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2); /* Brilho branco */
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #c0392b; /* Vermelho mais escuro */
+            color: white;
+            transform: translateY(-2px); /* Leve elevação */
+            box-shadow: var(--shadow);
+        }
+
+        .btn:hover::after {
+            left: 100%; /* Move o brilho para a direita */
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--primary); /* Inverte as cores no hover */
+            color: white;
+        }
+
+    /* Model Viewer */
+    .model-viewer-container {
+        position: relative;
+        height: 500px;
+        width: 100%;
+        overflow: hidden;
+        border-radius: 8px;
+        box-shadow: var(--shadow);
+    }
+
+    model-viewer {
+        width: 100%;
+        height: 100%;
+        --poster-color: transparent; /* Remove a cor de fundo padrão */
+        --progress-bar-color: var(--primary); /* Cor da barra de progresso */
+        --progress-bar-height: 5px; /* Altura da barra de progresso */
+    }
+
+    .model-text-overlay {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        padding: 10px 15px;
+        background-color: var(--overlay); /* Fundo semi-transparente */
+        color: white;
+        border-radius: var(--border-radius);
+        font-weight: 500;
+        font-size: 1.125rem;
+        z-index: 10; /* Acima do modelo 3D */
+        max-width: 80%; /* Limita a largura */
+    }
+
+    /* Animação de "digitando" (opcional) */
+    .ellipsis {
+        animation: blink 0.7s infinite;
+    }
+
+    @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0; }
+    }
+
+        /* Restante dos estilos (video, clarity, technology, api, features, pricing, testimonials, contact, footer) */
+        /* ... (seu CSS existente, com pequenas adaptações) ... */
+
+        /* Vídeo */
+        .video-section {
+            padding: var(--spacing-xl) 0;
+            background-color: var(--background);
+            text-align: center;
+        }
+        .video-section h2{
+            margin-left: auto;
+            margin-right: auto;
+        }
+         .video-section h2::after{
+            left: 50%;
+            transform:translateX(-50%);
+        }
+
+        .video-section p {
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: var(--spacing-lg);
+
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            /* height: 0; */
+            /* padding-bottom: 56.25%;  */
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .video-container video {
+            /* position: absolute;
+            top: 0;
+            left: 0; */
+            /* width: 100%;
+            height: 100%; */
+
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        /* Seção de Clareza*/
+        .clarity-section {
+            padding: var(--spacing-xl) 0;
+            background-color: #fff;
+        }
+
+        .clarity-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-lg);
+            align-items: center;
+        }
+
+        .clarity-image-container {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transform: rotate(2deg);
+            transition: transform 0.3s ease;
+        }
+
+        .clarity-image-container:hover {
+            transform: rotate(0deg);
+        }
+
+
+        /* Seção Tecnologia */
+
+        .technology-section {
+            padding: var(--spacing-xl) 0;
+            background-color: var(--background);
+        }
+
+        .technology-section .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-lg);
+            align-items: center;
+        }
+
+        .technology-image-container {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .technology-image {
+            transition: transform 0.5s ease;
+        }
+
+        .technology-image:hover {
+            transform: scale(1.05);
+        }
+
+        /* Seção API */
+        .api-section {
+            padding: var(--spacing-xl) 0;
+            background-color: #fff;
+        }
+
+        .api-section .container {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;  /* Ajuste a proporção conforme necessário */
+            gap: var(--spacing-lg);
+            align-items: center;
+        }
+
+        .api-description {
+            margin-bottom: var(--spacing-md);
+        }
+
+        .api-images img {
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            transform: perspective(1000px) rotateY(-15deg);  /* Efeito 3D sutil */
+            transition: transform 0.5s ease;
+        }
+
+        .api-images img:hover {
+            transform: perspective(1000px) rotateY(0); /* Remove a rotação no hover */
+        }
+
+        /* Seção de Recursos*/
+
+        .features-section {
+            padding: var(--spacing-xl) 0;
+            background-color: var(--background);
+            text-align: center;
+        }
+
+        .features-section h2 {
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .features-section h2::after {
+            left: 50%;
+            transform:translateX(-50%);
+        }
+
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-lg);
+        }
+
+        .feature {
+            padding: var(--spacing-md);
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: left;
+            border-top: 3px solid var(--primary); /* Detalhe visual */
+        }
+
+        .feature:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature h3 {
+            display: flex;
+            align-items: center;
+            margin-bottom: var(--spacing-sm);
+            color: var(--primary);
+        }
+
+        .feature h3 i {
+            margin-right: 10px;
+            font-size: 1.25rem;
+        }
+        /* Seção de Preços*/
+        .pricing-section {
+            padding: var(--spacing-xl) 0;
+            background-color: #fff;
+            text-align: center;
+            position: relative; /* Para o fundo */
+        }
+        /*fundo imagem*/
+        .pricing-background{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0.05; /*Imagem transparente*/
+            z-index: 0; /* Garante que o fundo fique atrás */
+        }
+        .pricing-section .container{
+            position: relative; /*para sobrepor o fundo*/
+            z-index: 1;
+        }
+        .pricing-section h2{
+            margin-left: auto;
+            margin-right: auto;
+        }
+         .pricing-section h2::after{
+            left: 50%;
+            transform:translateX(-50%);
+        }
+
+        .pricing-plans {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-lg);
+        }
+
+        .pricing-plan {
+            padding: var(--spacing-md);
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: left;
+            border: 1px solid var(--border); /* Borda sutil */
+        }
+
+        .pricing-plan:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary); /* Borda vermelha no hover */
+        }
+
+        .pricing-plan h3 {
+            margin-bottom: var(--spacing-xs);
+            color: var(--text); /* Cor padrão do texto */
+        }
+
+        .price {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .price small {
+            font-size: 1rem;
+            color: var(--light-text);
+        }
+
+        .pricing-plan ul {
+            list-style: none;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .pricing-plan ul li {
+            margin-bottom: var(--spacing-xs);
+            display: flex;
+            align-items: center;
+        }
+
+        .pricing-plan ul li i {
+            margin-right: 10px;
+            color: var(--primary); /* Ícones vermelhos */
+        }
+
+        .btn-pricing {
+            width: 100%;
+        }
+/* Eggleston Pop Animation para Cards */
+@keyframes eggleston-pop {
+    0% {
+        opacity: 0;
+        transform: translateY(40px) rotate(-5deg);
+        filter: saturate(0.5) blur(5px);
+    }
+    50% {
+        opacity: 0.8;
+        transform: translateY(-10px) rotate(2deg);
+        filter: saturate(1.8) blur(0);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) rotate(0);
+        filter: saturate(1);
+    }
 }
 
-.model-viewer-container {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 1;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  box-shadow: var(--shadow-xl);
-  max-height: 500px;
-  background-color: white;
+.features-grid .feature {
+    opacity: 0;
+    animation: eggleston-pop 0.6s ease forwards;
 }
 
-model-viewer {
-  width: 100%;
-  height: 100%;
+/* Delay progressivo para cada card */
+.features-grid .feature:nth-child(1) { animation-delay: 0.1s; }
+.features-grid .feature:nth-child(2) { animation-delay: 0.2s; }
+.features-grid .feature:nth-child(3) { animation-delay: 0.3s; }
+.features-grid .feature:nth-child(4) { animation-delay: 0.4s; }
+.features-grid .feature:nth-child(5) { animation-delay: 0.5s; }
+.features-grid .feature:nth-child(6) { animation-delay: 0.6s; }
+
+/* Efeito hover estilo Eggleston (pulso) */
+@keyframes eggleston-pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: var(--shadow);
+    }
+    50% {
+        transform: scale(1.04);
+        box-shadow: 0 20px 25px rgba(231, 76, 60, 0.25); /* cor primária vibrante */
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: var(--shadow);
+    }
 }
 
-.model-text-overlay {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-family: var(--font-heading);
-  font-weight: 800;
-  color: white;
-  font-size: 2rem;
-  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
-  white-space: nowrap;
-  z-index: 2;
+.features-grid .feature:hover {
+    animation: eggleston-pulse 0.6s ease-in-out;
 }
 
-.model-text-overlay .ellipsis {
-  display: inline-block;
-  width: 15px;
-  overflow: hidden;
-  vertical-align: bottom;
-  animation: ellipsis-typing 1.5s infinite steps(4, end);
+/* William Eggleston Inspired Shapes */
+.technology-section {
+    position: relative;
+    overflow: hidden;
 }
+<section class="technology-section">
+    <div class="container">
+        <div class="technology-content">
+            <h2>A nossa tecnologia</h2>
+            <p>A Neuraflow utiliza IA avançada para processar imagens e vídeos, gerando mapas de calor que identificam as áreas de maior atenção visual em designs publicitários, embalagens e expositores.</p>
+            <p>Relatórios detalhados explicam onde as pessoas olham e por que certos elementos se destacam, fornecendo insights estratégicos para marketing, design e vendas.</p>
+        </div>
+        <div class="technology-image-container">
+            <img src="https://andregazineu.github.io/newfrontNeuraflow/vectorapresentation.png" alt="Imagem da Tecnologia" class="technology-image">
+        </div>
+    </div>
+</section>
 
-@keyframes ellipsis-typing {
-  0%   { max-width: 0; }
-  100% { max-width: 15px; }
-}
-
-.clarity-section, .technology-section, .api-section, .features-section, 
-.pricing-section, .video-section, .testimonials-section, .contact-section {
-  padding: var(--section-padding);
-  position: relative;
-  overflow: hidden;
-}
-
-.clarity-section::before, .technology-section::before, .api-section::before, 
-.features-section::before, .pricing-section::before, .video-section::before, 
-.testimonials-section::before, .contact-section::before {
-  content: '';
-  position: absolute;
-  width: 300px;
-  height: 300px;
-  background: radial-gradient(circle, rgba(78, 154, 255, 0.05), transparent 70%);
-  border-radius: 50%;
-  z-index: -1;
-}
-
-.clarity-section::before {
-  top: 0;
-  right: 0;
+.technology-section::before,
+.technology-section::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    z-index: 0;
 }
 
 .technology-section::before {
-  top: 50%;
-  left: 0;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(255, 107, 43, 0.05), transparent 70%);
-  transform: translateY(-50%);
-}
-
-.api-section {
-  background: linear-gradient(to bottom, var(--bg-light), white);
-}
-
-.api-section::before {
-  bottom: 0;
-  right: 0;
-  z-index: 0;
-}
-
-.features-section::before {
-  top: 0;
-  left: 50%;
-  width: 400px;
-  height: 400px;
-  transform: translateX(-50%);
-}
-
-.pricing-section {
-  background: linear-gradient(to bottom, white, var(--bg-light));
-}
-
-.pricing-section::before {
-  bottom: 0;
-  left: 0;
-  background: radial-gradient(circle, rgba(255, 107, 43, 0.05), transparent 70%);
-  z-index: 0;
-}
-
-.video-section::before {
-  top: 0;
-  right: 0;
-  background: radial-gradient(circle, rgba(255, 107, 43, 0.05), transparent 70%);
-  z-index: 0;
-}
-
-.testimonials-section::before {
-  bottom: 0;
-  right: 0;
-  z-index: 0;
-}
-
-.contact-section {
-  text-align: center;
-}
-
-.contact-section::before {
-  bottom: 0;
-  left: 50%;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(255, 107, 43, 0.05), transparent 70%);
-  transform: translateX(-50%);
-  z-index: 0;
-}
-
-.clarity-container, .technology-section .container, .api-section .container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  align-items: center;
-}
-
-.clarity-text-content, .technology-content, .api-content {
-  text-align: left;
-  max-width: 600px;
-}
-
-.clarity-section h2, .technology-section h2, .api-section h2 {
-  text-align: left;
-}
-
-.clarity-section p, .technology-section p, .api-description {
-  color: var(--text-medium);
-  font-size: 1.125rem;
-  line-height: 1.7;
-  margin-bottom: 2rem;
-}
-
-.clarity-image-container, .technology-image-container {
-  position: relative;
-  display: flex;
-  justify-content: center;
-}
-
-.clarity-image, .technology-image {
-  max-width: 100%;
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-xl);
-  transition: transform var(--transition-normal);
-}
-
-.clarity-image {
-  transform: perspective(1000px) rotateY(5deg);
-}
-
-.clarity-image:hover, .technology-image:hover {
-  transform: perspective(1000px) rotateY(0);
-}
-
-.technology-image {
-  transform: perspective(1000px) rotateY(-5deg);
-}
-
-.api-images {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  position: relative;
-}
-
-.api-images img {
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-xl);
-  transition: transform var(--transition-normal);
-}
-
-.api-images img:first-child {
-  transform: perspective(1000px) rotateX(5deg) rotateY(-5deg);
-}
-
-.api-images img:last-child {
-  transform: perspective(1000px) rotateX(-5deg) rotateY(-5deg);
-}
-
-.api-images img:hover {
-  transform: perspective(1000px) rotateX(0) rotateY(0);
-}
-
-.features-section h2, .pricing-section h2, .video-section h2, .testimonials-section h2 {
-  text-align: center;
-  margin-bottom: 3rem;
-}
-
-.features-section h2::after, .pricing-section h2::after, 
-.video-section h2::after, .testimonials-section h2::after, 
-.contact-section h2::after {
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.features-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 2rem;
-}
-
-.feature {
-  background-color: white;
-  border-radius: var(--radius-lg);
-  padding: 2rem;
-  text-align: left;
-  box-shadow: var(--shadow-md);
-  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
-  position: relative;
-  overflow: hidden;
-  z-index: 1;
-}
-
-.feature::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 4px;
-  height: 0;
-  background: var(--primary);
-  transition: height var(--transition-normal);
-  z-index: -1;
-}
-
-.feature:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--shadow-lg);
-}
-
-.feature:hover::before {
-  height: 100%;
-}
-
-.feature p {
-  font-size: 1rem;
-  color: var(--text-medium);
-  line-height: 1.6;
-}
-
-.pricing-plans {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  position: relative;
-  z-index: 1;
-}
-
-.pricing-plan {
-  background: white;
-  border-radius: var(--radius-lg);
-  padding: 2.5rem;
-  text-align: left;
-  box-shadow: var(--shadow-md);
-  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
-  position: relative;
-  overflow: hidden;
-}
-
-.pricing-plan::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 100px;
-  height: 100px;
-  background: radial-gradient(circle, rgba(78, 154, 255, 0.05), transparent 70%);
-  border-radius: 0 0 0 100%;
-  z-index: 0;
-}
-
-.pricing-plan:hover {
-  transform: translateY(-8px);
-  box-shadow: var(--shadow-xl);
-}
-
-.pricing-plan h3 {
-  font-size: 1.75rem;
-  margin-bottom: 1rem;
-  position: relative;
-  z-index: 1;
-}
-
-.pricing-plan .price {
-  font-size: 2.25rem;
-  font-weight: 800;
-  color: var(--secondary);
-  margin-bottom: 1.5rem;
-  position: relative;
-  z-index: 1;
-}
-
-.pricing-plan .price small {
-  font-size: 1rem;
-  font-weight: 400;
-  color: var(--text-light);
-}
-
-.pricing-plan ul {
-  margin-bottom: 2rem;
-  position: relative;
-  z-index: 1;
-}
-
-.pricing-plan ul li {
-  margin-bottom: 0.75rem;
-  display: flex;
-  align-items: flex-start;
-  gap: 0.75rem;
-  color: var(--text-medium);
-}
-
-.pricing-plan ul li i {
-  color: var(--accent);
-  font-size: 1.2rem;
-  flex-shrink: 0;
-  margin-top: 0.2rem;
-}
+    width: 250px;
+    height: 250px;
+    background-color: var(--secondary); /* amarelo dourado */
+    opacity: 0.15;
+    top: -60px;
+    left: -80px;
+}
+
+.technology-section::after {
+    width: 180px;
+    height: 180px;
+    background-color: var(--accent); /* azul profundo */
+    opacity: 0.2;
+    bottom: -50px;
+    right: -60px;
+}
+
+.technology-content, 
+.technology-image-container {
+    position: relative;
+    z-index: 1;
+}
+
+        /* Seção de Testemunhos*/
+
+        .testimonials-section {
+            padding: var(--spacing-xl) 0;
+            background-color: var(--background);
+            text-align: center;
+        }
+        .testimonials-section h2{
+            margin-left: auto;
+            margin-right: auto;
+        }
+         .testimonials-section h2::after{
+            left: 50%;
+            transform:translateX(-50%);
+        }
+
+        .testimonials-slider {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-lg);
+        }
+
+        .testimonial {
+            padding: var(--spacing-md);
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .testimonial:hover {
+            transform: translateY(-5px);
+        }
+
+        .testimonial img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto var(--spacing-sm);
+            border: 3px solid var(--primary); /* Moldura vermelha */
+            object-fit: cover; /* Garante que a imagem cubra o círculo */
+        }
+
+        .testimonial p {
+            font-style: italic;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .testimonial h4 {
+            color: var(--primary);
+            font-size: 1rem;
+        }
+        /*Seção Contato*/
+        .contact-section {
+            padding: var(--spacing-xl) 0;
+            background-color: var(--primary); /* Fundo vermelho */
+            color: white;
+            text-align: center;
+        }
+
+        .contact-section h2 {
+            color: white;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .contact-section h2::after{
+            background-color: white;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .contact-section p{
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: var(--spacing-lg);
+        }
+        .btn-whatsapp {
+            background-color: #25D366; /* Cor do WhatsApp */
+            display: inline-flex; /* Para alinhar o ícone com o texto */
+            align-items: center;
+            justify-content: center;
+            gap: 10px; /* Espaço entre o ícone e o texto */
+        }
+
+        .btn-whatsapp:hover {
+            background-color: #128C7E; /* Cor mais escura no hover */
+        }
+        /*Rodapé*/
+        footer {
+            background-color: #2c3e50; /* Cinza escuro */
+            color: white;
+            padding: var(--spacing-lg) 0;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr; /* Distribuição das colunas */
+            gap: var(--spacing-md);
+        }
+
+        .footer-logo img {
+            height: 120px;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .footer-sections {
+            display: flex;
+            gap: var(--spacing-xl);
+        }
+
+        .footer-section h4 {
+            color: white;
+            margin-bottom: var(--spacing-sm);
+            position: relative;
+            display: inline-block;
+        }
+        /*Linha abaixo do h4*/
+        .footer-section h4::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 30px; 
+            height: 2px;
+            background-color: var(--primary);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .footer-section ul li a {
+            color: var(--light-text);
+            transition: color 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: white;
+        }
+
+        .footer-social {
+            display: flex;
+            justify-content: flex-end; /* Alinha os ícones à direita */
+            align-items: flex-start;
+        }
+
+        .footer-social a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1); /* Fundo semi-transparente */
+            border-radius: 50%;
+            color: white;
+            margin-left: var(--spacing-xs);
+            transition: all 0.3s ease;
+        }
+
+        .footer-social a:hover {
+            background-color: var(--primary); /* Fundo vermelho no hover */
+            transform: translateY(-3px); /* Leve elevação */
+        }
+        /* Direitos*/
+        .footer-copy {
+            grid-column: 1 / -1; /* Ocupa toda a largura */
+            margin-top: var(--spacing-lg);
+            padding-top: var(--spacing-md);
+            border-top: 1px solid rgba(255, 255, 255, 0.1); /* Linha divisória */
+            text-align: center;
+            color: var(--light-text);
+            font-size: 0.875rem;
+        }
+
+    /*Responsividade*/
+    /* Tablets e telas menores */
+        @media (max-width: 992px) {
+            h1 {
+                font-size: 2.75rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            .hero {
+                grid-template-columns: 1fr; /* Uma coluna */
+                text-align: center; /* Centraliza o conteúdo */
+                padding: var(--spacing-md) 0;
+            }
+
+            .hero-content {
+                max-width: 100%; /* Ocupa toda a largura */
+                order: 2; /* Conteúdo abaixo da imagem */
+            }
+
+            .hero-media {
+                order: 1; /* Imagem acima do conteúdo */
+            }
+            /*Layout das outras seções*/
+            .clarity-container,
+            .technology-section .container,
+            .api-section .container {
+                grid-template-columns: 1fr; /* Uma coluna */
+                gap: var(--spacing-md);
+            }
+
+            .technology-content, .api-content {
+                order: 2; /* Conteúdo abaixo da imagem */
+            }
+
+            .technology-image-container,
+            .api-images {
+                order: 1; /* Imagem acima do conteúdo */
+            }
+            /*Rodapé*/
+            .footer-content {
+                grid-template-columns: 1fr; /* Uma coluna */
+                gap: var(--spacing-md);
+            }
+
+            .footer-social {
+                justify-content: flex-start; /* Alinha os ícones à esquerda */
+                margin-top: var(--spacing-md);
+            }
+        }
+    /*Responsividade Menu Hamburguer*/
+    @media (max-width: 768px) {
+        .nav-desktop {
+            display: none; /* Esconde a navegação desktop */
+        }
+
+        .hamburger-menu {
+            display: block; /* Mostra o menu hambúrguer */
+        }
+    /*Posição menu*/
+        .nav-mobile {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            padding: var(--spacing-md);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-mobile ul {
+            flex-direction: column; /* Itens do menu em coluna */
+        }
+
+        .nav-mobile ul li {
+            margin: 0;
+            margin-bottom: var(--spacing-sm);  /*Espaçamento*/
+        }
+        /*Botão encher a largura*/
+        .hero-cta{
+            flex-direction: column;
+            gap:var(--spacing-sm);
+            align-items: center;
+        }
+        .hero-cta .btn{
+            width: 100%;
+            padding: 14px 20px;
+            font-size: 1rem;
+
+        }
+        /*Grid de uma coluna*/
+          .features-grid,
+          .pricing-plans,
+          .testimonials-slider {
+            grid-template-columns: 1fr;
+        }
+        /*Links do footer em coluna*/
+        .footer-sections{
+            flex-direction: column;
+            gap: var(--spacing-md)
+        }
+
+    }
 
-.pricing-plan .btn-pricing {
-  width: 100%;
-  justify-content: center;
-  position: relative;
-  z-index: 1;
-}
-
-.video-section {
-  text-align: center;
-}
-
-.video-section p {
-  font-size: 1.125rem;
-  color: var(--text-medium);
-  margin-bottom: 3rem;
-  max-width: 700px;
-  margin-inline: auto;
-}
-
-.video-container {
-  max-width: 800px;
-  width: 100%;
-  margin: 0 auto;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  box-shadow: var(--shadow-xl);
-  position: relative;
-  z-index: 1;
-}
-
-.video-container::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.2);
-  z-index: 2;
-  opacity: 0;
-  transition: opacity var(--transition-normal);
-  pointer-events: none;
-}
-
-.video-container:hover::before {
-  opacity: 1;
-}
-
-.video-container video {
-  width: 100%;
-  height: auto;
-  display: block;
-  transition: transform var(--transition-slow);
-}
-
-.video-container:hover video {
-  transform: scale(1.02);
-}
-
-.testimonials-slider {
-  display: flex;
-  gap: 2rem;
-  overflow-x: auto;
-  padding: 1rem 0 2rem;
-  position: relative;
-  z-index: 1;
-  scrollbar-width: thin;
-  scrollbar-color: var(--primary) var(--bg-light);
-}
-
-.testimonials-slider::-webkit-scrollbar {
-  height: 8px;
-}
-
-.testimonials-slider::-webkit-scrollbar-track {
-  background: var(--bg-light);
-  border-radius: 4px;
-}
-
-.testimonials-slider::-webkit-scrollbar-thumb {
-  background-color: var(--primary);
-  border-radius: 4px;
-}
-
-.testimonial {
-  background: white;
-  border-radius: var(--radius-lg);
-  padding: 2rem;
-  text-align: center;
-  flex: 0 0 auto;
-  width: 320px;
-  box-shadow: var(--shadow-md);
-  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
-  position: relative;
-  overflow: hidden;
-}
-
-.testimonial::before {
-  content: '\201C';
-  position: absolute;
-  top: 0;
-  left: 1rem;
-  font-size: 5rem;
-  color: rgba(78, 154, 255, 0.1);
-  font-family: Georgia, serif;
-  line-height: 1;
-}
-
-.testimonial:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--shadow-lg);
-}
-
-.testimonial img {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin: 0 auto 1.5rem;
-  border: 3px solid white;
-  box-shadow: var(--shadow-sm);
-}
-
-.testimonial p {
-  color: var(--text-medium);
-  margin-bottom: 1.5rem;
-  font-style: italic;
-  position: relative;
-  z-index: 1;
-}
-
-.testimonial h4 {
-  font-weight: 700;
-  color: var(--secondary);
-  font-size: 1.1rem;
-  margin-bottom: 0.25rem;
-}
-
-.testimonial span {
-  color: var(--text-light);
-  font-size: 0.9rem;
-  display: block;
-}
-
-.contact-section p {
-  font-size: 1.125rem;
-  color: var(--text-medium);
-  margin-bottom: 2rem;
-}
-
-.contact-section .btn {
-  margin-top: 1rem;
-}
-
-.hamburger-menu {
-  display: none;
-  flex-direction: column;
-  cursor: pointer;
-}
-
-.bar {
-  width: 25px;
-  height: 3px;
-  background-color: var(--text-dark);
-  margin: 3px 0;
-  transition: transform 0.3s ease, opacity 0.3s ease;
-}
-
-.nav-mobile {
-  display: none;
-  position: fixed;
-  top: var(--header-height);
-  left: 0;
-  width: 100%;
-  background: rgba(255, 255, 255, 0.98);
-  z-index: 99;
-  box-shadow: var(--shadow-md);
-}
-
-.nav-mobile ul {
-  padding: 1rem;
-  text-align: center;
-}
-
-.nav-mobile a {
-  display: block;
-  padding: 1rem;
-  color: var(--text-dark);
-  font-weight: 600;
-  transition: background-color var(--transition-fast);
-}
-
-.nav-mobile a:hover {
-  background-color: rgba(255, 107, 43, 0.1);
-}
-
-footer {
-  background-color: var(--secondary);
-  color: var(--bg-white);
-  padding: 4rem 0;
-  position: relative;
-  overflow: hidden;
-}
-
-footer::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 0;
-  width: 300px;
-  height: 300px;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.05), transparent 70%);
-  border-radius: 50%;
-  z-index: 0;
-  transform: translateY(-50%);
-}
-
-.footer-content {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: flex-start;
-  position: relative;
-  z-index: 1;
-}
-
-.footer-logo {
-  margin-bottom: 2rem;
-}
-
-.footer-logo img {
-  height: 120px;
-}
-
-.footer-sections {
-  display: flex;
-  gap: 4rem;
-  margin-bottom: 2rem;
-}
-
-.footer-section h4 {
-  font-size: 1.25rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-  color: var(--primary);
-}
-
-.footer-section ul li {
-  margin-bottom: 0.5rem;
-}
-
-.footer-section a {
-  color: var(--text-light);
-  transition: color var(--transition-fast);
-}
-
-.footer-section a:hover {
-  color: var(--bg-white);
-}
-
-.footer-social {
-  margin-bottom: 2rem;
-}
-
-.footer-social a {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.1);
-  color: var(--bg-white);
-  margin-right: 0.5rem;
-  transition: background-color var(--transition-fast);
-}
-
-.footer-social a:hover {
-  background-color: var(--primary);
-}
-
-.footer-copy {
-  font-size: 0.9rem;
-  color: var(--text-light);
-}
-
-@media (max-width: 768px) {
-  .hamburger-menu {
-    display: flex;
-  }
-  
-  .hero {
-    grid-template-columns: 1fr;
-    padding-top: calc(var(--header-height) + 2rem);
-    text-align: center;
-  }
-
-  .hero-cta {
-    justify-content: center;
-  }
-
-  .hero-media::before,
-  .hero-media::after {
-    display: none;
-  }
-
-  .clarity-container,
-  .technology-section .container,
-  .api-section .container {
-    grid-template-columns: 1fr;
-    text-align: center;
-  }
-
-  .clarity-text-content,
-  .technology-content,
-  .api-content {
-    margin-inline: auto;
-  }
-  
-  .clarity-section h2, 
-  .technology-section h2, 
-  .api-section h2 {
-    text-align: center;
-  }
-  
-  .clarity-section h2::after,
-  .technology-section h2::after,
-  .api-section h2::after {
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
-  .api-images {
-    flex-direction: row;
-    justify-content: center;
-  }
-
-  .api-images img {
-    max-width: 80%;
-  }
-
-  .hero-content {
-    order: 2;
-  }
-
-  .hero-media {
-    order: 1;
-  }
-  
-  .footer-sections {
-    flex-direction: column;
-    gap: 2rem;
-  }
-
-  .footer-content {
-    text-align: center;
-  }
-
-  .footer-social {
-    justify-content: center;
-  }
-}
     </style>
 </head>
+
 <body>
     <header>
         <div class="container header-content">
             <a href="/" class="logo-link">
                 <img src="https://andregazineu.github.io/newfrontNeuraflow/Logo_Neuraflow_Laranja_Branco_Vetor.svg" alt="Neuraflow" class="logo">
             </a>
-            
+
+            <!-- Menu Hambúrguer -->
             <div class="hamburger-menu" id="hamburger-icon">
                 <div class="bar"></div>
                 <div class="bar"></div>
                 <div class="bar"></div>
             </div>
+            <!-- Navegação Mobile -->
             <nav class="nav-mobile" id="mobile-nav">
                 <ul>
                     <li><a href="#about">Sobre</a></li>
@@ -1087,10 +1072,11 @@ footer::before {
     </header>
 
     <main id="content" class="main-content">
+      <!-- Seção Hero -->
         <section class="hero container" id="hero-section">
             <div class="hero-content">
                 <h1>Desvende o poder do design com IA <span class="animated-phrase"></span></h1>
-                <p>Utilizando a mais avançada tecnologia de IA do mercado, a Neuraflow analisa e prevê se o design <span class="animated-phrase"></span> vai chamar a atenção do consumidor e atingir os seus objetivos de venda, branding e retenção da marca. Transforme a maneira como você se conecta com o seu público e performe mais do que qualquer concorrente.</p>
+                <p>Utilizando a mais avançada tecnologia de IA do mercado, a Neuraflow analisa e prevê se o design <span class="animated-phrase"></span> vai chamar a atenção do consumidor e atingir os seus objetivos de venda, branding e retenção da marca.  Transforme a maneira como você se conecta com o seu público e performe mais do que qualquer concorrente.</p>
                 <div class="hero-cta">
                     <a href="https://pdfupload.io/docs/7dd785ea" class="btn" target="_blank" download="report_exemplo.pdf">Download Report</a>
                     <a href="#api-section" class="btn btn-secondary">Ver API</a>
@@ -1112,97 +1098,116 @@ footer::before {
             </div>
         </section>
 
-        <section class="video-section">
+        <!-- Seção de Vídeo -->
+       <section class="video-section">
             <div class="container">
                 <h2>Veja a Neuraflow em Ação</h2>
                 <p>Preveja, antes mesmo de lançar um produto ou campanha, se o visual chamará a atenção do seu público e economize milhares de reais ao saber quais elementos visuais serão notados e lembrados pelos consumidores-alvo.</p>
                 <div class="video-container">
-                    <video src="https://andregazineu.github.io/newfrontNeuraflow/transition3_video(9).mp4"
-                           controls autoplay muted loop style="width: 100%; height: auto;"
-                           poster="URL_DA_IMAGEM_DE_CAPA.jpg">
-                        <p>Seu navegador não suporta vídeo HTML5.</p>
-                    </video>
+                  <video src="https://andregazineu.github.io/newfrontNeuraflow/transition3_video(9).mp4"
+                    controls autoplay muted loop style="width: 100%; height: auto;"
+                    poster="URL_DA_IMAGEM_DE_CAPA.jpg">  <!-- Adicione um poster, se desejar -->
+                    <p>Seu navegador não suporta vídeo HTML5.</p>
+                  </video>
                 </div>
             </div>
         </section>
 
+
+      <!-- Seção Clareza -->
         <section class="clarity-section" id="clarity-section">
-            <div class="container clarity-container">
-                <div class="clarity-text-content">
-                    <h2>Está Cansado de Criar no Escuro?</h2>
-                    <p>A Neuraflow traz clareza, revelando precisamente onde a atenção se concentra, de forma que você possa otimizar seus visuais, garantindo o máximo de impacto e conversão de vendas.</p>
-                    <p>Avaliar designs com eye-tracking costumava ser sinônimo de alto custo e longos prazos, tornando a análise visual um luxo distante. Com Neuraflow, essa complexidade desaparece: obtenha insights preditivos instantâneos e intuitivos, transformando a otimização visual em algo simples e ao seu alcance.</p>
-                </div>
-                <div class="clarity-image-container">
-                   <div class="video-container">
-                        <video src="https://dms.licdn.com/playlist/vid/v2/C4D05AQFkSoXEWQiuig/mp4-640p-30fp-crf28/mp4-640p-30fp-crf28/0/1679422881782?e=2147483647&v=beta&t=_zFnceQ2Xc27YVdS5DUTkUpb1E0Flv8gn8ELqMWEa_A" autoplay muted loop playsinline></video>
-                    </div>
-                </div>
+          <div class="container clarity-container">
+            <div class="clarity-text-content">
+              <h2>Está Cansado de Criar no Escuro?</h2>
+              <p>A Neuraflow traz clareza, revelando precisamente onde a atenção se concentra, de forma que você possa otimizar seus visuais, garantindo o máximo de impacto e conversão de vendas.</p>
+              <p>Avaliar designs com eye-tracking costumava ser sinônimo de alto custo e longos prazos, tornando a análise visual um luxo distante. Com Neuraflow, essa complexidade desaparece: obtenha insights preditivos instantâneos e intuitivos, transformando a otimização visual em algo simples e ao seu alcance.</p>
             </div>
+            <div class="clarity-image-container">
+              <!--Substituí a imagem por um video, para dar mais dinamismo, conforme tinha pedido-->
+              <div class="video-container">
+                <video src="https://dms.licdn.com/playlist/vid/v2/C4D05AQFkSoXEWQiuig/mp4-640p-30fp-crf28/mp4-640p-30fp-crf28/0/1679422881782?e=2147483647&v=beta&t=_zFnceQ2Xc27YVdS5DUTkUpb1E0Flv8gn8ELqMWEa_A" autoplay muted loop playsinline></video>
+              </div>
+            </div>
+          </div>
         </section>
 
-        <section class="technology-section">
-            <div class="container">
-                <div class="technology-content">
-                   <h2>A nossa tecnologia</h2>
-                    <p>A Neuraflow utiliza IA avançada para processar imagens e vídeos, gerando mapas de calor que identificam as áreas de maior atenção visual em designs publicitários, embalagens e expositores.</p>
-                    <p>Relatórios detalhados explicam onde as pessoas olham e por que certos elementos se destacam, fornecendo insights estratégicos para marketing, design e vendas.</p>
-                </div>
-                <div class="technology-image-container">
-                    <img src="https://andregazineu.github.io/newfrontNeuraflow/vectorapresentation.png" alt="Imagem da Tecnologia" class="technology-image">
-                </div>
-            </div>
-        </section>
-
-        <section class="api-section" id="api-section">
-  <div class="container">
-    <div class="api-content">
-      <h2>Comece a Usar a API Neuraflow Agora Mesmo!</h2>
-      <p class="api-description">
-        Integre a análise preditiva da atenção visual diretamente em suas ferramentas e fluxos de trabalho.
-        Assista ao vídeo a seguir, um guia rápido de como obter suas chaves de API e começar a transformar
-        seus projetos com a Neuraflow.
-      </p>
-      <div class="video-container">
-        <video src="https://andregazineu.github.io/newfrontNeuraflow/20241210_154106.mp4"
-               controls autoplay muted loop style="width: 100%; height: auto;"
-               poster="URL_DA_IMAGEM_DE_CAPA_DO_VIDEO.jpg">
-          Seu navegador não suporta o elemento de vídeo.
-        </video>
-      </div>
+      <!-- Seção Tecnologia -->
+       <section class="technology-section">
+    <div class="container">
+        <div class="technology-content">
+            <h2>A nossa tecnologia</h2>
+            <p>A Neuraflow utiliza IA avançada para processar imagens e vídeos, gerando mapas de calor que identificam as áreas de maior atenção visual em designs publicitários, embalagens e expositores.</p>
+            <p>Relatórios detalhados explicam onde as pessoas olham e por que certos elementos se destacam, fornecendo insights estratégicos para marketing, design e vendas.</p>
+        </div>
+        <div class="technology-image-container">
+            <img src="https://andregazineu.github.io/newfrontNeuraflow/vectorapresentation.png" alt="Imagem da Tecnologia" class="technology-image">
+        </div>
     </div>
-    <div class="api-images">
-      <img src="https://hotpink-mandrill-928651.hostingersite.com/wp-content/uploads/2025/02/Iphones-Neuraflow.png"
-           alt="Exemplo de Integração via API" />
-    </div>
-  </div>
 </section>
 
+      <!-- Seção API -->
+        <section class="api-section" id="api-section">
+            <div class="container">
+                <div class="api-content">
+                    <h2>Comece a Usar a API Neuraflow Agora Mesmo!</h2>
+                    <p class="api-description">
+                        Integre a análise preditiva da atenção visual diretamente em suas ferramentas e fluxos de trabalho.
+                        Assista ao vídeo a seguir, um guia rápido de como obter suas chaves de API e começar a transformar
+                        seus projetos com a Neuraflow.
+                    </p>
+                  <!--Vídeo da seção API-->
+                  <div class="video-container">
+                      <video src="https://andregazineu.github.io/newfrontNeuraflow/20241210_154106.mp4"
+                      controls autoplay muted loop style="width: 100%; height: auto;"
+                      poster="URL_DA_IMAGEM_DE_CAPA_DO_VIDEO.jpg">  <!-- Adicione um poster, se desejar -->
+                      <p>Seu navegador não suporta o elemento de vídeo.</p>
+                      </video>
+                  </div>
 
+                </div>
+                <div class="api-images">
+                    <img src="https://hotpink-mandrill-928651.hostingersite.com/wp-content/uploads/2025/02/Iphones-Neuraflow.png"
+                        alt="Exemplo de Integração via API" />
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Seção de Recursos (Features) -->
         <section class="features-section" id="features-section">
             <div class="container">
                 <h2>Recursos Exclusivos</h2>
                 <div class="features-grid">
+                    <!-- Recurso 1 -->
                     <div class="feature">
                         <h3><i class="fas fa-brain"></i> Inteligência Artificial Avançada</h3>
                         <p>Utilizamos redes neurais de ponta, incluindo Vision Transformers e CNNs, para análises visuais detalhadas e confiáveis.</p>
                     </div>
+
+                    <!-- Recurso 2 -->
                     <div class="feature">
                         <h3><i class="fas fa-chart-line"></i> Análise Preditiva de Última Geração</h3>
                         <p>Prevemos o comportamento do consumidor, fornecendo insights valiosos para otimizar o impacto do seu design.</p>
                     </div>
+
+                   <!-- Recurso 3 -->
                     <div class="feature">
                         <h3><i class="fas fa-tags"></i> Preços acessíveis a qualquer empresa ou profissional autônomo</h3>
                         <p>Acreditamos na democratização da capacidade de prever resultados de vendas antes de lançar produtos, serviços e ações de marketing variadas. Nossa solução possui preços justos para qualquer cliente, em qualquer lugar do mundo.</p>
                     </div>
-                    <div class="feature">
-                        <h3><i class="fas fa-file-alt"></i> Relatórios completos</h3>
-                        <p>Receba relatórios completos, produzidos por nossa IA, que ajudam não só a entender quais os pontos de atenção do seu design, mas o que pode ser feito para melhorar ainda mais a sua performance e conversão de vendas. Tudo ricamente ilustrado por gráficos e mapas de calor.</p>
-                    </div>
-                    <div class="feature">
-                        <h3><i class="fas fa-headset"></i> Suporte especializado</h3>
-                        <p>Nossa equipe está pronta a ajudar a sua empresa a aproveitar o máximo os recursos da Neuraflow.</p>
-                    </div>
+
+                  <!-- Recurso 4 -->
+                  <div class="feature">
+                    <h3><i class="fas fa-file-alt"></i> Relatórios completos</h3>
+                    <p>Receba relatórios completos, produzidos por nossa IA, que ajudam não só a entender quais os pontos de atenção do seu design, mas o que pode ser feito para melhorar ainda mais a sua performance e conversão de vendas. Tudo ricamente ilustrado por gráficos e mapas de calor.</p>
+                  </div>
+
+                   <!-- Recurso 5 -->
+                  <div class="feature">
+                    <h3><i class="fas fa-headset"></i> Suporte especializado</h3>
+                    <p>Nossa equipe está pronta a ajudar a sua empresa a aproveitar o máximo os recursos da Neuraflow.</p>
+                  </div>
+                    <!-- Recurso 6 -->
                     <div class="feature">
                         <h3><i class="fas fa-rocket"></i> Um poder de inovação imparável</h3>
                         <p>Estamos constantemente atualizando e ampliando as funcionalidades da nossa solução, capaz de criar valor a toda a cadeia produtiva: gráficas, convertedoras, agências de publicidade, estúdios de design, pré-mídias, clicherias, donos de marca, empresas de pesquisa de tendências de mercado, designers autônomos dentre outros.</p>
@@ -1211,14 +1216,15 @@ footer::before {
             </div>
         </section>
 
-        <section class="pricing-section" id="pricing">
-            <div class="pricing-background"
-                 style="background-image: url('https://hotpink-mandrill-928651.hostingersite.com/wp-content/uploads/2025/02/Iphones-Neuraflow.png');">
-            </div>
+    <!-- Seção de Preços -->
+    <section class="pricing-section" id="pricing">
+    <!-- Imagem de fundo -->
+    <div class="pricing-background" style="background-image: url('https://hotpink-mandrill-928651.hostingersite.com/wp-content/uploads/2025/02/Iphones-Neuraflow.png');"></div>
 
             <div class="container">
                 <h2>Planos e Preços</h2>
                 <div class="pricing-plans">
+                    <!-- Plano 1 -->
                     <div class="pricing-plan">
                         <h3>Relatório Completo Neuraflow</h3>
                         <p class="price">USD 5.00 <small>/relatório</small></p>
@@ -1231,6 +1237,7 @@ footer::before {
                         <a href="#" class="btn btn-pricing">Comprar Relatório</a>
                     </div>
 
+                    <!-- Plano 2 -->
                     <div class="pricing-plan">
                         <h3>Análise de Requisitos Regulatórios</h3>
                         <p class="price">USD 1.00 <small>/análise</small></p>
@@ -1243,6 +1250,7 @@ footer::before {
                         <a href="#" class="btn btn-pricing">Solicitar Análise</a>
                     </div>
 
+                    <!-- Plano 3 -->
                     <div class="pricing-plan">
                         <h3>Análise e Comparação de PDFs</h3>
                         <p class="price">USD 0.25 <small>/comparação</small></p>
@@ -1258,135 +1266,159 @@ footer::before {
             </div>
         </section>
 
-        <section class="testimonials-section" id="testimonials">
+        <!-- Seção de Depoimentos -->
+       <section class="testimonials-section" id="testimonials">
             <div class="container">
-                <h2 class="testimonials-section h2">Depoimentos</h2>
+                <h2  class="testimonials-section h2">Depoimentos</h2>
                 <div class="testimonials-slider">
+                    <!-- Depoimento 1 -->
                     <div class="testimonial">
                         <img src="https://media.licdn.com/dms/image/v2/D4D03AQHEexePHcEPpA/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1692797111800?e=1741824000&v=beta&t=InJV6-4t0iOU5K-7aJXr39c9m7O1GxdMcgP4th4w0PE" alt="Depoimento 1">
                         <p>"A Neuraflow transformou nossa abordagem de design. Agora, cada criação é otimizada para o máximo impacto visual!"</p>
                         <h4>Paula Weber, Designer Gráfico</h4>
                     </div>
+
+                    <!-- Depoimento 2 -->
                     <div class="testimonial">
                         <img src="https://media.licdn.com/dms/image/v2/D4E03AQGaUbE7H9JThg/profile-displayphoto-shrink_400_400/B4EZTMO_AdHgAk-/0/1738593269253?e=1745452800&v=beta&t=1BJXRz310UZHlX3lgLTGkDyeVANnYEaq8vAzkDQxWfw" alt="Depoimento 2">
                         <p>"Neuraflow faz parte da nossa equipe e é nosso parceiro estratégico. Suas análises instantâneas de designs e a correção automatizada de textos nos permitem finalizar projetos em menos tempo, otimizando cada entrega com máxima eficiência e qualidade."</p>
                         <h4>Alejandra Acosta Salati, Técnica en Flexografía</h4>
                     </div>
+
+                    <!-- Depoimento 3 -->
                     <div class="testimonial">
                         <img src="https://andregazineu.github.io/newfrontNeuraflow/luiza.jpg" alt="Depoimento 3">
                         <p>"Finalmente uma ferramenta que combina precisão, facilidade de uso e um preço acessível. A Neuraflow é essencial para qualquer profissional criativo."</p>
                         <h4>Luiza Gelatti, Designer</h4>
                     </div>
+
+                    <!-- Depoimento 4 -->
                     <div class="testimonial">
                         <img src="https://media.licdn.com/dms/image/v2/D4D03AQHAy4ygXAjmpQ/profile-displayphoto-shrink_400_400/B4DZO9STtFHQAo-/0/1734047517470?e=1742428800&v=beta&t=qFbN_YPCbpJjD5rnKgFbWjzuKKDsqJbb8ZnSi4wkvIk" alt="Depoimento 4">
                         <p>"Com nossas capacidades de impressão digital e personalização de embalagens flexíveis, a inteligência artificial da Neuraflow nos permite prever o desempenho das embalagens no ponto de venda. Isso amplia nossa oferta de serviços e garante mais sucesso financeiro para nossos clientes."</p>
                         <h4>Felipe Toledo, CEO na Camargo Embalagens | Membro do Conselho da ABRE</h4>
                     </div>
-                </div>
-            </div>
+                    </div>
+             </div>
         </section>
 
-        <section class="contact-section">
-            <div class="container">
-                <h2>Descubra como a Neuraflow pode alavancar os negócios da sua empresa.</h2>
-                <p>Entre em contato com a equipe Neuraflow e descubra o potencial das nossas ferramentas</p>
-                <a href="https://api.whatsapp.com/send?phone=5511971122168" class="btn btn-whatsapp" target="_blank" rel="noopener noreferrer"  aria-label="Entre em contato via WhatsApp">
-                    <i class="fab fa-whatsapp"></i> Entre em contato
-                </a>
-            </div>
-        </section>
+        <!-- Seção de Contato -->
+      <section class="contact-section">
+        <div class="container">
+          <h2>Descubra como a Neuraflow pode alavancar os negócios da sua empresa.</h2>
+            <p>Entre em contato com a equipe Neuraflow e descubra o potencial das nossas ferramentas</p>
+          <a href="https://api.whatsapp.com/send?phone=5511971122168" class="btn btn-whatsapp" target="_blank" rel="noopener noreferrer"  aria-label="Entre em contato via WhatsApp">
+           <i class="fab fa-whatsapp"></i> Entre em contato
+          </a>
+        </div>
+      </section>
     </main>
-    <footer>
-    <div class="container footer-content">
-      <div class="footer-logo">
-        <a href="/" class="logo-link">
-          <img src="https://andregazineu.github.io/newfrontNeuraflow/Logo_Neuraflow_Laranja_Branco_Vetor.svg" alt="Neuraflow Logo">
-        </a>
-      </div>
-      <div class="footer-sections">
-        <div class="footer-section">
-          <h4>Links Úteis</h4>
-          <ul>
-            <li><a href="#hero-section">Home</a></li>
-            <li><a href="#clarity-section">Sobre Nós</a></li>
-            <li><a href="#api-section">API</a></li>
-          </ul>
+
+      <footer>
+        <div class="container footer-content">
+          <div class="footer-logo">
+            <a href="/" class="logo-link">
+              <img src="https://andregazineu.github.io/newfrontNeuraflow/Logo_Neuraflow_Laranja_Branco_Vetor.svg" alt="Neuraflow Logo">
+            </a>
+          </div>
+          <div class="footer-sections">
+            <div class="footer-section">
+              <h4>Links Úteis</h4>
+              <ul>
+                <li><a href="#hero-section">Home</a></li>
+                <li><a href="#clarity-section">Sobre Nós</a></li>
+                <li><a href="#api-section">API</a></li>
+              </ul>
+            </div>
+            <div class="footer-section">
+              <h4>Recursos</h4>
+              <ul>
+                <li><a href="#">Documentação</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="https://andregazineu.github.io/newfrontNeuraflow/faq.html">FAQ</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="footer-social">
+            <a href="https://www.linkedin.com/showcase/neuraflowbr/?originalSubdomain=br" target="_blank" rel="noopener noreferrer"  aria-label="Siga-nos no LinkedIn">
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+            <!-- Adicione mais ícones de mídia social conforme necessário -->
+          </div>
+            <div class="footer-copy">© 2025 Neuraflow. Todos os direitos reservados.</div>
         </div>
-        <div class="footer-section">
-          <h4>Recursos</h4>
-          <ul>
-            <li><a href="#">Documentação</a></li>
-            <li><a href="#">Blog</a></li>
-            <li><a href="https://andregazineu.github.io/newfrontNeuraflow/faq.html">FAQ</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="footer-social">
-        <a href="https://www.linkedin.com/showcase/neuraflowbr/?originalSubdomain=br" target="_blank" rel="noopener noreferrer" aria-label="Siga-nos no LinkedIn">
-          <i class="fab fa-linkedin-in"></i>
-        </a>
-      </div>
-      <div class="footer-copy">© 2025 Neuraflow. Todos os direitos reservados.</div>
-    </div>
-  </footer>
-  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const animatedTextHero = document.querySelector('.hero h1 .animated-phrase');
-      const animatedTextHeroP = document.querySelector('.hero p .animated-phrase');
-      const phrasesHero = ["[da sua embalagem]","[do seu rótulo]","[do seu anúncio]","[do seu produto]","[da sua propaganda]"];
-      let phraseIndexHero = 0;
-      function changeHeroPhrase() {
+      </footer>
+
+      <!-- Model Viewer -->
+      <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
+
+      <script>
+          document.addEventListener('DOMContentLoaded', () => {
+
+    // Animação Hero Section
+    const animatedTextHero = document.querySelector('h1 .animated-phrase');
+    const animatedTextHeroP = document.querySelector('.hero p .animated-phrase');
+    const phrasesHero = ["embalagem", "rótulo", "anúncio", "produto", "propaganda"];
+    let phraseIndexHero = 0;
+
+    function changeHeroPhrase() {
         animatedTextHero.textContent = phrasesHero[phraseIndexHero];
         animatedTextHeroP.textContent = phrasesHero[phraseIndexHero];
         phraseIndexHero = (phraseIndexHero + 1) % phrasesHero.length;
-        animatedTextHero.style.opacity = 0;
-        animatedTextHero.style.transition = 'opacity 0.5s ease-in-out';
-        setTimeout(() => { animatedTextHero.style.opacity = 1; }, 50);
         setTimeout(changeHeroPhrase, 4000);
-      }
-      changeHeroPhrase();
-      const textOverlay = document.getElementById('text-overlay');
-      const phrases = ["Cores Atraentes.","Legibilidade Clara.","Marca em Destaque.","Apelo Gourmet.","Design Autêntico.","Harmonia Visual.","Excelente Saliência","Aprovado pela Neuraflow."];
-      let phraseIndex = 0;
-      let typingDelay = 30;
-      function typeWriter(text, element, onComplete) {
+    }
+
+    changeHeroPhrase();
+
+    // Animação do Texto Digitado
+    const textOverlay = document.getElementById('text-overlay');
+    const phrases = ["Cores Atraentes.", "Legibilidade Clara.", "Marca Forte."];
+
+    function typeWriter(text, element, onComplete) {
         let charIndex = 0;
         element.innerHTML = '';
+
         function typeNextChar() {
-          if (charIndex < text.length) {
-            element.innerHTML = text.substring(0, charIndex + 1) + '<span class="ellipsis">...</span>';
-            charIndex++;
-            setTimeout(typeNextChar, typingDelay);
-          } else {
-            element.innerHTML = text;
-            onComplete();
-          }
+            if (charIndex < text.length) {
+                element.innerHTML = text.substring(0, charIndex + 1);
+                charIndex++;
+                setTimeout(typeNextChar, 100);
+            } else {
+                setTimeout(onComplete, 3000);
+            }
         }
         typeNextChar();
-      }
-      function changePhrase() {
+    }
+
+    function changePhrase() {
         const currentPhrase = phrases[phraseIndex];
         typeWriter(currentPhrase, textOverlay, () => {
-          setTimeout(() => {
             phraseIndex = (phraseIndex + 1) % phrases.length;
             changePhrase();
-          }, 3000);
         });
-      }
-      changePhrase();
-      const hamburgerIcon = document.getElementById('hamburger-icon');
-      const mobileNav = document.getElementById('mobile-nav');
-      const mobileNavLinks = mobileNav.querySelectorAll('a');
-      hamburgerIcon.addEventListener('click', () => {
+    }
+
+    let phraseIndex = 0;
+    changePhrase();
+
+    // Menu Hambúrguer
+    const hamburgerIcon = document.getElementById('hamburger-icon');
+    const mobileNav = document.getElementById('mobile-nav');
+    const mobileNavLinks = document.querySelectorAll('#mobile-nav ul li a');
+
+    hamburgerIcon.addEventListener('click', () => {
         mobileNav.style.display = mobileNav.style.display === 'block' ? 'none' : 'block';
-      });
-      mobileNavLinks.forEach(link => {
-        link.addEventListener('click', () => {
-          mobileNav.style.display = 'none';
-        });
-      });
     });
-  </script>
+
+    // Fecha o menu mobile ao clicar nos links
+    mobileNavLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            mobileNav.style.display = 'none';
+        });
+    });
+
+});
+            
+      </script>
 </body>
 </html>
