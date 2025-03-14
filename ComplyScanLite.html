@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Complyscan</title>
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Outfit:wght@400;600;800&display=swap');
+
+:root {
+  /* Paleta de Cores Neuraflow - Inspirada em William Eggleston */
+  --primary: #e74c3c;        /* Vermelho vibrante */
+  --secondary: #f39c12;      /* Amarelo dourado */
+  --accent: #2980b9;         /* Azul profundo */
+  --background: #f7f4f0;     /* Bege claro (papel fotográfico vintage) */
+  --text: #2c3e50;           /* Cinza escuro (quase preto) */
+  --light-text: #7f8c8d;     /* Cinza claro */
+  --border: #bdc3c7;         /* Cinza suave para bordas */
+  --overlay: rgba(44, 62, 80, 0.7); /* Sobreposição escura com transparência */
+  --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+
+  /* Tipografia */
+  --heading-font: 'Space Grotesk', sans-serif;
+  --body-font: 'Outfit', sans-serif;
+
+  /* Espaçamento e Layout */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 2rem;
+  --spacing-lg: 4rem;
+  --spacing-xl: 8rem;
+  --border-radius: 8px;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--body-font);
+  background: var(--background);
+  color: var(--text);
+  line-height: 1.6;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+.app-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: var(--spacing-md);
+}
+
+.swiper-container {
+  width: 100%;
+  height: 90vh;
+  padding: var(--spacing-md);
+}
+
+.swiper-slide {
+  background: white;
+  border-radius: var(--border-radius);
+  padding: var(--spacing-md);
+  box-shadow: var(--shadow);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.swiper-slide::before {
+  content: "";
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  background-color: var(--secondary);
+  opacity: 0.1;
+  top: -30px;
+  right: -20px;
+  border-radius: 50%;
+  z-index: 0;
+}
+
+.swiper-slide:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+h3 {
+  font-family: var(--heading-font);
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: var(--primary);
+  margin-bottom: var(--spacing-md);
+  position: relative;
+  display: inline-block;
+  z-index: 1;
+}
+
+h3::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -8px;
+  width: 40px;
+  height: 3px;
+  background-color: var(--primary);
+}
+
+.drop-area {
+  width: 100%;
+  height: 70vh;
+  border: 2px dashed var(--border);
+  border-radius: var(--border-radius);
+  background: rgba(255, 255, 255, 0.05);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.drop-area:hover {
+  border-color: var(--primary);
+  background: rgba(231, 76, 60, 0.05);
+  transform: translateY(-5px);
+}
+
+.drop-area i {
+  font-size: 3.5rem;
+  margin-bottom: var(--spacing-sm);
+  color: var(--primary);
+  transition: transform 0.3s ease;
+}
+
+.drop-area:hover i {
+  transform: scale(1.1);
+}
+
+.drop-area p {
+  font-size: 1.2rem;
+  text-align: center;
+  max-width: 80%;
+  color: var(--text);
+}
+
+.canvas-container {
+  width: 100%;
+  height: 100%;
+  background: white;
+  border-radius: var(--border-radius);
+  position: static;
+  overflow: visible;
+  box-shadow: var(--shadow);
+  transition: all 0.3s ease;
+}
+
+.canvas-container:hover {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+canvas {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  max-width: 100%;
+  max-height: 100%;
+}
+
+#overlay-control {
+  position: relative;
+  width: 90%;
+  margin: 10px 0 var(--spacing-md) 0;
+  -webkit-appearance: none;
+  height: 6px;
+  background: var(--border);
+  border-radius: 3px;
+  outline: none;
+  z-index: 10;
+}
+
+.canvas-container.fullscreen #overlay-control {
+  z-index: 999999 !important;
+}
+
+.canvas-container.fullscreen {
+  padding-bottom: 60px;
+}
+
+#overlay-control::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  background: var(--primary);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+#overlay-control::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+.loading-animation {
+  width: 50px;
+  height: 50px;
+  border: 3px solid var(--border);
+  border-radius: 50%;
+  border-top-color: var(--primary);
+  animation: spin 1s linear infinite;
+  margin: 0 auto var(--spacing-md);
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.comparison-results {
+  background: white;
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius);
+  margin-top: var(--spacing-sm);
+  max-height: 60vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow);
+  position: relative;
+  z-index: 1;
+  border-top: 3px solid var(--primary);
+  transition: all 0.3s ease;
+}
+
+.comparison-results:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.swiper-pagination-bullet {
+  background: var(--accent);
+  opacity: 0.5;
+}
+
+.swiper-pagination-bullet-active {
+  opacity: 1;
+  background: var(--primary);
+}
+
+.upload-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+.upload-container button {
+  padding: 12px 24px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-weight: 600;
+  font-family: var(--body-font);
+  transition: all 0.3s ease;
+  width: 100%;
+  max-width: 300px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.upload-container button::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.upload-container button:hover {
+  background: #c0392b;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+.upload-container button:hover::after {
+  left: 100%;
+}
+
+#resposta {
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-sm);
+  border-radius: var(--border-radius);
+  background: white;
+  text-align: left;
+  white-space: pre-wrap;
+  max-height: 60vh;
+  overflow-y: auto;
+  overflow-x: auto;
+  box-shadow: var(--shadow);
+  border-top: 3px solid var(--primary);
+  transition: all 0.3s ease;
+  color: var(--text);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+#resposta:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Animação de aparecimento gradual para elementos */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.swiper-slide-active h3,
+.swiper-slide-active .drop-area,
+.swiper-slide-active .comparison-results,
+.swiper-slide-active .canvas-container,
+.swiper-slide-active .upload-container,
+.swiper-slide-active #resposta {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* Estilo para texto dentro dos resultados */
+.comparison-results p, 
+.comparison-results strong {
+  margin-bottom: var(--spacing-xs);
+}
+
+.comparison-results strong {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+/* Estilo para dicas e instruções */
+.tip-text {
+  font-size: 0.9rem;
+  color: var(--light-text);
+  margin-top: var(--spacing-sm);
+  font-style: italic;
+  text-align: center;
+}
+
+.pagina {
+  margin-bottom: var(--spacing-md);
+}
+
+.pagina h3 {
+  margin-bottom: var(--spacing-sm);
+}
+
+/* Responsividade para diferentes tamanhos de tela */
+@media (max-width: 768px) {
+  .app-container {
+    padding: var(--spacing-sm);
+  }
+  
+  .swiper-container {
+    height: 85vh;
+    padding: var(--spacing-xs);
+  }
+  
+  .swiper-slide {
+    padding: var(--spacing-sm);
+  }
+  
+  h3 {
+    font-size: 1.2rem;
+  }
+  
+  .drop-area {
+    height: 60vh;
+  }
+  
+  .drop-area i {
+    font-size: 2.5rem;
+  }
+  
+  .drop-area p {
+    font-size: 1rem;
+  }
+  
+  .canvas-container.fullscreen {
+    padding-bottom: 40px;
+  }
+  
+  .upload-container button {
+    padding: 10px 16px;
+    font-size: 0.9rem;
+  }
+}
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <script src="https://andregazineu.github.io/barcode/index.js"></script>
+</head>
+<body>
+  <div class="app-container">
+    <div class="swiper-container">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <h3>Upload do Primeiro Arquivo</h3>
+          <div class="drop-area" id="drop-area-1">
+            <i class="fas fa-file"></i>
+            <p>Arraste e solte ou clique para selecionar</p>
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <h3>Upload do Segundo Arquivo</h3>
+          <div class="drop-area" id="drop-area-2">
+            <i class="fas fa-file"></i>
+            <p>Arraste e solte ou clique para selecionar</p>
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <h3>Análise em Andamento</h3>
+          <div class="comparison-results" id="resultados">
+            <div class="loading-animation"></div>
+            <p>Processando arquivos...</p>
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <h3>Comparação Visual</h3>
+          <input type="range" id="overlay-control" min="0" max="1" step="0.01" value="0.5">
+          <div class="canvas-container" id="overlay-canvas-container">
+            <canvas id="overlay-canvas1"></canvas>
+            <canvas id="overlay-canvas2"></canvas>
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <h3>Palavras Faltantes e Código de Barras</h3>
+          <div class="comparison-results" id="text-comparison-results">
+            <div class="loading-animation"></div>
+            <p>Gerando relatório...</p>
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <h3>Análise Avançada</h3>
+          <div class="upload-container">
+            <button id="compareButton">Comparar a Diferença de Arquivos</button>
+            <button id="spellCheckButton">Verificação Ortográfica Inteligente</button>
+            <button id="requisitosButton">Analisar Requisitos Estaturarios</button>
+          </div>
+          <div id="resposta">
+            <div id="loading-message" style="display: none; text-align: center;">
+              <div class="loading-animation"></div>
+              <p>Processando arquivos...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="swiper-pagination"></div>
+    </div>
+  </div>
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+  <script src="https://docs.opencv.org/4.9.0/opencv.js" type="text/javascript"></script>
+  <script>
+    let pdfFiles = [null, null];
+    let pdfReady = [false, false];
+    let scale = 1;
+    let isFullscreen = false;
+    let panning = false;
+    let offsetX = 0;
+    let offsetY = 0;
+    let start = { x: 0, y: 0 };
+    let pdfImages = [null, null];
+    function handleWheel(event) {
+      event.preventDefault();
+      const delta = Math.sign(event.deltaY);
+      const factor = 0.1;
+      scale = delta > 0 ? Math.max(0.1, scale - factor) : Math.min(5, scale + factor);
+      applyTransform();
+    }
+    function applyTransform() {
+      const overlayCanvas1 = document.getElementById("overlay-canvas1");
+      const overlayCanvas2 = document.getElementById("overlay-canvas2");
+      [overlayCanvas1, overlayCanvas2].forEach(canvas => {
+        if (canvas) {
+          canvas.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${scale})`;
+        }
+      });
+    }
+    function startPan(evt) {
+      if (isFullscreen) {
+        panning = true;
+        start = { x: evt.clientX - offsetX, y: evt.clientY - offsetY };
+      }
+    }
+    function move(evt) {
+      if (isFullscreen && panning) {
+        offsetX = evt.clientX - start.x;
+        offsetY = evt.clientY - start.y;
+        applyTransform();
+      }
+    }
+    function endPan() {
+      if (isFullscreen) {
+        panning = false;
+      }
+    }
+    function setupInteractionListeners(canvasContainer) {
+      canvasContainer.addEventListener("wheel", handleWheel);
+      canvasContainer.addEventListener("mousedown", startPan);
+      canvasContainer.addEventListener("mousemove", move);
+      canvasContainer.addEventListener("mouseup", endPan);
+      canvasContainer.addEventListener("mouseleave", endPan);
+    }
+    const swiper = new Swiper('.swiper-container', {
+      effect: 'coverflow',
+      grabCursor: true,
+      centeredSlides: true,
+      slidesPerView: 'auto',
+      coverflowEffect: {
+        rotate: 50,
+        stretch: 0,
+        depth: 100,
+        modifier: 1,
+        slideShadows: true,
+      },
+      pagination: {
+        el: '.swiper-pagination',
+      },
+      on: {
+        slideChange: () => {
+          if (swiper.activeIndex === 2 && pdfReady[0] && pdfReady[1]) {
+            compararPDFsDiferencas(pdfFiles[0], pdfFiles[1]);
+          } else if (swiper.activeIndex === 3 && pdfReady[0] && pdfReady[1]) {
+            compararPDFsOverlay(pdfFiles[0], pdfFiles[1]);
+          } else if (swiper.activeIndex === 4 && pdfReady[0] && pdfReady[1]) {
+            compararTextosPDFs(pdfFiles[0], pdfFiles[1]);
+          }
+        }
+      }
+    });
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+    const dropAreas = [document.getElementById("drop-area-1"), document.getElementById("drop-area-2")];
+    dropAreas.forEach((dropArea, index) => {
+      dropArea.addEventListener("dragover", (e) => e.preventDefault());
+      dropArea.addEventListener("drop", (e) => handleFileDrop(e, index));
+      dropArea.addEventListener("click", () => {
+        const input = document.createElement("input");
+        input.type = "file";
+        input.accept = "application/pdf, image/*";
+        input.onchange = (e) => {
+          handleFileDrop({ 
+            preventDefault: ()=>{}, 
+            dataTransfer: { files: e.target.files } 
+          }, index);
+        };
+        input.click();
+      });
+    });
+    function handleFileDrop(event, index) {
+      event.preventDefault();
+      const file = event.dataTransfer.files[0];
+      if (file && (file.type === "application/pdf" || file.type.startsWith("image/"))) {
+        pdfFiles[index] = file;
+        pdfReady[index] = true;
+        event.target.innerText = `${file.name} carregado`;
+        document.getElementById("resultados").innerHTML = '';
+        document.getElementById("text-comparison-results").innerHTML = 'Aguarde os arquivos serem carregados...';
+        processarEntrada(file, index);
+      } else {
+        alert("Por favor, arraste um arquivo PDF ou uma imagem.");
+      }
+    }
+    function processarEntrada(file, index) {
+      if (file.type.startsWith("image/")) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          pdfImages[index] = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      } else if (file.type === "application/pdf") {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const dadosPDF = e.target.result;
+          pdfjsLib.getDocument({ data: dadosPDF }).promise.then(pdf => {
+            pdf.getPage(1).then(page => {
+              const escala = 6;
+              const viewport = page.getViewport({ scale: escala });
+              const canvas = document.createElement("canvas");
+              canvas.width = viewport.width;
+              canvas.height = viewport.height;
+              const contexto = canvas.getContext("2d");
+              page.render({ canvasContext: contexto, viewport: viewport }).promise.then(() => {
+                pdfImages[index] = canvas.toDataURL("image/png");
+              });
+            });
+          });
+        };
+        reader.readAsArrayBuffer(file);
+      }
+    }
+    function pdfFileToArrayBuffer(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (e) => resolve(e.target.result);
+        reader.onerror = reject;
+        reader.readAsArrayBuffer(file);
+      });
+    }
+    async function compararPDFsDiferencas(pdf1File, pdf2File) {
+      if (pdf1File.type.startsWith("image/") && pdf2File.type.startsWith("image/")) {
+        compararImagensDiferencas(pdfImages[0], pdfImages[1]);
+      } else {
+        const carregamento1 = pdfjsLib.getDocument({ data: await pdfFileToArrayBuffer(pdf1File) });
+        const carregamento2 = pdfjsLib.getDocument({ data: await pdfFileToArrayBuffer(pdf2File) });
+        const pdf1 = await carregamento1.promise;
+        const pdf2 = await carregamento2.promise;
+        const numPaginas = Math.min(pdf1.numPages, pdf2.numPages);
+        const resultadosDiv = document.getElementById("resultados");
+        resultadosDiv.innerHTML = '';
+        for (let numPagina = 1; numPagina <= numPaginas; numPagina++) {
+          const pagina1 = await pdf1.getPage(numPagina);
+          const pagina2 = await pdf2.getPage(numPagina);
+          const escala = 6;
+          const viewport1 = pagina1.getViewport({ scale: escala });
+          const viewport2 = pagina2.getViewport({ scale: escala });
+          const largura = Math.min(viewport1.width, viewport2.width);
+          const altura = Math.min(viewport1.height, viewport2.height);
+          const canvas1 = document.createElement("canvas");
+          const canvas2 = document.createElement("canvas");
+          const diffCanvas = document.createElement("canvas");
+          canvas1.width = largura;
+          canvas1.height = altura;
+          canvas2.width = largura;
+          canvas2.height = altura;
+          diffCanvas.width = largura;
+          diffCanvas.height = altura;
+          const contexto1 = canvas1.getContext("2d");
+          const contexto2 = canvas2.getContext("2d");
+          const diffContexto = diffCanvas.getContext("2d");
+          await pagina1.render({ canvasContext: contexto1, viewport: viewport1 }).promise;
+          await pagina2.render({ canvasContext: contexto2, viewport: viewport2 }).promise;
+          const imgDados1 = contexto1.getImageData(0, 0, largura, altura);
+          const imgDados2 = contexto2.getImageData(0, 0, largura, altura);
+          const diffImgDados = diffContexto.createImageData(largura, altura);
+          for (let i = 0; i < largura * altura * 4; i += 4) {
+            const gray1 = 0.299 * imgDados1.data[i] + 0.587 * imgDados1.data[i + 1] + 0.114 * imgDados1.data[i + 2];
+            const gray2 = 0.299 * imgDados2.data[i] + 0.587 * imgDados2.data[i + 1] + 0.114 * imgDados2.data[i + 2];
+            const diff = Math.abs(gray1 - gray2);
+            if (diff > 50) {
+              diffImgDados.data[i] = 255;
+              diffImgDados.data[i + 1] = 0;
+              diffImgDados.data[i + 2] = 0;
+              diffImgDados.data[i + 3] = 255;
+            } else {
+              diffImgDados.data[i + 3] = 0;
+            }
+          }
+          diffContexto.putImageData(diffImgDados, 0, 0);
+          const divPagina = document.createElement("div");
+          divPagina.className = "pagina";
+          const tituloPagina = document.createElement("h3");
+          tituloPagina.textContent = `Diferenças na Página ${numPagina}`;
+          divPagina.appendChild(tituloPagina);
+          divPagina.appendChild(diffCanvas);
+          resultadosDiv.appendChild(divPagina);
+        }
+        const canvasContainer = document.querySelector(".canvas-container");
+        setupInteractionListeners(canvasContainer);
+      }
+    }
+    async function compararPDFsOverlay(pdf1File, pdf2File) {
+      if (pdf1File.type.startsWith("image/") && pdf2File.type.startsWith("image/")) {
+        compararImagensOverlay(pdfImages[0], pdfImages[1]);
+      } else {
+        const carregamento1 = pdfjsLib.getDocument({ data: await pdfFileToArrayBuffer(pdf1File) });
+        const carregamento2 = pdfjsLib.getDocument({ data: await pdfFileToArrayBuffer(pdf2File) });
+        const pdf1 = await carregamento1.promise;
+        const pdf2 = await carregamento2.promise;
+        const pagina1 = await pdf1.getPage(1);
+        const pagina2 = await pdf2.getPage(1);
+        const escala = 6;
+        const viewport1 = pagina1.getViewport({ scale: escala });
+        const viewport2 = pagina2.getViewport({ scale: escala });
+        const largura = Math.min(viewport1.width, viewport2.width);
+        const altura = Math.min(viewport1.height, viewport2.height);
+        const overlayCanvas1 = document.getElementById("overlay-canvas1");
+        const overlayCanvas2 = document.getElementById("overlay-canvas2");
+        overlayCanvas1.width = largura;
+        overlayCanvas1.height = altura;
+        overlayCanvas2.width = largura;
+        overlayCanvas2.height = altura;
+        const contexto1 = overlayCanvas1.getContext("2d");
+        const contexto2 = overlayCanvas2.getContext("2d");
+        await pagina1.render({ canvasContext: contexto1, viewport: viewport1 }).promise;
+        await pagina2.render({ canvasContext: contexto2, viewport: viewport2 }).promise;
+        pdfImages[0] = overlayCanvas1.toDataURL();
+        pdfImages[1] = overlayCanvas2.toDataURL();
+        const canvasContainer = document.getElementById("overlay-canvas-container");
+        setupInteractionListeners(canvasContainer);
+        const overlayControl = document.getElementById("overlay-control");
+        overlayControl.addEventListener("input", (e) => {
+          overlayCanvas2.style.opacity = e.target.value;
+        });
+        overlayCanvas2.style.opacity = overlayControl.value;
+      }
+    }
+    async function compararTextosPDFs(pdf1File, pdf2File) {
+      const textComparisonDiv = document.getElementById("text-comparison-results");
+      if (!pdf1File.type.startsWith("image/") && !pdf2File.type.startsWith("image/")) {
+        const pdf1 = await pdfjsLib.getDocument({ data: await pdfFileToArrayBuffer(pdf1File) }).promise;
+        const pdf2 = await pdfjsLib.getDocument({ data: await pdfFileToArrayBuffer(pdf2File) }).promise;
+        const text1 = await extractTextFromPDFDocument(pdf1);
+        const text2 = await extractTextFromPDFDocument(pdf2);
+        const missingInText1 = text2.split(/\s+/).filter(word => !text1.includes(word));
+        const missingInText2 = text1.split(/\s+/).filter(word => !text2.includes(word));
+        textComparisonDiv.innerHTML = `<strong>Palavras no PDF 2 mas faltando no PDF 1:</strong><br>${missingInText1.join(', ')}<br><br><strong>Palavras no PDF 1 mas faltando no PDF 2:</strong><br>${missingInText2.join(', ')}`;
+      } else {
+        textComparisonDiv.innerHTML = "Comparação de textos não disponível para imagens.";
+      }
+      if (pdfImages[0]) {
+        const barcode1 = await detectarCodigoBarras(pdfImages[0]);
+        textComparisonDiv.innerHTML += `<br><br><strong>Código de barras (Arquivo 1):</strong> ${barcode1}`;
+      }
+      if (pdfImages[1]) {
+        const barcode2 = await detectarCodigoBarras(pdfImages[1]);
+        textComparisonDiv.innerHTML += `<br><br><strong>Código de barras (Arquivo 2):</strong> ${barcode2}`;
+      }
+    }
+    async function extractTextFromPDFDocument(pdf) {
+      let fullText = '';
+      for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+        const page = await pdf.getPage(pageNum);
+        const textContent = await page.getTextContent();
+        const pageText = textContent.items.map(item => item.str).join(' ');
+        fullText += pageText + ' ';
+      }
+      return fullText.trim();
+    }
+    async function compararImagensDiferencas(imgURL1, imgURL2) {
+      const resultadosDiv = document.getElementById("resultados");
+      resultadosDiv.innerHTML = '';
+      const img1 = new Image();
+      const img2 = new Image();
+      await Promise.all([
+        new Promise(resolve => { img1.onload = resolve; img1.src = imgURL1; }),
+        new Promise(resolve => { img2.onload = resolve; img2.src = imgURL2; })
+      ]);
+      const largura = Math.min(img1.width, img2.width);
+      const altura = Math.min(img1.height, img2.height);
+      const canvas1 = document.createElement("canvas");
+      const canvas2 = document.createElement("canvas");
+      const diffCanvas = document.createElement("canvas");
+      canvas1.width = largura;
+      canvas1.height = altura;
+      canvas2.width = largura;
+      canvas2.height = altura;
+      diffCanvas.width = largura;
+      diffCanvas.height = altura;
+      const contexto1 = canvas1.getContext("2d");
+      const contexto2 = canvas2.getContext("2d");
+      const diffContexto = diffCanvas.getContext("2d");
+      contexto1.drawImage(img1, 0, 0, largura, altura);
+      contexto2.drawImage(img2, 0, 0, largura, altura);
+      const imgDados1 = contexto1.getImageData(0, 0, largura, altura);
+      const imgDados2 = contexto2.getImageData(0, 0, largura, altura);
+      const diffImgDados = diffContexto.createImageData(largura, altura);
+      for (let i = 0; i < largura * altura * 4; i += 4) {
+        const gray1 = 0.299 * imgDados1.data[i] + 0.587 * imgDados1.data[i + 1] + 0.114 * imgDados1.data[i + 2];
+        const gray2 = 0.299 * imgDados2.data[i] + 0.587 * imgDados2.data[i + 1] + 0.114 * imgDados2.data[i + 2];
+        const diff = Math.abs(gray1 - gray2);
+        if (diff > 50) {
+          diffImgDados.data[i] = 255;
+          diffImgDados.data[i + 1] = 0;
+          diffImgDados.data[i + 2] = 0;
+          diffImgDados.data[i + 3] = 255;
+        } else {
+          diffImgDados.data[i + 3] = 0;
+        }
+      }
+      diffContexto.putImageData(diffImgDados, 0, 0);
+      const divPagina = document.createElement("div");
+      divPagina.className = "pagina";
+      const tituloPagina = document.createElement("h3");
+      tituloPagina.textContent = `Diferenças na Imagem`;
+      divPagina.appendChild(tituloPagina);
+      divPagina.appendChild(diffCanvas);
+      resultadosDiv.appendChild(divPagina);
+      const canvasContainer = document.querySelector(".canvas-container");
+      setupInteractionListeners(canvasContainer);
+    }
+    async function compararImagensOverlay(imgURL1, imgURL2) {
+      const overlayCanvas1 = document.getElementById("overlay-canvas1");
+      const overlayCanvas2 = document.getElementById("overlay-canvas2");
+      const img1 = new Image();
+      const img2 = new Image();
+      await Promise.all([
+        new Promise(resolve => { img1.onload = resolve; img1.src = imgURL1; }),
+        new Promise(resolve => { img2.onload = resolve; img2.src = imgURL2; })
+      ]);
+      const largura = Math.min(img1.width, img2.width);
+      const altura = Math.min(img1.height, img2.height);
+      overlayCanvas1.width = largura;
+      overlayCanvas1.height = altura;
+      overlayCanvas2.width = largura;
+      overlayCanvas2.height = altura;
+      const ctx1 = overlayCanvas1.getContext("2d");
+      const ctx2 = overlayCanvas2.getContext("2d");
+      ctx1.drawImage(img1, 0, 0, largura, altura);
+      ctx2.drawImage(img2, 0, 0, largura, altura);
+      pdfImages[0] = overlayCanvas1.toDataURL();
+      pdfImages[1] = overlayCanvas2.toDataURL();
+      const canvasContainer = document.getElementById("overlay-canvas-container");
+      setupInteractionListeners(canvasContainer);
+      const overlayControl = document.getElementById("overlay-control");
+      overlayControl.addEventListener("input", (e) => {
+        overlayCanvas2.style.opacity = e.target.value;
+      });
+      overlayCanvas2.style.opacity = overlayControl.value;
+    }
+    document.addEventListener("DOMContentLoaded", () => {
+      const resultadosContainer = document.getElementById("resultados");
+      const canvasContainer = document.querySelector(".canvas-container");
+      const overlayControl = document.getElementById("overlay-control");
+      const respostaElement = document.getElementById("resposta");
+      function toggleFullscreen(element) {
+        if (!document.fullscreenElement) {
+          element.requestFullscreen().then(() => {
+            isFullscreen = true;
+            element.classList.add("fullscreen");
+          }).catch(err => alert(`Erro ao tentar ativar o modo de tela cheia: ${err.message}`));
+        } else {
+          document.exitFullscreen().then(() => {
+            isFullscreen = false;
+            element.classList.remove("fullscreen");
+          }).catch(err => alert(`Erro ao tentar sair do modo de tela cheia: ${err.message}`));
+        }
+      }
+      resultadosContainer.addEventListener("dblclick", () => toggleFullscreen(resultadosContainer));
+      canvasContainer.addEventListener("dblclick", () => toggleFullscreen(canvasContainer));
+      respostaElement.addEventListener("dblclick", () => toggleFullscreen(respostaElement));
+      overlayControl.addEventListener("input", (e) => {
+        document.getElementById("overlay-canvas2").style.opacity = e.target.value;
+      });
+      document.getElementById("compareButton").addEventListener("click", enviarPrompt);
+      document.getElementById("spellCheckButton").addEventListener("click", enviarPromptOrtografico);
+      document.getElementById("requisitosButton").addEventListener("click", enviarPromptRequisitos);
+    });
+    document.addEventListener("keydown", (event) => {
+      const overlayCanvas2 = document.getElementById("overlay-canvas2");
+      const overlayControl = document.getElementById("overlay-control");
+      const moveStep = 10;
+      if ([2, 3, 4].includes(swiper.activeIndex)) {
+        switch (event.key) {
+          case "4":
+            offsetX -= moveStep;
+            break;
+          case "6":
+            offsetX += moveStep;
+            break;
+          case "8":
+            offsetY -= moveStep;
+            break;
+          case "2":
+            offsetY += moveStep;
+            break;
+          case "1":
+            overlayControl.value = 0;
+            overlayCanvas2.style.opacity = 0;
+            break;
+          case "3":
+            overlayControl.value = 1;
+            overlayCanvas2.style.opacity = 1;
+            break;
+        }
+        applyTransform();
+      }
+    });
+    function toggleLoading(show) {
+      const loadingMessage = document.getElementById("loading-message");
+      if (show) {
+        loadingMessage.style.display = "block";
+      } else {
+        loadingMessage.style.display = "none";
+      }
+    }
+    function updateResponse(text) {
+      const respostaElement = document.getElementById("resposta");
+      let responseContainer = respostaElement.querySelector("#api-response");
+      if (!responseContainer) {
+        responseContainer = document.createElement("div");
+        responseContainer.id = "api-response";
+        respostaElement.appendChild(responseContainer);
+      }
+      responseContainer.textContent = text;
+    }
+    async function callGeminiAPI(promptText, base64Image0, base64Image1, includeGenerationConfig = true) {
+      const apiKey = "AIzaSyDDAwTx6Tn9w4E0crTvQwKm5BGZM4wOU1s";
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+      const data = {
+        contents: [{
+          parts: [
+            { text: promptText },
+            { inlineData: { data: base64Image0, mimeType: "image/png" } },
+            { inlineData: { data: base64Image1, mimeType: "image/png" } }
+          ]
+        }]
+      };
+      if (includeGenerationConfig) {
+        data.generationConfig = { temperature: 0.0 };
+      }
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      if (!response.ok) {
+        const errorData = await response.json();
+        let errorMessage = `Erro na requisição: ${response.status} ${response.statusText}`;
+        if (errorData && errorData.error) {
+          errorMessage += `\nDetalhes do erro: ${errorData.error.message}`;
+          if (errorData.error.details) {
+            errorMessage += `\nDetalhes adicionais: ${JSON.stringify(errorData.error.details)}`;
+          }
+        }
+        throw new Error(errorMessage);
+      }
+      const result = await response.json();
+      if (result.candidates && result.candidates.length > 0 &&
+          result.candidates[0].content && result.candidates[0].content.parts &&
+          result.candidates[0].content.parts.length > 0) {
+        return result.candidates[0].content.parts[0].text;
+      } else if (result.promptFeedback) {
+        return "Prompt Feedback: " + JSON.stringify(result.promptFeedback);
+      } else {
+        console.log("Resposta completa da API:", result);
+        return "Resposta inesperada da API. Verifique o console para detalhes.";
+      }
+    }
+    async function enviarPrompt() {
+      toggleLoading(true);
+      if (!pdfImages[0] || !pdfImages[1]) {
+        alert("As imagens dos arquivos não foram geradas. Por favor, acesse a tela de Comparação Visual antes de enviar o prompt.");
+        toggleLoading(false);
+        return;
+      }
+      const promptText = `
+1. **Comparação Detalhada e Estruturada dos Textos**
+      - Compare os textos extraídos das duas imagens de forma minuciosa, verificando cada palavra. Você não pode permitir que qualquer diferença entre arquivos passe impune, ou seja, identifique e destaque todas as diferenças entre arquivos. Seja direto e conciso na resposta e informe o resultado.
+`;
+      const base64Image0 = pdfImages[0].split(',')[1];
+      const base64Image1 = pdfImages[1].split(',')[1];
+      try {
+        const responseText = await callGeminiAPI(promptText, base64Image0, base64Image1, true);
+        updateResponse(responseText);
+      } catch (error) {
+        updateResponse(error.message);
+        console.error(error);
+      } finally {
+        toggleLoading(false);
+      }
+    }
+    async function enviarPromptOrtografico() {
+      toggleLoading(true);
+      if (!pdfImages[0] || !pdfImages[1]) {
+        alert("As imagens dos arquivos não foram geradas. Por favor, acesse a tela de Comparação Visual antes de enviar o prompt.");
+        toggleLoading(false);
+        return;
+      }
+      const promptText = "procure erros ortográficos. você precisa ser minucioso e não deixe nada passar. é muito importante que encontre, mas não alucine ou invente erros.";
+      const base64Image0 = pdfImages[0].split(',')[1];
+      const base64Image1 = pdfImages[1].split(',')[1];
+      try {
+        const responseText = await callGeminiAPI(promptText, base64Image0, base64Image1, true);
+        updateResponse(responseText);
+      } catch (error) {
+        updateResponse(error.message);
+        console.error(error);
+      } finally {
+        toggleLoading(false);
+      }
+    }
+    async function enviarPromptRequisitos() {
+      toggleLoading(true);
+      if (!pdfImages[0] || !pdfImages[1]) {
+        alert("As imagens dos arquivos não foram geradas. Por favor, acesse a tela de Comparação Visual antes de enviar o prompt.");
+        toggleLoading(false);
+        return;
+      }
+      const promptText = `Verifique se o produto atende a todos os seguintes requisitos obrigatórios:
+
+1. **Informações do Fabricante**:
+   - Razão social ou nome da marca do fabricante, produtor, fracionador ou titular.
+   - Endereço completo (incluindo país de origem e município).
+   - CNPJ ou CPF do responsável.
+   - Informações do importador (se aplicável).
+
+2. **Identificação da Indústria**:
+   - Expressão "INDÚSTRIA BRASILEIRA".
+   - Expressões como "fabricado em", "produto" ou "indústria".
+
+3. **Atendimento ao Consumidor**:
+   - Informação de atendimento ao consumidor com opções de contato (telefone, e-mail, etc.).
+
+4. **Denominação e Características do Produto**:
+   - Denominação de venda ou nome verdadeiro do produto.
+   - Expressão "Tipo" para produtos de origem específica.
+   - Denominação localizada no painel principal.
+   - Caracteres destacados e uniformes para produtos de origem animal.
+   - Tamanho da letra proporcional e altura mínima de 1mm para produtos regulamentados pela ANVISA.
+
+5. **Ingredientes e Composição**:
+   - Lista de ingredientes em ordem decrescente de quantidade.
+   - Informações sobre aromatização do produto.
+   - Forma de apresentação como "congelado" (se aplicável).
+   - Indicação de nova fórmula ou composição (se houver).
+
+6. **Informações Quantitativas e Condições de Armazenamento**:
+   - Conteúdo (volume) com especificações detalhadas.
+   - Conservação do produto com informações sobre temperatura.
+
+7. **Datação e Rastreabilidade**:
+   - Data de fabricação.
+   - Prazo de validade.
+   - Número do lote.
+
+8. **Informações sobre Alergênicos e Nutrientes**:
+   - Informações sobre alergênicos.
+   - Informação nutricional detalhada.
+   - Advertência sobre lactose.
+   - Informações obrigatórias sobre glúten e transgênicos.
+   - Advertências sobre aditivos alimentares.
+
+9. **Alegações Nutricionais e Regulamentações**:
+   - Alegações nutricionais em conformidade com os critérios de composição exigidos.
+
+Certifique-se de que cada um desses itens está presente e conforme as regulamentações aplicáveis.
+`;
+      const base64Image0 = pdfImages[0].split(',')[1];
+      const base64Image1 = pdfImages[1].split(',')[1];
+      try {
+        const responseText = await callGeminiAPI(promptText, base64Image0, base64Image1, false);
+        updateResponse(responseText);
+      } catch (error) {
+        updateResponse(error.message);
+        console.error(error);
+      } finally {
+        toggleLoading(false);
+      }
+    }
+    function dataURLtoFile(dataurl, filename) {
+      const arr = dataurl.split(',');
+      const mime = arr[0].match(/:(.*?);/)[1];
+      const bstr = atob(arr[1]);
+      let n = bstr.length;
+      const u8arr = new Uint8Array(n);
+      while(n--){
+          u8arr[n] = bstr.charCodeAt(n);
+      }
+      return new File([u8arr], filename, {type: mime});
+    }
+    async function detectarCodigoBarras(imageDataURL) {
+      const file = dataURLtoFile(imageDataURL, "temp.png");
+      const readerOptions = {
+        tryHarder: true,
+        formats: ["QRCode", "Code128", "EAN_13"]
+      };
+      try {
+        const results = await ZXingWASM.readBarcodesFromImageFile(file, readerOptions);
+        if (results.length > 0) {
+          return results[0].text;
+        } else {
+          return "Nenhum código de barras detectado.";
+        }
+      } catch (error) {
+        console.error("Erro ao detectar código de barras:", error);
+        return "Erro ao detectar código de barras.";
+      }
+    }
+  </script>
+</body>
+</html>
