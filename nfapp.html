@@ -137,20 +137,81 @@
       padding: var(--spacing-md) 0;
     }
 
-    input[type="file"] {
+    /* Custom File Upload Button */
+    .file-upload-container {
+      position: relative;
+      display: inline-block;
       margin: var(--spacing-sm) 0;
-      padding: var(--spacing-sm);
       width: 100%;
       max-width: 400px;
-      border: 2px dashed var(--border);
+    }
+
+    input[type="file"] {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+      z-index: 2;
+    }
+
+    .file-upload-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 12px 20px;
+      background-color: white;
+      color: var(--text);
+      border: 2px solid var(--border);
       border-radius: var(--border-radius);
-      background-color: rgba(189, 195, 199, 0.1);
+      font-family: var(--body-font);
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+      text-align: center;
+    }
+    
+    .file-upload-btn i {
+      font-size: 1.2rem;
+      color: var(--primary);
+    }
+    
+    .file-upload-btn::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: rgba(231, 76, 60, 0.1);
       transition: all 0.3s ease;
     }
 
-    input[type="file"]:hover {
+    input[type="file"]:hover + .file-upload-btn {
       border-color: var(--primary);
-      background-color: rgba(231, 76, 60, 0.05);
+      transform: translateY(-2px);
+    }
+    
+    input[type="file"]:hover + .file-upload-btn::after {
+      left: 100%;
+    }
+    
+    .file-name {
+      margin-top: 8px;
+      font-size: 0.9rem;
+      color: var(--light-text);
+      font-style: italic;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 100%;
     }
 
     button {
@@ -367,13 +428,17 @@
 </head>
 <body>
   <div class="container">
-    <h1>Análise de Design</h1>
-    <p>Faça o upload para obter uma análise detalhada da atenção visual, estética e eficácia do design.</p>
+    <h1>Análise de Design com IA Neuraflow</h1>
+    <p>Faça o upload de um design para obter uma análise detalhada da atenção visual, estética e eficácia do design.</p>
     
     <form id="uploadForm">
-      <label for="file">Selecione uma imagem (JPEG ou PNG):</label><br>
-      <input type="file" id="file" name="file" accept="image/jpeg, image/png" required>
-      <br>
+      <div class="file-upload-container">
+        <input type="file" id="file" name="file" accept="image/jpeg, image/png" required>
+        <label for="file" class="file-upload-btn">
+          <i class="fas fa-cloud-upload-alt"></i> Selecione uma imagem
+        </label>
+        <div class="file-name" id="fileName">Nenhum arquivo selecionado</div>
+      </div>
       <button type="submit"><i class="fas fa-bolt"></i> Analisar Design</button>
     </form>
     
@@ -453,13 +518,15 @@
 
       // Efeito no input file
       const fileInput = document.getElementById('file');
-      const fileLabel = fileInput.previousElementSibling;
+      const fileName = document.getElementById('fileName');
       
       fileInput.addEventListener('change', function() {
         if (this.files.length > 0) {
-          fileLabel.textContent = `Arquivo selecionado: ${this.files[0].name}`;
+          fileName.textContent = this.files[0].name;
+          fileName.style.color = 'var(--primary)';
         } else {
-          fileLabel.textContent = 'Selecione uma imagem do rótulo (JPEG ou PNG):';
+          fileName.textContent = 'Nenhum arquivo selecionado';
+          fileName.style.color = 'var(--light-text)';
         }
       });
       
