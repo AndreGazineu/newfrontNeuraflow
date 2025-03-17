@@ -43,99 +43,105 @@
     </filter>
   </defs>
 
-  <!-- Sombra de fundo para a área central -->
-  <rect x="170" y="45" width="60" height="110" rx="5" fill="#000000" opacity="0.05" filter="url(#glow)" />
-
-  <!-- PDF 1 - Documento da esquerda -->
-  <g id="pdf1" filter="url(#shadow)">
-    <rect x="50" y="50" width="80" height="100" rx="3" ry="3" fill="url(#pdfGradient1)" />
-    <rect x="55" y="60" width="70" height="8" rx="1" ry="1" fill="white" fill-opacity="0.7" />
-    <rect x="55" y="75" width="70" height="5" rx="1" ry="1" fill="white" fill-opacity="0.5" />
-    <rect x="55" y="85" width="70" height="5" rx="1" ry="1" fill="white" fill-opacity="0.5" />
-    <rect x="55" y="95" width="70" height="5" rx="1" ry="1" fill="white" fill-opacity="0.5" />
-    <rect x="55" y="105" width="70" height="5" rx="1" ry="1" fill="white" fill-opacity="0.5" />
-    <rect x="55" y="115" width="70" height="5" rx="1" ry="1" fill="white" fill-opacity="0.5" />
-    <rect x="55" y="125" width="70" height="5" rx="1" ry="1" fill="white" fill-opacity="0.5" />
-    
-    <!-- PDF text -->
-    <text x="90" y="140" font-family="Arial" font-weight="bold" font-size="12" text-anchor="middle" fill="white" filter="url(#textShadow)">PDF</text>
-    
-    <!-- Animação de movimentação do PDF 1 -->
-    <animateTransform 
-      attributeName="transform" 
-      type="translate" 
-      from="0 0" to="70 0" 
-      begin="0s" dur="1.2s" 
-      fill="freeze" />
-  </g>
-
-  <!-- PDF 2 - Documento da direita -->
-  <g id="pdf2" filter="url(#shadow)">
-    <rect x="270" y="50" width="80" height="100" rx="3" ry="3" fill="url(#pdfGradient2)" />
-    <rect x="275" y="60" width="70" height="8" rx="1" ry="1" fill="white" fill-opacity="0.7" />
-    <rect x="275" y="75" width="70" height="5" rx="1" ry="1" fill="white" fill-opacity="0.5" />
-    <rect x="275" y="85" width="70" height="5" rx="1" ry="1" fill="white" fill-opacity="0.5" />
-    <rect x="275" y="95" width="70" height="5" rx="1" ry="1" fill="white" fill-opacity="0.5" />
-    <rect x="275" y="105" width="50" height="5" rx="1" ry="1" fill="white" fill-opacity="0.5" />
-    <rect x="275" y="115" width="50" height="5" rx="1" ry="1" fill="white" fill-opacity="0.5" />
-    <rect x="275" y="125" width="50" height="5" rx="1" ry="1" fill="white" fill-opacity="0.5" />
-    
-    <!-- PDF text -->
-    <text x="310" y="140" font-family="Arial" font-weight="bold" font-size="12" text-anchor="middle" fill="white" filter="url(#textShadow)">PDF</text>
-    
-    <!-- Animação de movimentação do PDF 2 -->
-    <animateTransform 
-      attributeName="transform" 
-      type="translate" 
-      from="0 0" to="-70 0" 
-      begin="0s" dur="1.2s" 
-      fill="freeze" />
-  </g>
-
-  <!-- Círculo de processamento com melhor sombra -->
-  <g id="processingCircle" opacity="0" transform="translate(200, 100)">
-    <circle cx="0" cy="0" r="30" fill="none" stroke="#e74c3c" stroke-width="4" stroke-dasharray="1, 10" stroke-linecap="round" filter="url(#shadow)">
-      <animateTransform 
-        attributeName="transform"
-        type="rotate"
-        from="0 0 0"
-        to="360 0 0"
-        dur="1s"
-        repeatCount="2"
-        begin="1.2s" />
-    </circle>
-    
-    <!-- Animação de fade in e fade out do círculo -->
-    <animate 
-      attributeName="opacity" 
-      from="0" to="1" 
-      begin="1.2s" dur="0.3s" 
-      fill="freeze" />
-    <animate 
-      attributeName="opacity" 
-      from="1" to="0" 
-      begin="3.2s" dur="0.3s" 
-      fill="freeze" />
-  </g>
-
-  <!-- Checkmark com melhor sombra e brilho -->
-  <g id="checkmark" opacity="0" filter="url(#glow)">
-    <circle cx="200" cy="100" r="30" fill="#27ae60" />
-    <path d="M185,100 L195,110 L215,90" stroke="white" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round" />
-    
-    <!-- Animação do checkmark -->
-    <animate 
-      attributeName="opacity" 
-      from="0" to="1" 
-      begin="3.5s" dur="0.4s" 
-      fill="freeze" />
-    <animateTransform 
-      attributeName="transform" 
-      type="scale" 
-      additive="sum"
-      from="0.8 0.8" to="1 1" 
-      begin="3.5s" dur="0.4s" 
-      fill="freeze" />
-  </g>
+  <!-- Grupo principal para animação de loop -->
+  <g id="mainAnimation">
+    <!-- Sombra de fundo para a área central -->
+    <rect x="170" y="45" width="60" height="110" rx="5" fill="#000000" opacity="0.05" filter="url(#glow)" />
   
+    <!-- PDF 1 - Documento da esquerda -->
+    <g id="pdf1" filter="url(#shadow)">
+      <rect x="50" y="50" width="80" height="100" rx="3" ry="3" fill="url(#pdfGradient1)" />
+      <rect x="55" y="60" width="70" height="8" rx="1" ry="1" fill="white" fill-opacity="0.7" />
+      <rect x="55" y="75" width="70" height="5" rx="1" ry="1" fill="white" fill-opacity="0.5" />
+      <rect x="55" y="85" width="70" height="5" rx="1" ry="1" fill="white" fill-opacity="0.5" />
+      <rect x="55" y="95" width="70" height="5" rx="1" ry="1" fill="white" fill-opacity="0.5" />
+      <rect x="55" y="105" width="70" height="5" rx="1" ry="1" fill="white" fill-opacity="0.5" />
+      <rect x="55" y="115" width="70" height="5" rx="1" ry="1" fill="white" fill-opacity="0.5" />
+      <rect x="55" y="125" width="70" height="5" rx="1" ry="1" fill="white" fill-opacity="0.5" />
+      
+      <!-- PDF text -->
+      <text x="90" y="140" font-family="Arial" font-weight="bold" font-size="12" text-anchor="middle" fill="white" filter="url(#textShadow)">PDF</text>
+      
+      <!-- Animação de movimentação do PDF 1 -->
+      <animateTransform 
+        attributeName="transform" 
+        type="translate" 
+        values="0 0; 70 0; 70 0; 0 0; 0 0" 
+        keyTimes="0; 0.15; 0.65; 0.8; 1"
+        dur="8s" 
+        repeatCount="indefinite" />
+    </g>
+  
+    <!-- PDF 2 - Documento da direita -->
+    <g id="pdf2" filter="url(#shadow)">
+      <rect x="270" y="50" width="80" height="100" rx="3" ry="3" fill="url(#pdfGradient2)" />
+      <rect x="275" y="60" width="70" height="8" rx="1" ry="1" fill="white" fill-opacity="0.7" />
+      <rect x="275" y="75" width="70" height="5" rx="1" ry="1" fill="white" fill-opacity="0.5" />
+      <rect x="275" y="85" width="70" height="5" rx="1" ry="1" fill="white" fill-opacity="0.5" />
+      <rect x="275" y="95" width="70" height="5" rx="1" ry="1" fill="white" fill-opacity="0.5" />
+      <rect x="275" y="105" width="50" height="5" rx="1" ry="1" fill="white" fill-opacity="0.5" />
+      <rect x="275" y="115" width="50" height="5" rx="1" ry="1" fill="white" fill-opacity="0.5" />
+      <rect x="275" y="125" width="50" height="5" rx="1" ry="1" fill="white" fill-opacity="0.5" />
+      
+      <!-- PDF text -->
+      <text x="310" y="140" font-family="Arial" font-weight="bold" font-size="12" text-anchor="middle" fill="white" filter="url(#textShadow)">PDF</text>
+      
+      <!-- Animação de movimentação do PDF 2 -->
+      <animateTransform 
+        attributeName="transform" 
+        type="translate" 
+        values="0 0; -70 0; -70 0; 0 0; 0 0" 
+        keyTimes="0; 0.15; 0.65; 0.8; 1"
+        dur="8s" 
+        repeatCount="indefinite" />
+    </g>
+  
+    <!-- Círculo de processamento com melhor sombra -->
+    <g id="processingCircle" transform="translate(200, 100)">
+      <circle cx="0" cy="0" r="30" fill="none" stroke="#e74c3c" stroke-width="4" stroke-dasharray="1, 10" stroke-linecap="round" filter="url(#shadow)">
+        <!-- Animação de rotação contínua -->
+        <animateTransform 
+          attributeName="transform"
+          type="rotate"
+          from="0 0 0"
+          to="360 0 0"
+          dur="1s"
+          repeatCount="indefinite"
+          begin="1.2s"
+          end="3.2s" />
+      </circle>
+      
+      <!-- Animação de opacidade do círculo -->
+      <animate 
+        attributeName="opacity" 
+        values="0; 0; 1; 1; 0; 0" 
+        keyTimes="0; 0.15; 0.2; 0.4; 0.45; 1"
+        dur="8s" 
+        repeatCount="indefinite" />
+    </g>
+  
+    <!-- Checkmark com melhor sombra e brilho -->
+    <g id="checkmark" filter="url(#glow)">
+      <circle cx="200" cy="100" r="30" fill="#27ae60" />
+      <path d="M185,100 L195,110 L215,90" stroke="white" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+      
+      <!-- Animação de opacidade do checkmark -->
+      <animate 
+        attributeName="opacity" 
+        values="0; 0; 0; 0; 1; 1; 0; 0" 
+        keyTimes="0; 0.43; 0.45; 0.5; 0.55; 0.75; 0.8; 1"
+        dur="8s" 
+        repeatCount="indefinite" />
+      <!-- Animação de escala -->
+      <animateTransform 
+        attributeName="transform" 
+        type="scale" 
+        additive="sum"
+        values="0.8 0.8; 0.8 0.8; 0.8 0.8; 0.8 0.8; 1 1; 1 1; 0.8 0.8; 0.8 0.8" 
+        keyTimes="0; 0.43; 0.45; 0.5; 0.55; 0.75; 0.8; 1"
+        dur="8s" 
+        repeatCount="indefinite" />
+    </g>
+    
+  </g>
 </svg>
