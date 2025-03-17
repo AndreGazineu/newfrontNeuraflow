@@ -1,0 +1,141 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200">
+  <!-- Definições de gradientes e estilos -->
+  <defs>
+    <linearGradient id="pdfGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f44336" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#d32f2f" stop-opacity="0.9"/>
+    </linearGradient>
+    <linearGradient id="pdfGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e74c3c" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#c0392b" stop-opacity="0.9"/>
+    </linearGradient>
+    <filter id="shadow" x="-25%" y="-25%" width="150%" height="150%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3" />
+      <feOffset dx="2" dy="2" result="offsetblur" />
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.4" />
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <filter id="glow" x="-25%" y="-25%" width="150%" height="150%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="2" />
+      <feOffset dx="0" dy="0" result="offsetblur" />
+      <feFlood flood-color="#27ae60" flood-opacity="0.6" />
+      <feComposite in2="offsetblur" operator="in" />
+      <feMerge>
+        <feMergeNode />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <filter id="textShadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="1" />
+      <feOffset dx="1" dy="1" result="offsetblur" />
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.5" />
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Sombra de fundo para a área central -->
+  <rect x="170" y="45" width="60" height="110" rx="5" fill="#000000" opacity="0.05" filter="url(#glow)" />
+
+  <!-- PDF 1 - Documento da esquerda -->
+  <g id="pdf1" filter="url(#shadow)">
+    <rect x="50" y="50" width="80" height="100" rx="3" ry="3" fill="url(#pdfGradient1)" />
+    <rect x="55" y="60" width="70" height="8" rx="1" ry="1" fill="white" fill-opacity="0.7" />
+    <rect x="55" y="75" width="70" height="5" rx="1" ry="1" fill="white" fill-opacity="0.5" />
+    <rect x="55" y="85" width="70" height="5" rx="1" ry="1" fill="white" fill-opacity="0.5" />
+    <rect x="55" y="95" width="70" height="5" rx="1" ry="1" fill="white" fill-opacity="0.5" />
+    <rect x="55" y="105" width="70" height="5" rx="1" ry="1" fill="white" fill-opacity="0.5" />
+    <rect x="55" y="115" width="70" height="5" rx="1" ry="1" fill="white" fill-opacity="0.5" />
+    <rect x="55" y="125" width="70" height="5" rx="1" ry="1" fill="white" fill-opacity="0.5" />
+    
+    <!-- PDF text -->
+    <text x="90" y="140" font-family="Arial" font-weight="bold" font-size="12" text-anchor="middle" fill="white" filter="url(#textShadow)">PDF</text>
+    
+    <!-- Animação de movimentação do PDF 1 -->
+    <animateTransform 
+      attributeName="transform" 
+      type="translate" 
+      from="0 0" to="70 0" 
+      begin="0s" dur="1.2s" 
+      fill="freeze" />
+  </g>
+
+  <!-- PDF 2 - Documento da direita -->
+  <g id="pdf2" filter="url(#shadow)">
+    <rect x="270" y="50" width="80" height="100" rx="3" ry="3" fill="url(#pdfGradient2)" />
+    <rect x="275" y="60" width="70" height="8" rx="1" ry="1" fill="white" fill-opacity="0.7" />
+    <rect x="275" y="75" width="70" height="5" rx="1" ry="1" fill="white" fill-opacity="0.5" />
+    <rect x="275" y="85" width="70" height="5" rx="1" ry="1" fill="white" fill-opacity="0.5" />
+    <rect x="275" y="95" width="70" height="5" rx="1" ry="1" fill="white" fill-opacity="0.5" />
+    <rect x="275" y="105" width="50" height="5" rx="1" ry="1" fill="white" fill-opacity="0.5" />
+    <rect x="275" y="115" width="50" height="5" rx="1" ry="1" fill="white" fill-opacity="0.5" />
+    <rect x="275" y="125" width="50" height="5" rx="1" ry="1" fill="white" fill-opacity="0.5" />
+    
+    <!-- PDF text -->
+    <text x="310" y="140" font-family="Arial" font-weight="bold" font-size="12" text-anchor="middle" fill="white" filter="url(#textShadow)">PDF</text>
+    
+    <!-- Animação de movimentação do PDF 2 -->
+    <animateTransform 
+      attributeName="transform" 
+      type="translate" 
+      from="0 0" to="-70 0" 
+      begin="0s" dur="1.2s" 
+      fill="freeze" />
+  </g>
+
+  <!-- Círculo de processamento com melhor sombra -->
+  <g id="processingCircle" opacity="0" transform="translate(200, 100)">
+    <circle cx="0" cy="0" r="30" fill="none" stroke="#e74c3c" stroke-width="4" stroke-dasharray="1, 10" stroke-linecap="round" filter="url(#shadow)">
+      <animateTransform 
+        attributeName="transform"
+        type="rotate"
+        from="0 0 0"
+        to="360 0 0"
+        dur="1s"
+        repeatCount="2"
+        begin="1.2s" />
+    </circle>
+    
+    <!-- Animação de fade in e fade out do círculo -->
+    <animate 
+      attributeName="opacity" 
+      from="0" to="1" 
+      begin="1.2s" dur="0.3s" 
+      fill="freeze" />
+    <animate 
+      attributeName="opacity" 
+      from="1" to="0" 
+      begin="3.2s" dur="0.3s" 
+      fill="freeze" />
+  </g>
+
+  <!-- Checkmark com melhor sombra e brilho -->
+  <g id="checkmark" opacity="0" filter="url(#glow)">
+    <circle cx="200" cy="100" r="30" fill="#27ae60" />
+    <path d="M185,100 L195,110 L215,90" stroke="white" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+    
+    <!-- Animação do checkmark -->
+    <animate 
+      attributeName="opacity" 
+      from="0" to="1" 
+      begin="3.5s" dur="0.4s" 
+      fill="freeze" />
+    <animateTransform 
+      attributeName="transform" 
+      type="scale" 
+      additive="sum"
+      from="0.8 0.8" to="1 1" 
+      begin="3.5s" dur="0.4s" 
+      fill="freeze" />
+  </g>
+  
+</svg>
