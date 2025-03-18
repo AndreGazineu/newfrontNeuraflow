@@ -1,0 +1,136 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400">
+  <defs>
+    <linearGradient id="primaryGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e74c3c" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#c0392b" stop-opacity="0.9"/>
+    </linearGradient>
+    <linearGradient id="secondaryGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f39c12" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#e67e22" stop-opacity="0.9"/>
+    </linearGradient>
+    <filter id="shadow" x="-25%" y="-25%" width="150%" height="150%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
+      <feOffset dx="2" dy="2" result="offsetBlur"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.4"/>
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="glow" x="-25%" y="-25%" width="150%" height="150%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="2"/>
+      <feOffset dx="0" dy="0" result="offsetBlur"/>
+      <feFlood flood-color="#27ae60" flood-opacity="0.6"/>
+      <feComposite in2="offsetBlur" operator="in"/>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="textShadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="1"/>
+      <feOffset dx="1" dy="1" result="offsetBlur"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.5"/>
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <rect width="800" height="400" fill="#f7f4f0"/>
+  <g id="complyscanAnimation">
+    <g id="docOriginal" filter="url(#shadow)">
+      <rect x="150" y="100" width="150" height="200" rx="3" ry="3" fill="url(#primaryGradient)"/>
+      <rect x="165" y="120" width="120" height="10" rx="1" ry="1" fill="#ffffff" fill-opacity="0.8"/>
+      <rect x="165" y="140" width="120" height="6" rx="1" ry="1" fill="#ffffff" fill-opacity="0.7"/>
+      <rect x="165" y="155" width="120" height="6" rx="1" ry="1" fill="#ffffff" fill-opacity="0.7"/>
+      <rect x="165" y="170" width="120" height="6" rx="1" ry="1" fill="#ffffff" fill-opacity="0.7"/>
+      <rect x="165" y="185" width="120" height="6" rx="1" ry="1" fill="#ffffff" fill-opacity="0.7"/>
+      <g transform="translate(175,210) scale(0.8)">
+        <rect x="0" y="0" width="5" height="30" fill="black"/>
+        <rect x="7" y="0" width="3" height="30" fill="black"/>
+        <rect x="13" y="0" width="2" height="30" fill="black"/>
+        <rect x="17" y="0" width="4" height="30" fill="black"/>
+        <rect x="23" y="0" width="1" height="30" fill="black"/>
+        <rect x="26" y="0" width="3" height="30" fill="black"/>
+        <rect x="32" y="0" width="5" height="30" fill="black"/>
+        <rect x="39" y="0" width="2" height="30" fill="black"/>
+        <rect x="43" y="0" width="4" height="30" fill="black"/>
+        <rect x="50" y="0" width="3" height="30" fill="black"/>
+        <rect x="55" y="0" width="5" height="30" fill="black"/>
+        <rect x="62" y="0" width="2" height="30" fill="black"/>
+        <rect x="66" y="0" width="1" height="30" fill="black"/>
+        <rect x="70" y="0" width="7" height="30" fill="black"/>
+        <rect x="80" y="0" width="2" height="30" fill="black"/>
+        <rect x="84" y="0" width="6" height="30" fill="black"/>
+        <rect x="93" y="0" width="3" height="30" fill="black"/>
+        <rect x="98" y="0" width="5" height="30" fill="black"/>
+      </g>
+      <text x="225" y="280" font-family="Space Grotesk, sans-serif" font-weight="bold" font-size="18" text-anchor="middle" fill="#ffffff" filter="url(#textShadow)">Documento Original</text>
+      <animateTransform attributeName="transform" type="translate" values="0 0; 40 0; 40 0; 0 0; 0 0" keyTimes="0;0.15;0.65;0.8;1" dur="8s" repeatCount="indefinite"/>
+    </g>
+    <g id="docRevisado" filter="url(#shadow)">
+      <rect x="500" y="100" width="150" height="200" rx="3" ry="3" fill="url(#secondaryGradient)"/>
+      <rect x="515" y="120" width="120" height="10" rx="1" ry="1" fill="#ffffff" fill-opacity="0.8"/>
+      <rect x="515" y="140" width="120" height="6" rx="1" ry="1" fill="#ffffff" fill-opacity="0.7"/>
+      <rect x="515" y="155" width="120" height="6" rx="1" ry="1" fill="#ffffff" fill-opacity="0.7"/>
+      <rect x="515" y="170" width="110" height="6" rx="1" ry="1" fill="#ffffff" fill-opacity="0.7"/>
+      <rect x="515" y="185" width="120" height="6" rx="1" ry="1" fill="#ffffff" fill-opacity="0.7"/>
+      <text x="520" y="128" font-family="Space Grotesk, sans-serif" font-size="14" fill="#ffffff" fill-opacity="0.9">???</text>
+      <text x="520" y="148" font-family="Space Grotesk, sans-serif" font-size="14" fill="#ffffff" fill-opacity="0.9">???</text>
+      <text x="520" y="163" font-family="Space Grotesk, sans-serif" font-size="14" fill="#ffffff" fill-opacity="0.9">???</text>
+      <text x="520" y="178" font-family="Space Grotesk, sans-serif" font-size="14" fill="#ffffff" fill-opacity="0.9">???</text>
+      <text x="520" y="193" font-family="Space Grotesk, sans-serif" font-size="14" fill="#ffffff" fill-opacity="0.9">???</text>
+      <g transform="translate(525,210) scale(0.8)">
+        <rect x="0" y="0" width="5" height="30" fill="black"/>
+        <rect x="7" y="0" width="3" height="30" fill="black"/>
+        <rect x="13" y="0" width="2" height="30" fill="black"/>
+        <rect x="17" y="0" width="4" height="30" fill="black"/>
+        <rect x="23" y="0" width="1" height="30" fill="black"/>
+        <rect x="26" y="0" width="3" height="30" fill="black"/>
+        <rect x="32" y="0" width="5" height="30" fill="black"/>
+        <rect x="39" y="0" width="2" height="30" fill="black"/>
+        <rect x="43" y="0" width="4" height="30" fill="black"/>
+        <rect x="50" y="0" width="3" height="30" fill="black"/>
+        <rect x="55" y="0" width="5" height="30" fill="black"/>
+        <rect x="62" y="0" width="2" height="30" fill="black"/>
+        <rect x="66" y="0" width="3" height="30" fill="black"/>
+        <rect x="70" y="0" width="7" height="30" fill="black"/>
+        <rect x="80" y="0" width="2" height="30" fill="black"/>
+        <rect x="84" y="0" width="6" height="30" fill="black"/>
+        <rect x="93" y="0" width="1" height="30" fill="black"/>
+        <rect x="98" y="0" width="5" height="30" fill="black"/>
+      </g>
+      <text x="575" y="280" font-family="Space Grotesk, sans-serif" font-weight="bold" font-size="18" text-anchor="middle" fill="#ffffff" filter="url(#textShadow)">Documento Revisado</text>
+      <animateTransform attributeName="transform" type="translate" values="0 0; -40 0; -40 0; 0 0; 0 0" keyTimes="0;0.15;0.65;0.8;1" dur="8s" repeatCount="indefinite"/>
+    </g>
+    <g id="processingArea">
+      <rect x="300" y="80" width="200" height="240" rx="10" ry="10" fill="#f2f2f2" filter="url(#shadow)" opacity="0.9"/>
+      <g id="compareIcon" opacity="0">
+        <circle cx="400" cy="150" r="30" fill="#2980b9" filter="url(#shadow)"/>
+        <text x="400" y="160" text-anchor="middle" fill="#ffffff" font-family="Space Grotesk, sans-serif" font-size="30" font-weight="bold">?</text>
+        <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.15;0.2;0.3;0.35;1" dur="8s" repeatCount="indefinite"/>
+      </g>
+      <g id="differencesIndicator" opacity="0">
+        <line x1="300" y1="170" x2="500" y2="170" stroke="#f39c12" stroke-width="2" stroke-dasharray="5,3"/>
+        <circle cx="625" cy="170" r="8" fill="#f39c12"/>
+        <text x="625" y="174" font-family="Space Grotesk, sans-serif" font-weight="bold" font-size="12" text-anchor="middle" fill="#ffffff">!</text>
+        <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.6;0.74;0.8;0.85;1" dur="8s" repeatCount="indefinite"/>
+      </g>
+    </g>
+    <g id="validationCheck" filter="url(#glow)">
+      <circle cx="400" cy="320" r="35" fill="#27ae60"/>
+      <path d="M380,320 L395,335 L420,310" stroke="#ffffff" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.78;0.88;0.92;1;1" dur="8s" repeatCount="indefinite"/>
+      <animateTransform attributeName="transform" type="scale" additive="sum" values="0.8 0.8;0.8 0.8;1 1;1 1;0.8 0.8" keyTimes="0;0.78;0.88;0.92;1" dur="8s" repeatCount="indefinite"/>
+    </g>
+    <text id="validationMessage" x="400" y="370" font-family="Space Grotesk, sans-serif" font-weight="bold" font-size="18" text-anchor="middle" fill="#27ae60" opacity="0">Documento Validado com Sucesso
+      <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.82;0.9;0.94;1;1" dur="8s" repeatCount="indefinite"/>
+    </text>
+  </g>
+  <image x="640" y="310" width="150" height="90" xlink:href="https://andregazineu.github.io/newfrontNeuraflow/Logo%20ComplyScan-1.svg"/>
+</svg>
