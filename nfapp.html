@@ -130,6 +130,209 @@
       z-index: 0;
     }
 
+    /* Login screen styles */
+    .login-container {
+      max-width: 400px;
+      width: 100%;
+      background-color: white;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      padding: var(--spacing-lg) var(--spacing-md);
+      position: relative;
+      overflow: hidden;
+      z-index: 100;
+    }
+
+    .login-container::before {
+      content: "";
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      background: var(--gradient);
+      opacity: 0.08;
+      top: -150px;
+      right: -150px;
+      border-radius: 50%;
+      z-index: -1;
+    }
+
+    .login-container::after {
+      content: "";
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      background-color: var(--accent);
+      opacity: 0.05;
+      bottom: -100px;
+      left: -100px;
+      border-radius: 50%;
+      z-index: -1;
+    }
+
+    .login-logo {
+      text-align: center;
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .login-logo i {
+      font-size: 3rem;
+      color: var(--primary);
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .login-title {
+      text-align: center;
+      margin-bottom: var(--spacing-md);
+    }
+
+    .login-title h1 {
+      font-size: 2rem;
+      margin-bottom: var(--spacing-xs);
+      display: inline-block;
+    }
+
+    .login-title h1::after {
+      left: 50%;
+      transform: translateX(-50%);
+      width: 40px;
+    }
+
+    .login-subtitle {
+      font-size: 1rem;
+      color: var(--light-text);
+      text-align: center;
+      margin-bottom: var(--spacing-md);
+    }
+
+    .pin-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: var(--spacing-md);
+    }
+
+    .pin-dots {
+      display: flex;
+      justify-content: center;
+      margin-bottom: var(--spacing-md);
+      gap: 12px;
+    }
+
+    .pin-dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background-color: var(--border);
+      transition: all 0.3s ease;
+    }
+
+    .pin-dot.filled {
+      background-color: var(--primary);
+      transform: scale(1.1);
+    }
+
+    .pin-label {
+      color: var(--primary);
+      font-weight: 600;
+      margin-bottom: var(--spacing-sm);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 0.9rem;
+    }
+
+    .pin-keypad {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-gap: 15px;
+      margin-top: var(--spacing-sm);
+    }
+
+    .pin-key {
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: 600;
+      background-color: white;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .pin-key:hover {
+      background-color: var(--background);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+
+    .pin-key:active {
+      transform: translateY(1px);
+      box-shadow: none;
+    }
+
+    .pin-key.delete {
+      grid-column: 3;
+      font-size: 1.2rem;
+    }
+
+    .pin-key.zero {
+      grid-column: 2;
+    }
+
+    .login-button {
+      width: 100%;
+      padding: 12px;
+      background: var(--gradient);
+      color: white;
+      border: none;
+      border-radius: var(--border-radius);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: var(--spacing-sm);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .login-button::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .login-button:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+
+    .login-button:hover::after {
+      left: 100%;
+    }
+
+    .login-error {
+      color: var(--primary);
+      text-align: center;
+      margin-top: var(--spacing-sm);
+      font-size: 0.9rem;
+      height: 20px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .login-error.visible {
+      opacity: 1;
+    }
+
     /* Formulário Upload */
     #uploadForm {
       position: relative;
@@ -423,83 +626,129 @@
       .analysis-grid {
         grid-template-columns: 1fr;
       }
+
+      .pin-key {
+        width: 50px;
+        height: 50px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Análise de Design com IA Neuraflow</h1>
-    <p>Faça o upload de um design para obter uma análise detalhada da atenção visual, estética e eficácia do design.</p>
+  <!-- Login Screen -->
+  <div id="loginScreen" class="login-container">
+    <div class="login-logo">
+      <i class="fas fa-brain"></i>
+    </div>
+    <div class="login-title">
+      <h1>Desbloqueie Neuraflow</h1>
+    </div>
+    <div class="login-subtitle">Usar PIN</div>
     
-    <form id="uploadForm">
-      <div class="file-upload-container">
-        <input type="file" id="file" name="file" accept="image/jpeg, image/png" required>
-        <label for="file" class="file-upload-btn">
-          <i class="fas fa-cloud-upload-alt"></i> Selecione uma imagem
-        </label>
-        <div class="file-name" id="fileName">Nenhum arquivo selecionado</div>
+    <div class="pin-container">
+      <div class="pin-dots">
+        <div class="pin-dot" id="dot1"></div>
+        <div class="pin-dot" id="dot2"></div>
+        <div class="pin-dot" id="dot3"></div>
+        <div class="pin-dot" id="dot4"></div>
       </div>
-      <button type="submit"><i class="fas fa-bolt"></i> Analisar Design</button>
-    </form>
-    
-    <div id="loading" class="loading">
-      <div class="spinner"></div>
-      <p>Processando sua imagem com IA avançada, por favor aguarde...</p>
+      
+      <div class="pin-keypad">
+        <div class="pin-key" data-value="1">1</div>
+        <div class="pin-key" data-value="2">2</div>
+        <div class="pin-key" data-value="3">3</div>
+        <div class="pin-key" data-value="4">4</div>
+        <div class="pin-key" data-value="5">5</div>
+        <div class="pin-key" data-value="6">6</div>
+        <div class="pin-key" data-value="7">7</div>
+        <div class="pin-key" data-value="8">8</div>
+        <div class="pin-key" data-value="9">9</div>
+        <div class="pin-key zero" data-value="0">0</div>
+        <div class="pin-key delete" data-value="delete">
+          <i class="fas fa-backspace"></i>
+        </div>
+      </div>
+      
+      <div class="login-error" id="loginError">PIN incorreto. Tente novamente.</div>
     </div>
   </div>
-  
-  <div id="responseContainer" class="response-section container">
-    <h2>Resultado da Análise</h2>
-    
-    <div class="image-container">
-      <div class="image-box">
-        <h3><i class="fas fa-image"></i> Imagem Processada</h3>
-        <img id="outputImage" src="" alt="Imagem processada">
-      </div>
+
+  <!-- Main Container (Hidden initially) -->
+  <div id="mainApp" style="display: none;">
+    <div class="container">
+      <h1>Análise de Design com IA Neuraflow</h1>
+      <p>Faça o upload de um design para obter uma análise detalhada da atenção visual, estética e eficácia do design.</p>
       
-      <div class="image-box">
-        <h3><i class="fas fa-chart-pie"></i> Mapa de Calor</h3>
-        <img id="graphImage" src="" alt="Mapa de calor de atenção visual">
+      <form id="uploadForm">
+        <div class="file-upload-container">
+          <input type="file" id="file" name="file" accept="image/jpeg, image/png" required>
+          <label for="file" class="file-upload-btn">
+            <i class="fas fa-cloud-upload-alt"></i> Selecione uma imagem
+          </label>
+          <div class="file-name" id="fileName">Nenhum arquivo selecionado</div>
+        </div>
+        <button type="submit"><i class="fas fa-bolt"></i> Analisar Design</button>
+      </form>
+      
+      <div id="loading" class="loading">
+        <div class="spinner"></div>
+        <p>Processando sua imagem com IA avançada, por favor aguarde...</p>
       </div>
     </div>
     
-    <div class="text-analysis">
-      <h3>Análise Detalhada por IA</h3>
+    <div id="responseContainer" class="response-section container">
+      <h2>Resultado da Análise</h2>
       
-      <div class="analysis-grid">
-        <div class="text-section">
-          <div class="section-title"><i class="fas fa-eye"></i> Atratividade</div>
-          <div id="atratividade"></div>
+      <div class="image-container">
+        <div class="image-box">
+          <h3><i class="fas fa-image"></i> Imagem Processada</h3>
+          <img id="outputImage" src="" alt="Imagem processada">
         </div>
         
-        <div class="text-section">
-          <div class="section-title"><i class="fas fa-th"></i> Consistência Estilística</div>
-          <div id="consistencia"></div>
+        <div class="image-box">
+          <h3><i class="fas fa-chart-pie"></i> Mapa de Calor</h3>
+          <img id="graphImage" src="" alt="Mapa de calor de atenção visual">
         </div>
+      </div>
+      
+      <div class="text-analysis">
+        <h3>Análise Detalhada por IA</h3>
         
-        <div class="text-section">
-          <div class="section-title"><i class="fas fa-palette"></i> Harmonia Visual</div>
-          <div id="harmonia"></div>
-        </div>
-        
-        <div class="text-section">
-          <div class="section-title"><i class="fas fa-glasses"></i> Legibilidade</div>
-          <div id="legibilidade"></div>
-        </div>
-        
-        <div class="text-section">
-          <div class="section-title"><i class="fas fa-thumbs-up"></i> Pontos Fortes</div>
-          <div id="pontos_fortes"></div>
-        </div>
-        
-        <div class="text-section">
-          <div class="section-title"><i class="fas fa-exclamation-circle"></i> Pontos Fracos</div>
-          <div id="pontos_fracos"></div>
-        </div>
-        
-        <div class="text-section">
-          <div class="section-title"><i class="fas fa-rainbow"></i> Psicometria das Cores</div>
-          <div id="psicometria"></div>
+        <div class="analysis-grid">
+          <div class="text-section">
+            <div class="section-title"><i class="fas fa-eye"></i> Atratividade</div>
+            <div id="atratividade"></div>
+          </div>
+          
+          <div class="text-section">
+            <div class="section-title"><i class="fas fa-th"></i> Consistência Estilística</div>
+            <div id="consistencia"></div>
+          </div>
+          
+          <div class="text-section">
+            <div class="section-title"><i class="fas fa-palette"></i> Harmonia Visual</div>
+            <div id="harmonia"></div>
+          </div>
+          
+          <div class="text-section">
+            <div class="section-title"><i class="fas fa-glasses"></i> Legibilidade</div>
+            <div id="legibilidade"></div>
+          </div>
+          
+          <div class="text-section">
+            <div class="section-title"><i class="fas fa-thumbs-up"></i> Pontos Fortes</div>
+            <div id="pontos_fortes"></div>
+          </div>
+          
+          <div class="text-section">
+            <div class="section-title"><i class="fas fa-exclamation-circle"></i> Pontos Fracos</div>
+            <div id="pontos_fracos"></div>
+          </div>
+          
+          <div class="text-section">
+            <div class="section-title"><i class="fas fa-rainbow"></i> Psicometria das Cores</div>
+            <div id="psicometria"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -507,6 +756,99 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
+      // PIN Login Logic
+      let currentPin = '';
+      const correctPin = '1234';
+      const pinKeys = document.querySelectorAll('.pin-key');
+      const dots = document.querySelectorAll('.pin-dot');
+      const loginError = document.getElementById('loginError');
+      const loginScreen = document.getElementById('loginScreen');
+      const mainApp = document.getElementById('mainApp');
+      
+      pinKeys.forEach(key => {
+        key.addEventListener('click', () => {
+          const value = key.getAttribute('data-value');
+          
+          if (value === 'delete') {
+            // Delete last digit
+            if (currentPin.length > 0) {
+              currentPin = currentPin.slice(0, -1);
+              updateDots();
+            }
+          } else {
+            // Add digit if we have less than 4 digits
+            if (currentPin.length < 4) {
+              currentPin += value;
+              updateDots();
+              
+              // Check PIN when we have 4 digits
+              if (currentPin.length === 4) {
+                setTimeout(() => {
+                  if (currentPin === correctPin) {
+                    loginSuccess();
+                  } else {
+                    loginFailed();
+                  }
+                }, 300);
+              }
+            }
+          }
+        });
+      });
+      
+      function updateDots() {
+        // Update the dots to reflect PIN length
+        dots.forEach((dot, index) => {
+          if (index < currentPin.length) {
+            dot.classList.add('filled');
+          } else {
+            dot.classList.remove('filled');
+          }
+        });
+      }
+      
+      function loginSuccess() {
+        // Success animation
+        loginScreen.style.animation = 'fadeIn 0.5s ease-in-out reverse';
+        setTimeout(() => {
+          loginScreen.style.display = 'none';
+          mainApp.style.display = 'block';
+          mainApp.style.animation = 'fadeIn 0.5s ease-in-out';
+        }, 500);
+      }
+      
+      function loginFailed() {
+        // Show error message
+        loginError.classList.add('visible');
+        
+        // Shake animation
+        loginScreen.style.animation = 'shake 0.5s cubic-bezier(.36,.07,.19,.97) both';
+        setTimeout(() => {
+          loginScreen.style.animation = '';
+        }, 500);
+        
+        // Reset PIN
+        currentPin = '';
+        updateDots();
+        
+        // Hide error message after 2 seconds
+        setTimeout(() => {
+          loginError.classList.remove('visible');
+        }, 2000);
+      }
+      
+      // Add shake animation
+      const style = document.createElement('style');
+      style.innerHTML = `
+        @keyframes shake {
+          10%, 90% { transform: translate3d(-1px, 0, 0); }
+          20%, 80% { transform: translate3d(2px, 0, 0); }
+          30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+          40%, 60% { transform: translate3d(4px, 0, 0); }
+        }
+      `;
+      document.head.appendChild(style);
+      
       // Animação para os cards da análise
       function animateCards() {
         const cards = document.querySelectorAll('.text-section');
